@@ -46,6 +46,18 @@
     background-color: white;
 }
 
+.applayout-footer {
+    color: #d3d3d3;
+    font-weight: bold;
+    text-align: center;
+    background-color: white;
+    padding: 0 10px;
+}
+
+.applayout-footer > a {
+    color: inherit;
+}
+
 /* index home */
 .ant-tabs-content-holder, .ant-tabs-nav-list {
     padding: 0 20px;
@@ -54,3 +66,4 @@
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn, .ant-tabs-tab:hover {
     color: var(--point-color);
 }
+

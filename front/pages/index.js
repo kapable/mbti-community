@@ -23,6 +23,13 @@ const Home = () => {
                     </TabPane>
                 ))}
             </Tabs>
+            <Tabs className='home-category-tab' tabPosition='top' size='default' type='line' tabBarGutter={20} tabBarStyle={{backgroundColor: '#f3f3f3', height:'1.7rem'}} > 
+                {categories.map((category) => (
+                    <TabPane key={category} tab={category}>
+                        {category}
+                    </TabPane>
+                ))}
+            </Tabs>
         </Fragment>
     );
 };

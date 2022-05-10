@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import Head from 'next/head';
 
 const Signup = () => {
     return (
-        <div>Signup</div>
+        <Fragment>
+            <Head>
+                <title>회원가입 페이지</title>
+            </Head>
+            <div>Signup</div>
+        </Fragment>
     );
 };
 
