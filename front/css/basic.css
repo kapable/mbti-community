@@ -21,8 +21,8 @@
 }
 
 .applayout-nav {
-    width: 100%;
-    clear: both;
+    height: 2rem;
+    background-color: white;
 }
 
 .applayout-nav-signup-div-a, .applayout-nav-login-div-a {
@@ -32,11 +32,15 @@
 .applayout-nav-login-div {
     float: right;
     border-right: solid 0.05rem #b7bed1;
-    padding: 0 1rem;
+    padding: 0.3rem 1rem 0;
 }
 
 .applayout-nav-signup-div {
     float: right;
     border-left: solid 0.05rem #b7bed1;
-    padding: 0 1rem;
+    padding: 0.3rem 1rem 0;
+}
+
+.applayout-content {
+    background-color: bisque;
 }
