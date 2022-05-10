@@ -1,0 +1,14 @@
+{
+  "name": "mbti-community-front",
+  "version": "1.0.0",
+  "description": "MBTI Community Front-end",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next"
+  },
+  "author": "Seeyong",
+  "license": "ISC",
+  "dependencies": {
+    "next": "^9.5.5"
+  }
+}
