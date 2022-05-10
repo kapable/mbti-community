@@ -1,0 +1,24 @@
+:root {
+    --point-color: #345cb4;
+}
+/* AppLayout */
+.applayout-header {
+    background-color: var(--point-color);
+    height: 3rem;
+    color: #b7bed1;
+}
+
+.applayout-header-inner-div {
+    margin: auto 1rem;
+}
+
+.applayout-header-main-logo {
+    width: 5rem;
+    margin-top: 0.4rem;
+}
+
+.applayout-header-hamburger {
+    float: right;
+    font-size: 1.5rem;
+    margin-top: 0.3rem;
+}
