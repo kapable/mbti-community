@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Drawer, Layout, Divider } from 'antd';
+import { Drawer, Layout } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
@@ -38,8 +38,6 @@ const AppLayout = ({ children }) => {
                 <div className='applayout-nav-signup-div'><Link href='/signup'><a className='applayout-nav-signup-div-a'>회원가입</a></Link></div>
                 <div className='applayout-nav-login-div'><Link href='/login'><a className='applayout-nav-login-div-a'>로그인</a></Link></div>
             </div>
-            {/* <Divider /> */}
-                {/* <br style={{clear: "all"}}/> */}
             <Content className='applayout-content'>
                 { children }
             </Content>

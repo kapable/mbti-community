@@ -23,6 +23,7 @@
 .applayout-nav {
     height: 2rem;
     background-color: white;
+    border-bottom: solid 0.05rem #b7bed1;
 }
 
 .applayout-nav-signup-div-a, .applayout-nav-login-div-a {
@@ -31,16 +32,25 @@
 
 .applayout-nav-login-div {
     float: right;
-    border-right: solid 0.05rem #b7bed1;
+    border-right: solid 0.025rem #b7bed1;
     padding: 0.3rem 1rem 0;
 }
 
 .applayout-nav-signup-div {
     float: right;
-    border-left: solid 0.05rem #b7bed1;
+    border-left: solid 0.025rem #b7bed1;
     padding: 0.3rem 1rem 0;
 }
 
 .applayout-content {
-    background-color: bisque;
+    background-color: white;
+}
+
+/* index home */
+.ant-tabs-content-holder, .ant-tabs-nav-list {
+    padding: 0 20px;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn, .ant-tabs-tab:hover {
+    color: var(--point-color);
 }
