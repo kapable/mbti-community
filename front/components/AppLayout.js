@@ -1,8 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Drawer } from 'antd';
+import { Drawer, Menu, Layout } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
+
+const { Header, Content, Footer } = Layout;
 
 const AppLayout = ({ children }) => {
     const [showDrawer, setShowDrawer] = useState(false);
@@ -14,13 +16,10 @@ const AppLayout = ({ children }) => {
     }, []);
 
     return (
-        <div className='applayout'>
-            <div className='applayout-header'>
-                <div className='applayout-header-inner-div'>
-                    <img className='applayout-header-main-logo' src='https://images.niair.xyz/basic/kfunny_logo.png' alt='케이퍼니' />
-                    <div className='applayout-header-hamburger' onClick={onClickHamburger}><MenuOutlined /></div>
-                </div>
-            </div>
+        <Layout className='applayout'>
+            <Header className='applayout-header'>
+                <img className='applayout-header-main-logo' src='https://images.niair.xyz/basic/kfunny_logo.png' alt='케이퍼니' />
+                <div className='applayout-header-hamburger' onClick={onClickHamburger}><MenuOutlined /></div>
             <Drawer
                 title="MBTI 커뮤니티"
                 placement='right'
@@ -34,13 +33,20 @@ const AppLayout = ({ children }) => {
                 <p>Some contents...</p>
                 <p>Some contents...</p>
             </Drawer>
-            <div>
-                <Link href='/'><a>Home</a></Link>
-                <Link href='/login'><a>로그인</a></Link>
-                <Link href='/signup'><a>회원가입</a></Link>
+            <div className='applayout-nav'>
+                <div className='applayout-nav-signup-div'><Link href='/signup'><a className='applayout-nav-signup-div-a'>회원가입</a></Link></div>
+                <div className='applayout-nav-login-div'><Link href='/login'><a className='applayout-nav-login-div-a'>로그인</a></Link></div>
             </div>
-            { children }
-        </div>
+            {/* <Menu className='applayout-nav' mode='horizontal' triggerSubMenuAction="click" theme='light'>
+                <Menu.Item key="login"></Menu.Item>
+                <Menu.Item key="divider" disabled={true}>|</Menu.Item>
+                <Menu.Item key="signup"></Menu.Item>
+            </Menu> */}
+            </Header>
+            {/* <Content>
+                { children }
+            </Content> */}
+        </Layout>
     );
 };
 
