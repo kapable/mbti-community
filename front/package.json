@@ -4,11 +4,16 @@
   "description": "MBTI Community Front-end",
   "main": "index.js",
   "scripts": {
-    "dev": "next"
+    "dev": "next",
+    "build": "next build"
   },
   "author": "Seeyong",
   "license": "ISC",
   "dependencies": {
-    "next": "^9.5.5"
+    "antd": "^4.20.3",
+    "next": "^9.5.5",
+    "prop-types": "^15.8.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   }
 }
