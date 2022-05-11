@@ -1,5 +1,6 @@
 :root {
     --point-color: #345cb4;
+    --grey-color: #f3f3f3
 }
 
 /* AppLayout */
@@ -59,7 +60,7 @@
 }
 
 /* index home */
-.ant-tabs-content-holder, .ant-tabs-nav-list {
+.ant-tabs-nav-list {
     padding: 0 20px;
 }
 
@@ -67,3 +68,60 @@
     color: var(--point-color);
 }
 
+.ant-tabs-top > .ant-tabs-nav {
+    margin-bottom: 0;
+}
+
+/* Hot Ranking */
+.home-hot-ranking-title-div {
+    padding: 1.5rem 20px;
+    text-align: left;
+}
+.home-hot-ranking-title-btn {
+    width: 7rem;
+    background-color: var(--point-color);
+    color: white;
+    border: none;
+    height: 2rem;
+    margin: auto 0;
+}
+
+.home-hot-ranking-first-p {
+    margin-left: 2rem;
+    margin-bottom: 0;
+    margin-block-start: 0.25rem;
+    margin-block-end: 0;
+}
+
+.home-hot-ranking-row {
+    background-color: var(--grey-color);
+    padding: 0 20px;
+    margin-bottom: 1rem;
+}
+
+.home-hot-ranking-topten-div {
+    font-size: 0.6rem;
+    margin: 0.5rem auto;
+}
+
+
+@media only screen and (min-width: 600px) {
+    .home-hot-ranking-title-div {
+        margin-left: 20%;
+        text-align: right;
+    }
+
+    .home-hot-ranking-first-p {
+        text-align: left;
+    }
+
+    .home-hot-ranking-row {
+        max-width: 70rem;
+        margin: 0 auto;
+    }
+
+    .home-hot-ranking-topten-div {
+        font-size: 1.1rem;
+        margin: 1rem auto;
+    }
+}
