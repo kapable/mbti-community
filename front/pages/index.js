@@ -2,6 +2,7 @@ import React, { Fragment, useCallback, useState } from 'react';
 import { Tabs } from 'antd';
 import Head from 'next/head';
 import HotRanking from '../components/Main/HotRanking';
+import TypeForum from '../components/Main/TypeForum';
 
 const { TabPane } = Tabs;
 
@@ -25,10 +26,7 @@ const Home = () => {
             <Tabs className='home-category-tab' onChange={onChangeCategory} tabPosition='top' size='default' type='line' tabBarGutter={20} tabBarStyle={{backgroundColor: '#f3f3f3', height:'1.7rem'}} moreIcon={false}> 
                 {categories.map((category) => (
                     <TabPane key={category} tab={category}>
-                        {selectedCategory === "Hot 게시글"
-                        ? <HotRanking />
-                        : <div>{selectedCategory}</div>
-                        }
+                        {selectedCategory === "Hot 게시글" ? <HotRanking /> : <TypeForum category={selectedCategory} />}
                     </TabPane>
                 ))}
             </Tabs>
