@@ -1,5 +1,5 @@
 :root {
-    --point-color: #345cb4;
+    --point-color: #375cb7;
     --grey-color: #f3f3f3
 }
 
@@ -52,7 +52,7 @@
     font-weight: bold;
     text-align: center;
     background-color: white;
-    padding: 0 10px;
+    padding: 3rem 10px;
 }
 
 .applayout-footer > a {
@@ -82,14 +82,14 @@
     background-color: var(--point-color);
     color: white;
     border: none;
-    height: 2rem;
+    height: 1.5rem;
     margin: auto 0;
 }
 
 .home-hot-ranking-first-p {
     margin-left: 2rem;
     margin-bottom: 0;
-    margin-block-start: 0.25rem;
+    margin-block-start: 0.;
     margin-block-end: 0;
 }
 
@@ -104,10 +104,50 @@
     margin: 0.5rem auto;
 }
 
+/* Hot for Each category */
+
+.home-category-hot-post-row {
+    background-color: var(--grey-color);
+    padding: 0 20px;
+}
+
+.home-category-hot-post-col-title {
+    font-size: 0.8rem;
+    margin-block-start: 0.8rem;
+    margin-block-end: 0.4rem;
+}
+
+.home-category-hot-post-col-info {
+    color: #bfbfbf;
+    font-size: 0.5rem;
+    margin-block-start: 0.4rem;
+    margin-block-end: 0.8rem;
+}
+
+.home-category-hot-post-col-right {
+    color: var(--point-color);
+    font-size: 1.1rem;
+    line-height: 4rem;
+}
+
+/* Pagination */
+.ant-pagination-item-active a,
+.ant-pagination-item-active:hover a {
+    color: white;
+}
+
+.ant-pagination-item:hover,
+.ant-pagination-item-active:hover {
+    border-color: var(--point-color);
+}
+
+.ant-pagination-item-active {
+    border-color: var(--point-color);
+    background-color: var(--point-color);
+}
 
 @media only screen and (min-width: 600px) {
     .home-hot-ranking-title-div {
-        margin-left: 20%;
         text-align: right;
     }
 
@@ -118,10 +158,34 @@
     .home-hot-ranking-row {
         max-width: 70rem;
         margin: 0 auto;
+        margin-bottom: 1rem;
     }
 
     .home-hot-ranking-topten-div {
         font-size: 1.1rem;
         margin: 1rem auto;
+    }
+
+    .home-category-hot-post-row {
+        max-width: 70rem;
+        margin: 0 auto;
+    }
+
+    .home-category-tab {
+        max-width: 70rem;
+        margin: 0 auto;
+    }
+
+    .home-category-hot-post-col-title {
+        font-size: 1.2rem;
+    }
+    
+    .home-category-hot-post-col-info {
+        font-size: 0.8rem;
+    }
+    
+    .home-category-hot-post-col-right {
+        font-size: 1.3rem;
+        line-height: 4.5rem;
     }
 }
