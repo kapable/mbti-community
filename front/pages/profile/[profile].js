@@ -21,16 +21,16 @@ const Profile = () => {
                 <div className='profile-head-type'>ENTP</div>
             </div>
             <Tabs className='profile-menu-tab' tabBarStyle={{margin:"0 auto", width:"fit-content"}} tabPosition='top' size='default' type='line'>
-                <TabPane tab="작성글" key="1">
+                <TabPane style={{padding: "16px"}} tab="작성글" key="1">
                     작성글
                 </TabPane>
-                <TabPane tab="작성댓글" key="2">
+                <TabPane style={{padding: "16px"}} tab="작성댓글" key="2">
                     작성댓글
                 </TabPane>
-                <TabPane tab="댓글단 글" key="3">
+                <TabPane style={{padding: "16px"}} tab="댓글단 글" key="3">
                     댓글단 글
                 </TabPane>
-                <TabPane tab="좋아요한 글" key="4">
+                <TabPane style={{padding: "16px"}} tab="좋아요한 글" key="4">
                     좋아요한 글
                 </TabPane>
             </Tabs>
