@@ -270,6 +270,32 @@
     line-height: 190%;
 }
 
+/* Profile */
+.profile-head-div {
+    padding: 16px 16px;
+    border-bottom: solid 0.5rem var(--grey-color);
+    color: grey;
+}
+
+.profile-head-name {
+    font-size: 1.5rem;
+}
+
+.profile-head-email {
+    font-size: 0.9rem;
+}
+
+.profile-head-type {
+    background-color: var(--red-color);
+    color: white;
+    width: 3rem;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.profile-menu-tab {
+    color: grey;
+}
 
 @media only screen and (min-width: 600px) {
     .home-hot-ranking-title-div {
