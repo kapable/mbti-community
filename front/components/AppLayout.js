@@ -1,12 +1,16 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Drawer, Layout } from 'antd';
-import { MenuOutlined } from '@ant-design/icons';
+import { Drawer, Layout, Collapse } from 'antd';
+import { BellFilled, BellOutlined, MenuOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
+const { Panel } = Collapse;
 
 const AppLayout = ({ children }) => {
+    const categories = ["Hot 게시글", "고민상담소", 'ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
+    const account = <div><div className='applayout-drawer-account-name-div'>My Name</div><div className='applayout-drawer-account-type-div'>ENTP</div></div>
+    const [bellClicked, setBellClicked] = useState(false);
     const [showDrawer, setShowDrawer] = useState(false);
     const onClickHamburger = useCallback(() => {
         setShowDrawer(true);
@@ -15,13 +19,18 @@ const AppLayout = ({ children }) => {
         setShowDrawer(false);
     }, []);
 
+    const onBellClick = useCallback((type) => () => {
+        setBellClicked(!bellClicked);
+    }, [bellClicked]);
+
     return (
         <Layout className='applayout'>
             <Header className='applayout-header'>
             <Link href='/'><a><img className='applayout-header-main-logo' src='https://images.niair.xyz/basic/kfunny_logo.png' alt='케이퍼니' /></a></Link>
                 <div className='applayout-header-hamburger' onClick={onClickHamburger}><MenuOutlined /></div>
                 <Drawer
-                    title="MBTI 커뮤니티"
+                    className='applayout-drawer'
+                    title={account}
                     placement='right'
                     closable={false}
                     onClose={onCloseDrawer}
@@ -29,9 +38,33 @@ const AppLayout = ({ children }) => {
                     key="applayout-drawer"
                     width={270}
                 >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <div className='applayout-drawer-fixed-menu-div'>
+                        {categories.slice(0, 2).map(menu => (
+                            <p key={menu}>{menu}<span onClick={onBellClick({menu})} className='applayout-drawer-bell-icon'>{bellClicked ? <BellFilled /> : <BellOutlined />}</span></p>
+                        ))}
+                    </div>
+                    <Collapse ghost accordion defaultActiveKey={['1']}>
+                        <Panel key="1" header="즐겨찾는 게시판">
+                            <p>Some contents...</p>
+                            <p>Some contents...</p>
+                            <p>Some contents...</p>
+                        </Panel>
+                        <Panel key="2" header="E형">
+                            {categories.map(type => {
+                                if(type.startsWith('E')) {
+                                    return <p key={type}>{type}<span onClick={onBellClick({type})} className='applayout-drawer-bell-icon'>{bellClicked ? <BellFilled /> : <BellOutlined />}</span></p>
+                                }
+                            })}
+                        </Panel>
+                        <Panel key="3" header="I형">
+                        {categories.map(type => {
+                                if(type.startsWith('I')) {
+                                    return <p key={type}>{type}<span onClick={onBellClick({type})} className='applayout-drawer-bell-icon'>{bellClicked ? <BellFilled /> : <BellOutlined />}</span></p>
+                                }
+                            })}
+                        </Panel>
+                        
+                    </Collapse>
                 </Drawer>
             </Header>
             <div className='applayout-nav'>

@@ -16,12 +16,52 @@
     width: 5rem;
 }
 
+/* Drawer */
+
 .applayout-header-hamburger {
     float: right;
     font-size: 1.5rem;
     cursor: pointer;
 }
 
+.applayout-drawer-account-name-div {
+    margin-left: 16px;
+    margin-bottom: 0.5rem ;
+    font-size: 1.5rem;
+    color: grey;
+}
+
+.applayout-drawer-account-type-div {
+    margin-left: 16px;
+    background-color: var(--red-color);
+    color: white;
+    width: 3rem;
+    text-align: center;
+    margin-bottom: 1.5rem ;
+}
+
+.ant-drawer-body, .ant-drawer-header {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.applayout-drawer-fixed-menu-div {
+    padding-left: 16px;
+    border-bottom: solid 0.05rem #b7bed1;
+}
+
+.ant-collapse-header, .ant-collapse-content-box {
+    border-bottom: solid 0.05rem #b7bed1;
+}
+
+.applayout-drawer-bell-icon {
+    color: grey;
+    float: right;
+    margin-right: 16px;
+    cursor: pointer;
+}
+
+/* Navigation */
 .applayout-nav {
     height: 2rem;
     background-color: white;
@@ -130,6 +170,7 @@
     color: var(--point-color);
     font-size: 1.1rem;
     line-height: 4rem;
+    text-align: right;
 }
 
 /* Pagination */
