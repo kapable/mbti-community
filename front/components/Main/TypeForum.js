@@ -1,10 +1,25 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'antd';
 import SwipeableViews from 'react-swipeable-views';
 
+const pointColor = '#375cb7';
+const greyColor = '#f3f3f3';
+
 const TypeForum = ({ category }) => {
     const [swipeIndex, setSwipeIndex] = useState(0);
+
+    const onSwipe = useCallback((index) => {
+        setSwipeIndex(index);
+    }, []);
+
+    const onFirstSwipeBtnClick = useCallback(() => {
+        setSwipeIndex(0);
+    }, []);
+
+    const onSecondSwipeBtnClick = useCallback(() => {
+        setSwipeIndex(1);
+    }, []);
     
     return (
         <Fragment>
@@ -17,7 +32,7 @@ const TypeForum = ({ category }) => {
                     <button>글쓰기</button>
                 </Col>
             </Row>
-            <SwipeableViews enableMouseEvents resistance>
+            <SwipeableViews index={swipeIndex} onChangeIndex={onSwipe} enableMouseEvents resistance>
                 <div>
                     <Row className='home-category-hot-post-row'>
                         <Col className='home-category-hot-post-col-left' span={20}>
@@ -65,7 +80,10 @@ const TypeForum = ({ category }) => {
                     </Row>
                 </div>
             </SwipeableViews>
-            
+            <div className='type-forum-swipe-button-div'>
+                <button onClick={onFirstSwipeBtnClick} style={swipeIndex ? {backgroundColor:greyColor}:{backgroundColor:pointColor}} className='type-forum-swipe-first-button'></button>
+                <button onClick={onSecondSwipeBtnClick} style={swipeIndex ? {backgroundColor:pointColor}:{backgroundColor:greyColor}} className='type-forum-swipe-second-button'></button>
+            </div>
         </Fragment>
     );
 };
