@@ -8,9 +8,13 @@ const { Header, Content, Footer } = Layout;
 const { Panel } = Collapse;
 
 const AppLayout = ({ children }) => {
-    const categories = ["Hot 게시글", "고민상담소", 'ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
+    const categoriesObj = {"Hot 게시글":false, "고민상담소":false, 'ENFJ':false, 'ENFP':false, 'ENTJ':false, 'ENTP':false, 'ESFJ':false, 'ESFP':false, 'ESTJ':false, 'ESTP':false, 'INFJ':false, 'INFP':false, 'INTJ':false, 'INTP':false, 'ISFJ':false, 'ISFP':false, 'ISTJ':false, 'ISTP':false}
     const account = <div><div className='applayout-drawer-account-name-div'>My Name</div><div className='applayout-drawer-account-type-div'>ENTP</div></div>
-    const [bellClicked, setBellClicked] = useState(false);
+    const [bellClicked, setBellClicked] = useState(categoriesObj);
+    const onBellClick = useCallback((type) => () => {
+        setBellClicked((bellClicked) => ({...bellClicked, [type]: !bellClicked[type]}));
+    }, [bellClicked]);
+
     const [showDrawer, setShowDrawer] = useState(false);
     const onClickHamburger = useCallback(() => {
         setShowDrawer(true);
@@ -19,9 +23,6 @@ const AppLayout = ({ children }) => {
         setShowDrawer(false);
     }, []);
 
-    const onBellClick = useCallback((type) => () => {
-        setBellClicked(!bellClicked);
-    }, [bellClicked]);
 
     return (
         <Layout className='applayout'>
@@ -39,27 +40,29 @@ const AppLayout = ({ children }) => {
                     width={270}
                 >
                     <div className='applayout-drawer-fixed-menu-div'>
-                        {categories.slice(0, 2).map(menu => (
-                            <p key={menu}>{menu}<span onClick={onBellClick({menu})} className='applayout-drawer-bell-icon'>{bellClicked ? <BellFilled /> : <BellOutlined />}</span></p>
+                        {Object.keys(bellClicked).slice(0, 2).map(menu => (
+                            <p key={menu}>{menu}<span onClick={onBellClick(menu)} className='applayout-drawer-bell-icon'>{bellClicked[menu] ? <BellFilled /> : <BellOutlined />}</span></p>
                         ))}
                     </div>
                     <Collapse ghost accordion defaultActiveKey={['1']}>
                         <Panel key="1" header="즐겨찾는 게시판">
-                            <p>Some contents...</p>
-                            <p>Some contents...</p>
-                            <p>Some contents...</p>
+                            {Object.keys(bellClicked).map((key) => {
+                                if(bellClicked[key] === true) {
+                                    return<p key={key}>{key}<span onClick={onBellClick(key)} className='applayout-drawer-bell-icon'>{bellClicked[key] ? <BellFilled /> : <BellOutlined />}</span></p>
+                                }
+                            })}
                         </Panel>
                         <Panel key="2" header="E형">
-                            {categories.map(type => {
+                            {Object.keys(bellClicked).map(type => {
                                 if(type.startsWith('E')) {
-                                    return <p key={type}>{type}<span onClick={onBellClick({type})} className='applayout-drawer-bell-icon'>{bellClicked ? <BellFilled /> : <BellOutlined />}</span></p>
+                                    return <p key={type}>{type}<span onClick={onBellClick(type)} className='applayout-drawer-bell-icon'>{bellClicked[type] ? <BellFilled /> : <BellOutlined />}</span></p>
                                 }
                             })}
                         </Panel>
                         <Panel key="3" header="I형">
-                        {categories.map(type => {
+                        {Object.keys(bellClicked).map(type => {
                                 if(type.startsWith('I')) {
-                                    return <p key={type}>{type}<span onClick={onBellClick({type})} className='applayout-drawer-bell-icon'>{bellClicked ? <BellFilled /> : <BellOutlined />}</span></p>
+                                    return <p key={type}>{type}<span onClick={onBellClick(type)} className='applayout-drawer-bell-icon'>{bellClicked[type] ? <BellFilled /> : <BellOutlined />}</span></p>
                                 }
                             })}
                         </Panel>
