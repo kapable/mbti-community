@@ -2,6 +2,7 @@ import React, { Fragment, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'antd';
 import SwipeableViews from 'react-swipeable-views';
+import CategoryNewPost from './CategoryNewPost';
 
 const pointColor = '#375cb7';
 const greyColor = '#f3f3f3';
@@ -84,6 +85,7 @@ const TypeForum = ({ category }) => {
                 <button onClick={onFirstSwipeBtnClick} style={swipeIndex ? {backgroundColor:greyColor}:{backgroundColor:pointColor}} className='type-forum-swipe-first-button'></button>
                 <button onClick={onSecondSwipeBtnClick} style={swipeIndex ? {backgroundColor:pointColor}:{backgroundColor:greyColor}} className='type-forum-swipe-second-button'></button>
             </div>
+            <CategoryNewPost category={category} />
         </Fragment>
     );
 };
