@@ -149,6 +149,31 @@
 }
 
 /* Type Forum */
+.type-forum-title-left-col-title {
+    margin: 10px 0 10px 20px;
+    font-size: 1.3rem;
+}
+
+.type-forum-title-left-col-hot {
+    margin: 0 0 10px 20px;
+    background-color: var(--point-color);
+    width: 2.5rem;
+    text-align: center;
+    color: white;
+    font-size: 0.5rem;
+}
+
+.type-forum-title-right-col-write {
+    float: right;
+    border: none;
+    color: white;
+    background-color: var(--point-color);
+    right: 20px;
+    position: absolute;
+    bottom: 10px;
+
+}
+
 .type-forum-swipe-button-div {
     width: 100%;
     text-align: center;

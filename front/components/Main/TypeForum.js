@@ -1,6 +1,7 @@
 import React, { Fragment, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 import SwipeableViews from 'react-swipeable-views';
 import CategoryNewPost from './CategoryNewPost';
 
@@ -25,12 +26,12 @@ const TypeForum = ({ category }) => {
     return (
         <Fragment>
             <Row>
-                <Col span={20}>
-                    <p>{category}</p>
-                    <button>HOT</button>
+                <Col className='type-forum-title-left-col' span={18}>
+                    <p className='type-forum-title-left-col-title'>{category}</p>
+                    <div className='type-forum-title-left-col-hot'>HOT</div>
                 </Col>
-                <Col span={4}>
-                    <button>글쓰기</button>
+                <Col className='type-forum-title-right-col' span={6}>
+                    <button className='type-forum-title-right-col-write'><EditOutlined />&nbsp;글쓰기</button>
                 </Col>
             </Row>
             <SwipeableViews index={swipeIndex} onChangeIndex={onSwipe} enableMouseEvents resistance>
