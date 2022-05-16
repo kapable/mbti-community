@@ -3,7 +3,7 @@ import { Form, Input, Button } from 'antd';
 
 const PostCommentForm = () => {
     return (
-        <div>
+        <div className='post-comment-form-div'>
             <Form>
                 <Form.Item>
                     <Input.TextArea
@@ -14,7 +14,8 @@ const PostCommentForm = () => {
                         autoSize={{maxRows: 3}}
                     />
                     <Button
-                        type='primary'
+                        className='post-comment-submit-button'
+                        type='default'
                         htmlType='submit'
                     >등록</Button>
                 </Form.Item>
