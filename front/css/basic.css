@@ -287,12 +287,63 @@
     font-size: 0.9rem;
 }
 
+.profile-head-right-upper-div, .profile-head-right-below-div {
+    font-size: 0.9rem;
+    text-align: center;
+    color: black;
+}
+
+.profile-head-follower-div {
+    float: left;
+    width: 50%;
+    margin: 0 auto;
+    border-right: solid 0.1rem #b7bed1;
+}
+
+.profile-head-following-div > span,
+.profile-head-follower-div > span {
+    font-size: 1.3rem;
+}
+
+.profile-head-following-div {
+    float: left;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.profile-head-right-below-div {
+    padding-top: 0.5rem;
+    clear: both;
+}
+
 .profile-head-type {
     background-color: var(--red-color);
     color: white;
     width: 3rem;
     text-align: center;
     margin-top: 0.5rem;
+}
+
+.profile-introduction-row {
+    max-width: 70rem;
+    margin: 0 auto;
+    padding: 16px 16px;
+    border-bottom: solid 0.5rem var(--grey-color);
+}
+
+.profile-introduction-icon {
+    text-align: center;
+    font-size: 1.7rem;
+}
+
+.profile-introduction-text {
+    padding: 0 5px;
+    font-size: 0.75rem;
+}
+
+.profile-introduction-edit {
+    text-align: center;
+    font-size: 1.5rem;
 }
 
 .profile-menu-tab {
