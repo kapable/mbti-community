@@ -13,7 +13,7 @@
 }
 
 .applayout-header-main-logo {
-    width: 5rem;
+    width: 9rem;
 }
 
 /* Drawer */
@@ -141,8 +141,34 @@
 }
 
 .home-hot-ranking-topten-div {
-    font-size: 0.6rem;
+    text-align: center;
+    font-size: 1rem;
     margin: 0.5rem auto;
+}
+
+.home-hot-ranking-topten-p {
+    margin-block-start: 0.;
+    margin-block-end: 0;
+}
+
+.home-hot-ranking-topten-number {
+    color: #375cb7;
+    font-weight: bold;   
+}
+
+.home-hot-ranking-topten-type {
+    color: #b7bed1;
+    font-size: 0.7rem;
+}
+
+.home-hot-ranking-topten-title {
+    font-weight: bold;
+}
+
+.home-hot-ranking-topten-views {
+    color: #375cb7;
+    font-size: 0.7rem;
+    font-weight: bold;
 }
 
 /* Hot for Each category */
