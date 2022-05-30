@@ -1,8 +1,15 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
+let UploadEditor;
+if (typeof window !== "undefined") {
+    UploadEditor = dynamic(() => import('../components/Main/UploadEditor'));
+};
 
 const Upload = () => {
     return (
-        <div>Upload</div>
+        <div>
+            {UploadEditor && <UploadEditor />}
+        </div>
     );
 };
 
