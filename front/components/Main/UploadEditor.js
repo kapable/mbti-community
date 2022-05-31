@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { createReactEditorJS } from "react-editor-js";
 const ReactEditorJS = createReactEditorJS();
 
@@ -19,6 +19,12 @@ import Image from "@editorjs/image";
 // import SimpleImage from "@editorjs/simple-image";
 
 const UploadEditor = () => {
+    const imageInput = useRef(null);
+    const onClickImageUpload = useCallback(() => {
+        imageInput.current.click();
+        }, [imageInput.current]);
+
+
     const handleOnChange = async (e) => {
         const value = await e.saver.save()
         value.blocks.map(content => (
@@ -33,7 +39,14 @@ const UploadEditor = () => {
         // warning: Warning,
         // code: Code,
         // linkTool: LinkTool,
-        image: Image,
+        image: {
+            class: Image,
+            config: {
+                endpoints: {
+                    byFile: 'http://localhost:3000', // Your backend file uploader endpoint
+                }
+            }
+        },
         // raw: Raw,
         // header: Header,
         // quote: Quote,
@@ -42,8 +55,12 @@ const UploadEditor = () => {
         // inlineCode: InlineCode,
         // simpleImage: SimpleImage
     };
+
     return (
-        <ReactEditorJS tools={EDITOR_JS_TOOLS} onChange={handleOnChange} />
+        <div style={{border: 'solid 0.5rem grey'}}>
+            <input type="file" name='image' accept="image/*" multiple hidden ref={imageInput} />
+            <ReactEditorJS tools={EDITOR_JS_TOOLS} onChange={handleOnChange} />
+        </div>
     );
 };
 
