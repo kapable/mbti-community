@@ -1,5 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import Head from 'next/head';
+import React, { useCallback, useState } from 'react';
 import { Button, Checkbox, Form, Input, Dropdown, Row, Col, Space, Menu } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import Router from 'next/router';

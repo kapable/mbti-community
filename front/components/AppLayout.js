@@ -8,6 +8,8 @@ const { Header, Content, Footer } = Layout;
 const { Panel } = Collapse;
 
 const AppLayout = ({ children }) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const categoriesObj = {"Hot 게시글":false, "고민상담소":false, 'ENFJ':false, 'ENFP':false, 'ENTJ':false, 'ENTP':false, 'ESFJ':false, 'ESFP':false, 'ESTJ':false, 'ESTP':false, 'INFJ':false, 'INFP':false, 'INTJ':false, 'INTP':false, 'ISFJ':false, 'ISFP':false, 'ISTJ':false, 'ISTP':false}
     const account = <div><div className='applayout-drawer-account-name-div'>My Name</div><div className='applayout-drawer-account-type-div'>ENTP</div></div>
     const [bellClicked, setBellClicked] = useState(categoriesObj);
@@ -71,8 +73,20 @@ const AppLayout = ({ children }) => {
                 </Drawer>
             </Header>
             <div className='applayout-nav'>
-                <div className='applayout-nav-signup-div'><Link href='/signup'><a className='applayout-nav-signup-div-a'>회원가입</a></Link></div>
-                <div className='applayout-nav-login-div'><Link href='/login'><a className='applayout-nav-login-div-a'>로그인</a></Link></div>
+                {isLoggedIn
+                ? (
+                    <>
+                        <div className='applayout-nav-signup-div'><Link href='/profile/1'><a className='applayout-nav-signup-div-a'>내 정보</a></Link></div>
+                        <div className='applayout-nav-login-div'>로그아웃</div>
+                    </>
+                )
+                : (
+                    <>
+                        <div className='applayout-nav-signup-div'><Link href='/signup'><a className='applayout-nav-signup-div-a'>회원가입</a></Link></div>
+                        <div className='applayout-nav-login-div'><Link href='/login'><a className='applayout-nav-login-div-a'>로그인</a></Link></div>
+                    </>
+                )
+                }
             </div>
             <Content className='applayout-content'>
                 { children }

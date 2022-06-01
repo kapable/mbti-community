@@ -9,16 +9,9 @@ const LoginForm = () => {
     const [email, onChangeEmail] = useInput('');
     const [password, onChangePassword] = useInput('');
 
-    const onChangePasswordCheck = useCallback(
-        (e) => {
-            setPasswordCheck(e.target.value);
-            setPasswordError(e.target.value !== password);
-        },
-        [password],
-    );
-
     const onSubmit = useCallback(
         () => {
+            console.log(email, password);
             // dispatch({
             //     type: SIGN_UP_REQUEST,
             //     data: { email, nickname, myMBTI, password }
