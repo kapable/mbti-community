@@ -27,7 +27,7 @@ const AppLayout = ({ children }) => {
     return (
         <Layout className='applayout'>
             <Header className='applayout-header'>
-            <Link href='/'><a><img className='applayout-header-main-logo' src={'https://d3edqqquyf396f.cloudfront.net/basic/doodling-logo.png'} alt='케이퍼니' /></a></Link>
+            <Link href='/'><a><img className='applayout-header-main-logo' src={'https://d3edqqquyf396f.cloudfront.net/basic/doodling-logo.png'} alt='두들링' /></a></Link>
                 <div className='applayout-header-hamburger' onClick={onClickHamburger}><MenuOutlined /></div>
                 <Drawer
                     className='applayout-drawer'

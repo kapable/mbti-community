@@ -1,15 +1,12 @@
 import React, { Fragment } from 'react';
-import Head from 'next/head';
+import SignupForm from '../components/Sign/SignupForm';
 
-const Signup = () => {
+const signup = () => {
     return (
         <Fragment>
-            <Head>
-                <title>회원가입 페이지</title>
-            </Head>
-            <div>Signup</div>
+            <SignupForm />
         </Fragment>
     );
 };
 
-export default Signup;
+export default signup;
