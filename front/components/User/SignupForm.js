@@ -54,6 +54,7 @@ const SignupForm = () => {
             //     type: SIGN_UP_REQUEST,
             //     data: { email, nickname, myMBTI, password }
             // })
+            console.log(email, password, myMBTI);
         },
         [password, passwordCheck, setPasswordError, term, setTermError, email, nickname, myMBTI],
     )
@@ -85,7 +86,7 @@ const SignupForm = () => {
                             onChange={onChangePasswordCheck}
                         />
                     </Form.Item>
-                    {passwordError && <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage>}
+                    {passwordError && <div className='sign-up-error-message-div'>비밀번호가 일치하지 않습니다.</div>}
                 </div>
                 <Row>
                     <Col span={12}>
@@ -109,7 +110,7 @@ const SignupForm = () => {
                 </Row>
                 <div>
                     <Checkbox name="user-term" checked={term} onChange={onChangeTerm}>(필수) 체크 후 가입시 개인정보활용 방침에 동의합니다.</Checkbox>
-                    {termError && <ErrorMessage>개인정보활용방침 동의 후 가입이 가능합니다.</ErrorMessage>}
+                    {termError && <div className='sign-up-error-message-div'>개인정보활용방침 동의 후 가입이 가능합니다.</div>}
                 </div>
                 <div className='signup-form-button-group'>
                     <Button className='signup-form-button' htmlType="submit" >회원가입하기</Button>

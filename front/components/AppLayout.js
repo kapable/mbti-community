@@ -1,14 +1,18 @@
 import React, { useCallback, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Drawer, Layout, Collapse } from 'antd';
 import { BellFilled, BellOutlined, MenuOutlined } from '@ant-design/icons';
+import { logoutAction } from '../reducers/user';
 
 const { Header, Content, Footer } = Layout;
 const { Panel } = Collapse;
 
 const AppLayout = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const dispatch = useDispatch();
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { isLoggedIn } = useSelector((state) => state.user);
 
     const categoriesObj = {"Hot 게시글":false, "고민상담소":false, 'ENFJ':false, 'ENFP':false, 'ENTJ':false, 'ENTP':false, 'ESFJ':false, 'ESFP':false, 'ESTJ':false, 'ESTP':false, 'INFJ':false, 'INFP':false, 'INTJ':false, 'INTP':false, 'ISFJ':false, 'ISFP':false, 'ISTJ':false, 'ISTP':false}
     const account = <div><div className='applayout-drawer-account-name-div'>My Name</div><div className='applayout-drawer-account-type-div'>ENTP</div></div>
@@ -25,6 +29,10 @@ const AppLayout = ({ children }) => {
         setShowDrawer(false);
     }, []);
 
+    const onLogOut = useCallback(() => {
+        dispatch(logoutAction());
+        alert('로그아웃 되었습니다!');
+    }, []);
 
     return (
         <Layout className='applayout'>
@@ -77,7 +85,7 @@ const AppLayout = ({ children }) => {
                 ? (
                     <>
                         <div className='applayout-nav-signup-div'><Link href='/profile/1'><a className='applayout-nav-signup-div-a'>내 정보</a></Link></div>
-                        <div className='applayout-nav-login-div'>로그아웃</div>
+                        <div onClick={onLogOut} className='applayout-nav-login-div'><a className='applayout-nav-login-div-a'>로그아웃</a></div>
                     </>
                 )
                 : (

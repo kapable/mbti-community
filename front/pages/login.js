@@ -1,8 +1,16 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Head from 'next/head';
+import Router from "next/router";
 import LoginForm from '../components/User/LoginForm';
+import { useSelector } from 'react-redux';
 
 const Login = () => {
+    const { isLoggedIn } = useSelector((state) => state.user);
+    useEffect(() => {
+        if(isLoggedIn) {
+            Router.push('/');
+        }
+    }, [isLoggedIn]);
 
     return (
         <Fragment>

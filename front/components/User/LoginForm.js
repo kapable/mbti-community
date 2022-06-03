@@ -2,12 +2,14 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { Button, Checkbox, Form, Input, Dropdown, Row, Col, Space, Menu } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import Router from 'next/router';
 import useInput from '../../hooks/useInput';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../../reducers/user';
 
 const LoginForm = () => {
     const [email, onChangeEmail] = useInput('');
     const [password, onChangePassword] = useInput('');
+    const dispatch = useDispatch();
 
     const onSubmit = useCallback(
         () => {
@@ -16,6 +18,7 @@ const LoginForm = () => {
             //     type: SIGN_UP_REQUEST,
             //     data: { email, nickname, myMBTI, password }
             // })
+            dispatch(loginAction({ email, password }))
         },
         [email, password],
     )

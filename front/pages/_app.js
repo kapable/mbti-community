@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import '../css/basic.css';
 import '../css/sign.css';
 import AppLayout from '../components/AppLayout';
+import wrapper from '../store/configureStore';
 
 const App = ({ Component }) => {
     return (
@@ -21,4 +22,4 @@ App.propTypes = {
     Component: PropTypes.elementType.isRequired,
 };
 
-export default App;
+export default wrapper.withRedux(App);
