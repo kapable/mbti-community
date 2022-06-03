@@ -8,6 +8,7 @@ const PostContentForm = ({ singleContent }) => {
     const id = useSelector((state) => state.user.myInfo?.id);
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
+    const [alarmed, setAlarmed] = useState(false);
 
     const onLikeClick = useCallback(() => {
         setLiked(!liked);
@@ -17,6 +18,10 @@ const PostContentForm = ({ singleContent }) => {
         setSaved(!saved);
     }, [saved]);
 
+    const onAlarmClick = useCallback(() => {
+        setAlarmed(!alarmed);
+    }, [alarmed]);
+
     return (
         <Fragment>
             {/* Header for the Category */}
@@ -25,7 +30,11 @@ const PostContentForm = ({ singleContent }) => {
                     <p className='post-content-header-type'>{singleContent.category}</p>
                 </Col>
                 <Col className='post-content-header-right-col' span={6}>
-                    <BellOutlined className='post-content-header-bell' />
+                    <div onClick={onAlarmClick}>
+                        {alarmed
+                        ? (<BellFilled style={{ color: "#375cb7" }} className='post-content-header-bell' />)
+                        : (<BellOutlined className='post-content-header-bell' />)}
+                    </div>
                 </Col>
             </Row>
             {/* Title for the post */}
