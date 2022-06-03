@@ -55,7 +55,7 @@ const SignupForm = () => {
             //     data: { email, nickname, myMBTI, password }
             // })
         },
-        [password, passwordCheck, setPasswordError, term, setTermError, email, nickname],
+        [password, passwordCheck, setPasswordError, term, setTermError, email, nickname, myMBTI],
     )
 
     return (
