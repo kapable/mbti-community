@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { createReactEditorJS } from "react-editor-js";
 const ReactEditorJS = createReactEditorJS();
 
@@ -9,6 +9,11 @@ const ReactEditorJS = createReactEditorJS();
 // import Code from "@editorjs/code";
 // import LinkTool from "@editorjs/link";
 import Image from "@editorjs/image";
+import { Button, Divider, Input, Select } from 'antd';
+import useInput from '../../hooks/useInput';
+import { UploadOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPost } from '../../reducers/post';
 // import Raw from "@editorjs/raw";
 // import Header from "@editorjs/header";
 // import Quote from "@editorjs/quote";
@@ -18,19 +23,38 @@ import Image from "@editorjs/image";
 // import InlineCode from "@editorjs/inline-code";
 // import SimpleImage from "@editorjs/simple-image";
 
+const { Option } = Select;
+
 const UploadEditor = () => {
+    const dispatch = useDispatch();
+    const { imagePaths } = useSelector((state) => state.post);
+    const categories = ['고민상담소','ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
+    const [title, onChangeTitle] = useInput('');
+    const [category, setCategory] = useState('');
+    const [contents, setContents] = useState(``);
     const imageInput = useRef(null);
     const onClickImageUpload = useCallback(() => {
         imageInput.current.click();
         }, [imageInput.current]);
 
+    const handleOnChange = useCallback(async (e) => {
+        const value = await e.saver.save();
+        setContents(value.blocks);
+    }, []);
 
-    const handleOnChange = async (e) => {
-        const value = await e.saver.save()
-        value.blocks.map(content => (
-            console.log(content.data.text)
-        ))
-    }
+    const onSubmit = useCallback(() => {
+        if(!title || !title.trim()) {
+            return alert('제목을 입력하세요!');
+        };
+        if(!category) {
+            return alert('카테고리를 선택하세요!');
+        };
+        if(!contents) {
+            return alert('본문을 작성해주세요!');
+        }
+        dispatch(addPost)
+    }, [title, category]);
+
     const EDITOR_JS_TOOLS = {
         // embed: Embed,
         // table: Table,
@@ -57,9 +81,32 @@ const UploadEditor = () => {
     };
 
     return (
-        <div style={{border: 'solid 0.5rem grey'}}>
-            <input type="file" name='image' accept="image/*" multiple hidden ref={imageInput} />
+        <div className="upload-editor-div">
+            {/* TITLE */}
+            <div style={{textAlign: "center"}}>
+                <Input className='upload-title-input' value={title} required showCount maxLength={30} onChange={onChangeTitle} placeholder="제목을 써주세요!" allowClear={true} />
+                <Select
+                    className='upload-category-select'
+                    placeholder="게시판을 선택해주세요."
+                    optionLabelProp='type'
+                    onChange={setCategory}>
+                        {categories.map((type => (
+                            <Option value={type} label={type} key={`${type}_category`}>
+                                {type}
+                            </Option>
+                        )))}
+                </Select>
+            </div>
+            {/* <h1 className='admin-upload-title-preview'>{title}</h1> */}
+            <Divider dashed />
+            {/* EDITOR */}
+            {/* <input type="file" name='image' accept="image/*" multiple hidden ref={imageInput} /> */}
             <ReactEditorJS tools={EDITOR_JS_TOOLS} onChange={handleOnChange} />
+            <Divider dashed />
+            {/* UPLOAD BUTTON */}
+            <div style={{textAlign: "center"}}>
+                <Button onClick={onSubmit} icon={<UploadOutlined />} className='upload-submit-button'>&nbsp;글 업로드</Button>
+            </div>
         </div>
     );
 };

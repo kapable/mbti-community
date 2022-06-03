@@ -1,8 +1,9 @@
 import { Col, Row } from 'antd';
 import React, { Fragment, useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 import { BellFilled, BellOutlined, EditOutlined, LikeOutlined, LikeFilled, CommentOutlined, LinkOutlined, TagOutlined, BookOutlined, BookFilled } from '@ant-design/icons';
 
-const PostContentForm = () => {
+const PostContentForm = ({ singleContent }) => {
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
 
@@ -28,7 +29,7 @@ const PostContentForm = () => {
             {/* Title for the post */}
             <Row className='post-content-title-row'>
                 <Col className='post-content-left-col' span={12}>
-                    <p className='post-content-title'>엔프제 남친에게 서울할 때 엔프제 남친에게 서울할 때<span className='post-content-title-like'>&nbsp;<LikeOutlined /></span></p>
+                    <p className='post-content-title'>{singleContent.title}<span className='post-content-title-like'>&nbsp;<LikeOutlined /></span></p>
                     <p className='post-content-info'>
                         <span className='post-content-time'>19:25</span>&nbsp;&nbsp;&nbsp;
                         <span className='post-content-views'>조회수 12</span>
@@ -46,12 +47,14 @@ const PostContentForm = () => {
             </Row>
             {/* Contents of the post */}
             <div className='post-content-div'>
-                <p>엔프제 남친에게 서운할 때 마리야<br />가나다라마바사아자아자 화이팅!</p>
-                <p>엔프제 남친에게 서운할 때 마리야<br />가나다라마바사아자아자 화이팅!</p>
-                <p>엔프제 남친에게 서운할 때 마리야<br />가나다라마바사아자아자 화이팅!</p>
-                <p>엔프제 남친에게 서운할 때 마리야<br />가나다라마바사아자아자 화이팅!</p>
-                <p>엔프제 남친에게 서운할 때 마리야<br />가나다라마바사아자아자 화이팅!</p>
-                <p>엔프제 남친에게 서운할 때 마리야<br />가나다라마바사아자아자 화이팅!</p>
+                {singleContent.content.map((value) => {
+                    if(value.type === "paragraph") {
+                        let texts = value.data.text.replace("&nbsp;", "\u00a0")
+                        return (<p key={value.id}>{texts}</p>)
+                    } else if(value.type === 'image') {
+                        return <img key={value.id} className='post-content-image' src={value.data.file.url} alt={"이미지 불러오는 중.."} />
+                    }
+                })}
             </div>
             {/* Bottom action buttons */}
             <Row className='post-content-bottom-actions-row'>
@@ -61,6 +64,18 @@ const PostContentForm = () => {
             </Row>
         </Fragment>
     );
+};
+
+PostContentForm.propTypes = {
+    singleContent: PropTypes.shape({
+        id: PropTypes.number,
+        category: PropTypes.string,
+        User: PropTypes.object,
+        title: PropTypes.string,
+        content: PropTypes.arrayOf(PropTypes.object),
+        likes: PropTypes.number,
+        Comments: PropTypes.arrayOf(PropTypes.object),
+    })
 };
 
 export default PostContentForm;

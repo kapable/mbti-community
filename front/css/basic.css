@@ -376,6 +376,10 @@
     padding: 16px;
 }
 
+.post-content-image {
+    width: 100%;
+}
+
 .post-content-bottom-actions-row {
     font-size: 1rem;
     padding: 16px;
@@ -408,6 +412,37 @@
 
 .post-comment-list-form {
     padding: 16px;
+}
+
+/* Upload Editor */
+.upload-editor-div {
+    margin: 0 auto;
+    max-width: 70rem;
+    padding: 0 16px;
+    /* border: solid 0.5rem grey; */
+}
+
+.upload-title-input {
+    margin: 1rem auto;
+    max-width: 50rem;
+}
+
+.upload-category-select {
+    width: 100%;
+    max-width: 50rem;
+}
+
+.upload-submit-button {
+    text-align: center;
+    margin: 1rem auto 0;
+    background-color: var(--point-color);
+    color: white;
+    width: 100%;
+    max-width: 50rem;
+    height: 3rem;
+    font-size: 1.2rem;
+    letter-spacing: 20px;
+    text-indent: 10px;
 }
 
 @media only screen and (min-width: 600px) {
