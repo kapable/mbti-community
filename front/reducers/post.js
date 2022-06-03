@@ -23,6 +23,19 @@ export const initialState = {
                 }
             },
             {
+                id: "FF1iyF3VwasdfN",
+                type: "image",
+                data: {
+                    file: {
+                        url: "https://codex.so/public/app/img/external/codex2x.png"
+                    },
+                    caption: "",
+                    withBorder: false,
+                    stretched: false,
+                    withBackground: false
+                }
+            },
+            {
                 id: "SkQzn3tbvZ",
                 type: "paragraph",
                 data: {
@@ -41,7 +54,7 @@ export const initialState = {
                     stretched: false,
                     withBackground: false
                 }
-            }
+            },
         ],
         likes: 30,
         Comments: [{

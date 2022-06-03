@@ -35,7 +35,7 @@ PostCommentListForm.propTypes = {
         content: PropTypes.arrayOf(PropTypes.object),
         likes: PropTypes.number,
         Comments: PropTypes.arrayOf(PropTypes.object),
-    })
+    }).isRequired,
 };
 
 export default PostCommentListForm;

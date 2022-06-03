@@ -13,7 +13,7 @@ const Post = () => {
     return (
         <Fragment>
             <PostContentForm singleContent={singleContent} />
-            <PostCommentForm />
+            <PostCommentForm singleContent={singleContent} />
             <PostCommentListForm singleContent={singleContent}/>
         </Fragment>
     );

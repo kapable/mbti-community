@@ -350,6 +350,16 @@
     color: white;
     cursor: pointer;
     position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.post-content-delete-button {
+    border: none;
+    background-color: var(--red-color);
+    color: white;
+    cursor: pointer;
+    position: absolute;
     bottom: 0;
     right: 0;
 }

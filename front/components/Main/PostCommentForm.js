@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
+import useInput from '../../hooks/useInput';
+import { useSelector } from 'react-redux';
 
-const PostCommentForm = () => {
+const PostCommentForm = ({ singleContent }) => {
+    const [commentText, onChangeCommentText, setCommentText] = useInput('');
+    const myId = useSelector((state) => state.user.myInfo?.id);
+
+    const onSubmitComment = useCallback(() => {
+        // if(!myId) {
+        //     alert('로그인이 필요합니다');
+        // };
+        // dispatch({
+        //     type: ADD_COMMENT_REQUEST,
+        //     data: { content: commentText, postId: singleContent.id, userId: myId }
+        // });
+        console.log(commentText, singleContent.id);
+    }, [commentText, myId, singleContent]);
+
     return (
         <div className='post-comment-form-div'>
-            <Form>
+            <Form onFinish={onSubmitComment}>
                 <Form.Item>
                     <Input.TextArea
                         placeholder='댓글을 입력해주세요(최대 140자)'
@@ -12,6 +29,8 @@ const PostCommentForm = () => {
                         maxLength={140}
                         showCount
                         autoSize={{maxRows: 3}}
+                        value={commentText}
+                        onChange={onChangeCommentText}
                     />
                     <Button
                         className='post-comment-submit-button'
@@ -23,6 +42,18 @@ const PostCommentForm = () => {
             </Form>
         </div>
     );
+};
+
+PostCommentForm.propTypes = {
+    singleContent: PropTypes.shape({
+        id: PropTypes.number,
+        category: PropTypes.string,
+        User: PropTypes.object,
+        title: PropTypes.string,
+        content: PropTypes.arrayOf(PropTypes.object),
+        likes: PropTypes.number,
+        Comments: PropTypes.arrayOf(PropTypes.object),
+    }).isRequired,
 };
 
 export default PostCommentForm;
