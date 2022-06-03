@@ -1,6 +1,6 @@
 import { CheckOutlined, DownOutlined, EditOutlined, PlusOutlined, WechatOutlined } from '@ant-design/icons';
 import { Button, Col, Dropdown, Form, Input, Menu, Row, Space, Tabs } from 'antd';
-import React, { useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import useInput from '../../hooks/useInput';
 
 const { TabPane } = Tabs;
@@ -8,15 +8,21 @@ const { TabPane } = Tabs;
 const UserProfile = () => {
     const [nickname, setNickname] = useInput('');
     const [description, setDescription] = useInput('');
-    const [myMBTI, setMyMBTI] = useState('');
+    const [myMBTI, setMyMBTI] = useState('ENTP');
     const [nicknameEditMode, setNicknameEditMode] = useState(false);
-    const onInfoEditMode = useCallback(() => {
+    const [descriptionEditMode, setDescriptionEditMode] = useState(false);
+    const [typeEditMode, setTypeEditMode] = useState(false);
+    const onNicknameEditMode = useCallback(() => {
         setNicknameEditMode(!nicknameEditMode);
     }, [nicknameEditMode]);
 
+    const onDescriptionEditMode = useCallback(() => {
+        setDescriptionEditMode(!descriptionEditMode);
+    }, [descriptionEditMode]);
+
     const onMBTIClick = useCallback((e) => {
         setMyMBTI(e.key)
-        console.log(myMBTI);
+        setTypeEditMode(false);
     }, [myMBTI]);
 
     const categories = ['ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
@@ -37,16 +43,16 @@ const UserProfile = () => {
         };
     }, [nickname]);
 
-    // const onDescriptionSubmit = useCallback(() => {
-    //     if(description.length > 100) {
-    //         alert('소개는 100자 이내로 적어주세요!');
-    //     } else if (!description) {
-    //         alert('소개를 적어주세요!')
-    //     } else {
-    //         setInfoEditMode(false);
-    //     };
+    const onDescriptionSubmit = useCallback(() => {
+        if(description.length > 100) {
+            alert('소개는 100자 이내로 적어주세요!');
+        } else if (!description) {
+            alert('소개를 적어주세요!')
+        } else {
+            setDescriptionEditMode(false);
+        };
         
-    // }, [description]);
+    }, [description]);
 
     const [isFollow, setIsFollow] = useState(false);
     const onFollowButtonClick = useCallback(() => {
@@ -59,18 +65,28 @@ const UserProfile = () => {
                 <Col span={16}>
                     {nicknameEditMode
                     ? (<Input.Search 
-                        className='user-profile-edit-input'
+                        className='user-nickname-edit-input'
                         value={nickname}
                         onChange={setNickname}
                         addonBefore="닉네임"
                         enterButton="수정"
                         onSearch={onNicknameSubmit}
                     />)
-                    : (<div className='profile-head-name'>웡아잉 <EditOutlined onClick={onInfoEditMode} className="profile-head-name-edit-button" /></div>)
+                    : (<div className='profile-head-name'>웡아잉 <EditOutlined onClick={onNicknameEditMode} className="profile-head-name-edit-button" /></div>)
                     }
                     
                     <div className='profile-head-email'>ellen0@gmail.com</div>
-                    <div className='profile-head-type'>ENTP</div>
+                    {typeEditMode
+                    ? (<Dropdown overlay={menu} trigger={['click']}>
+                            <Button style={{ width: '6rem' }}>
+                                <Space>
+                                    {myMBTI ? myMBTI : 'MBTI'}
+                                <DownOutlined />
+                                </Space>
+                            </Button>
+                        </Dropdown>)
+                    : (<div onClick={() => (setTypeEditMode(true))} className='profile-head-type'>{myMBTI}</div>)
+                    }
                 </Col>
                 <Col span={8}>
                     <div className='profile-head-right-upper-div'>
@@ -88,42 +104,26 @@ const UserProfile = () => {
                     </div>
                 </Col>
             </Row>
-            {/* {infoEditMode
-            ? (
-                <Form className='user-profile-edit-form'>
-                    <Input.Search 
-                        className='user-profile-edit-input'
-                        value={nickname}
-                        onChange={setNickname}
-                        addonBefore="닉네임"
-                        enterButton="수정"
-                        onSearch={onNicknameSubmit}
-                    />
+            <Row className='profile-introduction-row'>
+                <Col className='profile-introduction-icon' span={4}><WechatOutlined style={{color: "#375cb7"}} /></Col>
+                {descriptionEditMode
+                ? (
                     <Input.Search
-                        className='user-profile-edit-input'
+                        className='user-description-edit-input'
                         value={description}
                         onChange={setDescription}
                         addonBefore="소개"
                         enterButton="수정"
                         onSearch={onDescriptionSubmit}
                     />
-                    <Dropdown overlay={menu} trigger={['click']}>
-                        <Button style={{ width: '100%' }}>
-                            <Space>
-                                {myMBTI ? myMBTI : 'MBTI'}
-                            <DownOutlined />
-                            </Space>
-                        </Button>
-                    </Dropdown>
-                </Form>
-            )
-            : (
-                null
-            )} */}
-            <Row className='profile-introduction-row'>
-                <Col className='profile-introduction-icon' span={4}><WechatOutlined style={{color: "#375cb7"}} /></Col>
-                <Col className='profile-introduction-text' span={16}>안녕하세요! 인간 엔팁 웡아잉입니다!<br />고민 해결 해드릴게요! 팔로우 부탁드립니다!</Col>
-                <Col className='profile-introduction-edit' span={4}><EditOutlined onClick={onInfoEditMode} style={{color: "#b7bed1"}} /></Col>
+                )
+                : (
+                    <Fragment>
+                        <Col className='profile-introduction-text' span={16}>안녕하세요! 인간 엔팁 웡아잉입니다!<br />고민 해결 해드릴게요! 팔로우 부탁드립니다!</Col>
+                        <Col className='profile-introduction-edit' span={4}><EditOutlined onClick={onDescriptionEditMode} style={{color: "#b7bed1"}} /></Col>
+                    </Fragment>
+                )
+                }
             </Row>
             <Tabs className='profile-menu-tab' tabBarStyle={{margin:"0 auto", width:"fit-content"}} tabPosition='top' size='default' type='line'>
                 <TabPane style={{padding: "16px"}} tab="작성글" key="1">
