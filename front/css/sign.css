@@ -83,6 +83,7 @@
     width: 50%;
     margin: 0 auto;
     border-right: solid 0.1rem #b7bed1;
+    color: black;
 }
 
 .profile-head-following-div > span,
@@ -94,6 +95,7 @@
     float: left;
     width: 50%;
     margin: 0 auto;
+    color: black;
 }
 
 .profile-head-right-below-div {
@@ -139,6 +141,19 @@
 
 .user-profile-edit-form {
     margin: 16px 16px;
+}
+
+/* Follow Form */
+.follow-list-form {
+    padding: 0 16px;
+    max-width: 50rem;
+    margin: 0 auto;
+}
+
+.follow-list-user-type {
+    background-color: #c86143;
+    color: white;
+    padding: 0 4px;
 }
 
 @media only screen and (min-width: 600px) {

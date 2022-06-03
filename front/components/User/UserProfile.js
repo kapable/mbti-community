@@ -2,12 +2,13 @@ import { CheckOutlined, DownOutlined, EditOutlined, PlusOutlined, WechatOutlined
 import { Button, Col, Dropdown, Form, Input, Menu, Row, Space, Tabs } from 'antd';
 import React, { Fragment, useCallback, useState } from 'react';
 import useInput from '../../hooks/useInput';
+import Link from 'next/link';
 
 const { TabPane } = Tabs;
 
 const UserProfile = () => {
-    const [nickname, setNickname] = useInput('');
-    const [description, setDescription] = useInput('');
+    const [nickname, setNickname] = useInput('웡아잉');
+    const [description, setDescription] = useInput('안녕하세요! 인간 엔팁 웡아잉입니다! 고민 해결 해드릴게요! 팔로우 부탁드립니다!');
     const [myMBTI, setMyMBTI] = useState('ENTP');
     const [nicknameEditMode, setNicknameEditMode] = useState(false);
     const [descriptionEditMode, setDescriptionEditMode] = useState(false);
@@ -31,7 +32,7 @@ const UserProfile = () => {
             onClick={onMBTIClick}
             items={categories.map((type, _) => ({ label: type, key: type }))}
         />
-    )
+    );
 
     const onNicknameSubmit = useCallback(() => {
         if (!nickname) {
@@ -72,7 +73,7 @@ const UserProfile = () => {
                         enterButton="수정"
                         onSearch={onNicknameSubmit}
                     />)
-                    : (<div className='profile-head-name'>웡아잉 <EditOutlined onClick={onNicknameEditMode} className="profile-head-name-edit-button" /></div>)
+                    : (<div className='profile-head-name'>{nickname} <EditOutlined onClick={onNicknameEditMode} className="profile-head-name-edit-button" /></div>)
                     }
                     
                     <div className='profile-head-email'>ellen0@gmail.com</div>
@@ -90,8 +91,8 @@ const UserProfile = () => {
                 </Col>
                 <Col span={8}>
                     <div className='profile-head-right-upper-div'>
-                        <div className='profile-head-follower-div'><span>850</span><br />팔로워</div>
-                        <div className='profile-head-following-div'><span>850</span><br />팔로잉</div>
+                        <Link href={`/followers/1`}><a><div className='profile-head-follower-div'><span>850</span><br />팔로워</div></a></Link>
+                        <Link href={`/followings/1`}><a><div className='profile-head-following-div'><span>850</span><br />팔로잉</div></a></Link>
                     </div>
                     <div className='profile-head-right-below-div'>
                         <Button
@@ -119,7 +120,7 @@ const UserProfile = () => {
                 )
                 : (
                     <Fragment>
-                        <Col className='profile-introduction-text' span={16}>안녕하세요! 인간 엔팁 웡아잉입니다!<br />고민 해결 해드릴게요! 팔로우 부탁드립니다!</Col>
+                        <Col className='profile-introduction-text' span={16}>{description}</Col>
                         <Col className='profile-introduction-edit' span={4}><EditOutlined onClick={onDescriptionEditMode} style={{color: "#b7bed1"}} /></Col>
                     </Fragment>
                 )
