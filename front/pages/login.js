@@ -5,12 +5,12 @@ import LoginForm from '../components/User/LoginForm';
 import { useSelector } from 'react-redux';
 
 const Login = () => {
-    const { isLoggedIn } = useSelector((state) => state.user);
+    const { logInDone } = useSelector((state) => state.user);
     useEffect(() => {
-        if(isLoggedIn) {
+        if(logInDone) {
             Router.push('/');
         }
-    }, [isLoggedIn]);
+    }, [logInDone]);
 
     return (
         <Fragment>

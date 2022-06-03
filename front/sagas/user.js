@@ -1,5 +1,13 @@
 import axios from 'axios';
-import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
+import { all, fork, put, takeLatest, call, delay } from 'redux-saga/effects';
+// import {
+//     LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE,
+//     LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE,
+//     SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE,
+//     CHANGE_NICKNAME_REQUEST, CHANGE_NICKNAME_SUCCESS, CHANGE_NICKNAME_FAILURE,
+//     CHANGE_DESCRIPTION_REQUEST, CHANGE_DESCRIPTION_SUCCESS, CHANGE_DESCRIPTION_FAILURE,
+//     LOAD_MY_INFO_REQUEST, LOAD_MY_INFO_SUCCESS, LOAD_MY_INFO_FAILURE
+// } from '../reducers/user';
 
 function logInAPI(data) {
     return axios.post(`/user/login`, data);
@@ -7,7 +15,8 @@ function logInAPI(data) {
 
 function* logIn(action) {
     try {
-        const result = yield call(logInAPI, action.data);
+        // const result = yield call(logInAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: LOG_IN_SUCCESS,
             // data: result.data
@@ -27,7 +36,8 @@ function logOutAPI() {
 
 function* logOut() {
     try {
-        yield call(logOutAPI);
+        // yield call(logOutAPI);
+        yield delay(1000);
         yield put({
             // type: LOG_OUT_SUCCESS,
         })
@@ -46,7 +56,8 @@ function signUpAPI(data) {
 
 function* signUp(action) {
     try {
-        const result = yield call(signUpAPI, action.data);
+        // const result = yield call(signUpAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: SIGN_UP_SUCCESS,
         })
@@ -65,7 +76,8 @@ function loadMyInfoAPI() {
 
 function* loadMyInfo(action) {
     try {
-        const result = yield call(loadMyInfoAPI, action.data);
+        // const result = yield call(loadMyInfoAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: LOAD_MY_INFO_SUCCESS,
             // data: result?.data || null
@@ -85,7 +97,8 @@ function changeNicknameAPI(data) {
 
 function* changeNickname(action) {
     try {
-        const result = yield call(changeNicknameAPI, action.data);
+        // const result = yield call(changeNicknameAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: CHANGE_NICKNAME_SUCCESS,
             // data: result.data,
@@ -105,7 +118,8 @@ function changeDescriptionAPI(data) {
 
 function* changeDescription(action) {
     try {
-        const result = yield call(changeDescriptionAPI, action.data);
+        // const result = yield call(changeDescriptionAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: CHANGE_DESCRIPTION_SUCCESS,
             // data: result.data,

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
+import { all, fork, put, takeLatest, call, delay } from 'redux-saga/effects';
 // import {
 //     LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE,
 //     ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE,
@@ -19,7 +19,8 @@ function loadPostsAPI(data) {
 
 function* loadPosts(action) {
     try {
-        const result = yield call(loadPostsAPI, action);
+        // const result = yield call(loadPostsAPI, action);
+        yield delay(1000);
         yield put({
             // type: LOAD_POSTS_SUCCESS,
             // data: result.data,
@@ -39,7 +40,8 @@ function loadPostAPI(data) {
 
 function* loadPost(action) {
     try {
-        const result = yield call(loadPostAPI, action.data);
+        // const result = yield call(loadPostAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: LOAD_POST_SUCCESS,
             // data: result.data,
@@ -59,7 +61,8 @@ function addPostAPI(data) {
 
 function* addPost(action) {
     try {
-        const result = yield call(addPostAPI, action.data);
+        // const result = yield call(addPostAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: ADD_POST_SUCCESS,
             // data: result.data,
@@ -83,7 +86,8 @@ function removePostAPI(data) {
 
 function* removePost(action) {
     try {
-        const result = yield call(removePostAPI, action.data);
+        // const result = yield call(removePostAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: REMOVE_POST_SUCCESS,
             // data: result.data
@@ -107,7 +111,8 @@ function setPostTitleAPI(data) {
 
 function* setPostTitle(action) {
     try {
-        const result = yield call(setPostTitleAPI, action.data);
+        // const result = yield call(setPostTitleAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: SET_POST_TITLE_SUCCESS,
             // data: result.data
@@ -127,7 +132,8 @@ function setPostTextAPI(data) {
 
 function* setPostText(action) {
     try {
-        const result = yield call(setPostTextAPI, action.data);
+        // const result = yield call(setPostTextAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: SET_POST_TEXT_SUCCESS,
             // data: result.data
@@ -147,7 +153,8 @@ function addCommentAPI(data) {
 
 function* addComment(action) {
     try {
-        const result = yield call(addCommentAPI, action.data);
+        // const result = yield call(addCommentAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: ADD_COMMENT_SUCCESS,
             // data: result.data,
@@ -167,7 +174,8 @@ function uploadImagesAPI(data) {
 
 function* uploadImages(action) {
     try {
-        const result = yield call(uploadImagesAPI, action.data);
+        // const result = yield call(uploadImagesAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: UPLOAD_IMAGES_SUCCESS,
             // data: result.data,
@@ -187,7 +195,8 @@ function uploadThumbnailAPI(data) {
 
 function* uploadThumbnail(action) {
     try {
-        const result = yield call(uploadThumbnailAPI, action.data);
+        // const result = yield call(uploadThumbnailAPI, action.data);
+        yield delay(1000);
         yield put({
             // type: UPLOAD_THUMBNAIL_SUCCESS,
             // data: result.data,
