@@ -1,12 +1,13 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { Button, Checkbox, Form, Input, Dropdown, Row, Col, Space, Menu } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, LoadingOutlined } from '@ant-design/icons';
 import useInput from '../../hooks/useInput';
-import { useDispatch } from 'react-redux';
-import { loginAction } from '../../reducers/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOG_IN_REQUEST } from '../../reducers/user';
 
 const LoginForm = () => {
+    const { logInLoading } = useSelector((state) => state.user);
     const [email, onChangeEmail] = useInput('');
     const [password, onChangePassword] = useInput('');
     const dispatch = useDispatch();
@@ -18,7 +19,10 @@ const LoginForm = () => {
             //     type: SIGN_UP_REQUEST,
             //     data: { email, nickname, myMBTI, password }
             // })
-            dispatch(loginAction({ email, password }))
+            dispatch({
+                type: LOG_IN_REQUEST,
+                data: { email, password },
+            });
         },
         [email, password],
     )
@@ -41,7 +45,7 @@ const LoginForm = () => {
                     </Form.Item>
                 </div>
                 <div className='signup-form-button-group'>
-                    <Button className='signup-form-button' htmlType="submit" >로그인하기</Button>
+                    <Button className='signup-form-button' htmlType="submit" >{logInLoading ? <LoadingOutlined /> : "로그인하기"}</Button>
                 </div>
             </Form>
         </div>

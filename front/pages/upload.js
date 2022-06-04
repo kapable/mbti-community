@@ -8,13 +8,13 @@ if (typeof window !== "undefined") {
 };
 
 const Upload = () => {
-    const { logInDone } = useSelector((state) => state.user);
+    const { myInfo } = useSelector((state) => state.user);
     // useEffect(() => {
-    //     if(!logInDone) {
+    //     if(!myInfo) {
     //         alert('로그인 후 글 작성이 가능해요!');
     //         Router.push('/');
     //     }
-    // }, [logInDone]);
+    // }, [myInfo]);
 
     return (
         <div>

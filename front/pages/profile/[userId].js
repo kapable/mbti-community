@@ -1,8 +1,21 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import UserProfile from '../../components/User/UserProfile';
+import { useDispatch } from 'react-redux';
+import { LOAD_USER_INFO_REQUEST } from '../../reducers/user';
 
 const Profile = () => {
+    const dispatch = useDispatch();
+    const router = useRouter();
+    const { userId } = router.query;
+
+    useEffect(() => {
+        dispatch({
+            type: LOAD_USER_INFO_REQUEST,
+            data: userId
+        })
+    }, [userId]);
 
     return (
         <Fragment>

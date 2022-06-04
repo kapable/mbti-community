@@ -1,10 +1,15 @@
 import React, { useCallback, useState } from 'react';
 import { Button, Checkbox, Form, Input, Dropdown, Row, Col, Space, Menu } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, LoadingOutlined } from '@ant-design/icons';
 import Router from 'next/router';
 import useInput from '../../hooks/useInput';
+import { SIGN_UP_REQUEST } from '../../reducers/user';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignupForm = () => {
+    const dispatch = useDispatch();
+    const { signUpLoading } = useSelector((state) => state.user);
+
     const [email, onChangeEmail] = useInput('');
     const [nickname, onChangeNickname] = useInput('');
     const [myMBTI, setMyMBTI] = useState('');
@@ -50,10 +55,10 @@ const SignupForm = () => {
             if(!term) {
                 return setTermError(true);
             }
-            // dispatch({
-            //     type: SIGN_UP_REQUEST,
-            //     data: { email, nickname, myMBTI, password }
-            // })
+            dispatch({
+                type: SIGN_UP_REQUEST,
+                data: { email, nickname, myMBTI, password }
+            })
             console.log(email, password, myMBTI);
         },
         [password, passwordCheck, setPasswordError, term, setTermError, email, nickname, myMBTI],
@@ -113,7 +118,7 @@ const SignupForm = () => {
                     {termError && <div className='sign-up-error-message-div'>개인정보활용방침 동의 후 가입이 가능합니다.</div>}
                 </div>
                 <div className='signup-form-button-group'>
-                    <Button className='signup-form-button' htmlType="submit" >회원가입하기</Button>
+                    <Button className='signup-form-button' htmlType="submit" >{signUpLoading ? <LoadingOutlined /> : "회원가입하기"}</Button>
                 </div>
             </Form>
         </div>

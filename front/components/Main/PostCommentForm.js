@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import useInput from '../../hooks/useInput';
@@ -7,15 +7,22 @@ import { useSelector } from 'react-redux';
 const PostCommentForm = ({ singleContent }) => {
     const [commentText, onChangeCommentText, setCommentText] = useInput('');
     const myId = useSelector((state) => state.user.myInfo?.id);
+    const { addCommentDone } = useSelector((state) => state.post);
+
+    useEffect(() => {
+        if(addCommentDone) {
+            setCommentText('');
+        };
+    }, [addCommentDone]);
 
     const onSubmitComment = useCallback(() => {
-        // if(!myId) {
-        //     alert('로그인이 필요합니다');
-        // };
-        // dispatch({
-        //     type: ADD_COMMENT_REQUEST,
-        //     data: { content: commentText, postId: singleContent.id, userId: myId }
-        // });
+        if(!myId) {
+            alert('로그인이 필요합니다');
+        };
+        dispatch({
+            type: ADD_COMMENT_REQUEST,
+            data: { content: commentText, postId: singleContent.id, userId: myId }
+        });
         console.log(commentText, singleContent.id);
     }, [commentText, myId, singleContent]);
 

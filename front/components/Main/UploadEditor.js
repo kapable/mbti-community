@@ -1,4 +1,5 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Router from 'next/router';
 import { createReactEditorJS } from "react-editor-js";
 const ReactEditorJS = createReactEditorJS();
 
@@ -13,7 +14,7 @@ import { Button, Divider, Input, Select } from 'antd';
 import useInput from '../../hooks/useInput';
 import { UploadOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from '../../reducers/post';
+import { ADD_POST_REQUEST } from '../../reducers/post';
 // import Raw from "@editorjs/raw";
 // import Header from "@editorjs/header";
 // import Quote from "@editorjs/quote";
@@ -27,9 +28,11 @@ const { Option } = Select;
 
 const UploadEditor = () => {
     const dispatch = useDispatch();
-    const { imagePaths } = useSelector((state) => state.post);
+    const { imagePaths, addPostDone } = useSelector((state) => state.post);
+    const { myInfo } = useSelector((state) => state.user);
+
     const categories = ['고민상담소','ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
-    const [title, onChangeTitle] = useInput('');
+    const [title, onChangeTitle, setTitle] = useInput('');
     const [category, setCategory] = useState('');
     const [contents, setContents] = useState(``);
     const imageInput = useRef(null);
@@ -52,8 +55,25 @@ const UploadEditor = () => {
         if(!contents) {
             return alert('본문을 작성해주세요!');
         }
-        dispatch(addPost)
-    }, [title, category]);
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', contents);
+        formData.append('category', category);
+        dispatch({
+            type: ADD_POST_REQUEST,
+            data: formData,
+        });
+        alert('정상적으로 글이 게시되었습니다!')
+        return Router.push(`/profile/${myInfo.id}`)
+    }, [title, category, contents]);
+
+    useEffect(() => {
+        if(addPostDone) {
+            setTitle('');
+            setContents('');
+            setCategory('');
+        };
+    }, [addPostDone]);
 
     const EDITOR_JS_TOOLS = {
         // embed: Embed,

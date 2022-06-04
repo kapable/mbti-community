@@ -3,16 +3,23 @@ import { Button, Col, Dropdown, Form, Input, Menu, Row, Space, Tabs } from 'antd
 import React, { Fragment, useCallback, useState } from 'react';
 import useInput from '../../hooks/useInput';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { CHANGE_DESCRIPTION_REQUEST, CHANGE_NICKNAME_REQUEST } from '../../reducers/user';
 
 const { TabPane } = Tabs;
 
 const UserProfile = () => {
-    const [nickname, setNickname] = useInput('웡아잉');
-    const [description, setDescription] = useInput('안녕하세요! 인간 엔팁 웡아잉입니다! 고민 해결 해드릴게요! 팔로우 부탁드립니다!');
-    const [myMBTI, setMyMBTI] = useState('ENTP');
+    const dispatch = useDispatch();
+    const { userInfo, myInfo } = useSelector((state) => state.user);
+
+    const [nickname, setNickname] = useInput(userInfo.nickname);
+    const [description, setDescription] = useInput(userInfo.description);
+    const [myMBTI, setMyMBTI] = useState(userInfo.type);
+
     const [nicknameEditMode, setNicknameEditMode] = useState(false);
     const [descriptionEditMode, setDescriptionEditMode] = useState(false);
     const [typeEditMode, setTypeEditMode] = useState(false);
+
     const onNicknameEditMode = useCallback(() => {
         setNicknameEditMode(!nicknameEditMode);
     }, [nicknameEditMode]);
@@ -40,6 +47,10 @@ const UserProfile = () => {
         } else if (nickname.length > 20) {
             alert('닉네임은 20자 이내로 적어주세요!');
         } else {
+            dispatch({
+                type: CHANGE_NICKNAME_REQUEST,
+                data: nickname,
+            });
             setNicknameEditMode(false);
         };
     }, [nickname]);
@@ -50,6 +61,10 @@ const UserProfile = () => {
         } else if (!description) {
             alert('소개를 적어주세요!')
         } else {
+            dispatch({
+                type: CHANGE_DESCRIPTION_REQUEST,
+                data: description,
+            });
             setDescriptionEditMode(false);
         };
         
@@ -91,8 +106,8 @@ const UserProfile = () => {
                 </Col>
                 <Col span={8}>
                     <div className='profile-head-right-upper-div'>
-                        <Link href={`/followers/1`}><a><div className='profile-head-follower-div'><span>850</span><br />팔로워</div></a></Link>
-                        <Link href={`/followings/1`}><a><div className='profile-head-following-div'><span>850</span><br />팔로잉</div></a></Link>
+                        <Link href={`/followers/1`}><a><div className='profile-head-follower-div'><span>{userInfo.Followers.length}</span><br />팔로워</div></a></Link>
+                        <Link href={`/followings/1`}><a><div className='profile-head-following-div'><span>{userInfo.Followings.length}</span><br />팔로잉</div></a></Link>
                     </div>
                     <div className='profile-head-right-below-div'>
                         <Button
@@ -120,7 +135,7 @@ const UserProfile = () => {
                 )
                 : (
                     <Fragment>
-                        <Col className='profile-introduction-text' span={16}>{description}</Col>
+                        <Col className='profile-introduction-text' span={16}>{userInfo.description}</Col>
                         <Col className='profile-introduction-edit' span={4}><EditOutlined onClick={onDescriptionEditMode} style={{color: "#b7bed1"}} /></Col>
                     </Fragment>
                 )
