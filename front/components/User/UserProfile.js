@@ -10,7 +10,7 @@ const { TabPane } = Tabs;
 
 const UserProfile = () => {
     const dispatch = useDispatch();
-    const { userInfo, myInfo } = useSelector((state) => state.user);
+    const { myInfo } = useSelector((state) => state.user);
 
     const [nickname, setNickname] = useInput(myInfo.nickname);
     const [description, setDescription] = useInput(myInfo.description);

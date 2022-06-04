@@ -1,4 +1,7 @@
 import produce from '../util/produce';
+import faker from '@withshepherd/faker'
+
+faker.locale = "ko";
 
 export const initialState = {
     logInLoading: false,
@@ -25,6 +28,12 @@ export const initialState = {
     loadUserInfoLoading: false,
     loadUserInfoDone: false,
     loadUserInfoError: false,
+    loadFollowerListLoading:false,
+    loadFollowerListDone:false,
+    loadFollowerListError:false,
+    loadFollowingListLoading:false,
+    loadFollowingListDone:false,
+    loadFollowingListError:false,
     myInfo: null,
     userInfo: null,
     signUpData: {},
@@ -63,6 +72,17 @@ export const LOAD_USER_INFO_REQUEST = 'LOAD_USER_INFO_REQUEST';
 export const LOAD_USER_INFO_SUCCESS = 'LOAD_USER_INFO_SUCCESS';
 export const LOAD_USER_INFO_FAILURE = 'LOAD_USER_INFO_FAILURE';
 
+export const LOAD_FOLLOWER_LIST_REQUEST = 'LOAD_FOLLOWER_LIST_REQUEST';
+export const LOAD_FOLLOWER_LIST_SUCCESS = 'LOAD_FOLLOWER_LIST_SUCCESS';
+export const LOAD_FOLLOWER_LIST_FAILURE = 'LOAD_FOLLOWER_LIST_FAILURE';
+
+export const LOAD_FOLLOWING_LIST_REQUEST = 'LOAD_FOLLOWING_LIST_REQUEST';
+export const LOAD_FOLLOWING_LIST_SUCCESS = 'LOAD_FOLLOWING_LIST_SUCCESS';
+export const LOAD_FOLLOWING_LIST_FAILURE = 'LOAD_FOLLOWING_LIST_FAILURE';
+
+export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
+export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
+
 
 const dummyUser = (data) => ({
     ...data,
@@ -70,9 +90,9 @@ const dummyUser = (data) => ({
     id: 10,
     type: 'ISTJ',
     description: '안녕하세요! 인간 엔팁 웡아잉입니다! 고민 해결 해드릴게요! 팔로우 부탁드립니다!',
-    Posts: [],
-    Followings: [],
-    Followers: [],
+    Posts: [{ id: 1 }],
+    Followings: [{ nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }],
+    Followers: [{ nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }],
 });
 
 
@@ -193,6 +213,36 @@ const reducer = (state = initialState, action) => {
                 draft.loadUserInfoLoading = false;
                 draft.loadUserInfoDone = false;
                 draft.loadUserInfoError = action.error;
+                break;
+            case LOAD_FOLLOWER_LIST_REQUEST:
+                draft.loadFollowerListLoading = true;
+                draft.loadFollowerListDone = false;
+                draft.loadFollowerListError = null;
+                break;
+            case LOAD_FOLLOWER_LIST_SUCCESS:
+                draft.loadFollowerListLoading = false;
+                draft.loadFollowerListDone = true;
+                draft.userInfo = dummyUser()//action?.data || null;
+                break;
+            case LOAD_FOLLOWER_LIST_FAILURE:
+                draft.loadFollowerListLoading = false;
+                draft.loadFollowerListDone = false;
+                draft.loadFollowerListError = action.error;
+                break;
+            case LOAD_FOLLOWING_LIST_REQUEST:
+                draft.loadFollowingListLoading = true;
+                draft.loadFollowingListDone = false;
+                draft.loadFollowingListError = null;
+                break;
+            case LOAD_FOLLOWING_LIST_SUCCESS:
+                draft.loadFollowingListLoading = false;
+                draft.loadFollowingListDone = true;
+                draft.userInfo = dummyUser()//action?.data || null;
+                break;
+            case LOAD_FOLLOWING_LIST_FAILURE:
+                draft.loadFollowingListLoading = false;
+                draft.loadFollowingListDone = false;
+                draft.loadFollowingListError = action.error;
                 break;
             default:
                 break;

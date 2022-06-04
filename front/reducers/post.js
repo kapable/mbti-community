@@ -10,7 +10,7 @@ export const initialState = {
             nickname: 'be_seeyong',
         },
         title:'엔프제 남친에게 서운할 때 어떻게 해야 하나요 ㅠㅠ',
-        content: [
+        Content: [
             {
                 id: "5jvmbJbK4Q",
                 type: "paragraph",
@@ -95,11 +95,11 @@ export const initialState = {
         id:1,
         category: 'ENFJ',
         User: {
-            id:1,
+            id:10,
             nickname: 'be_seeyong',
         },
         title:'엔프제 남친에게 서운할 때 어떻게 해야 하나요 ㅠㅠ',
-        content: [
+        Content: [
             {
                 id: "5jvmbJbK4Q",
                 type: "paragraph",
@@ -184,6 +184,9 @@ export const initialState = {
     addPostLoading: false,
     addPostDone: false,
     addPostError: false,
+    removePostLoading: false,
+    removePostDone: false,
+    removePostError: false,
     addCommentLoading: false,
     addCommentDone: false,
     addCommentError: false,
@@ -192,6 +195,10 @@ export const initialState = {
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+
+export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
+export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
+export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
@@ -239,6 +246,20 @@ const reducer = (state = initialState, action) => {
             case ADD_POST_FAILURE:
                 draft.addPostLoading = false;
                 draft.addPostError = action.error;
+                break;
+            case REMOVE_POST_REQUEST:
+                draft.removePostLoading = true;
+                draft.removePostDone = false;
+                draft.removePostError = null;
+                break;
+            case REMOVE_POST_SUCCESS:
+                draft.mainPosts = draft.mainPosts.filter((v) => v.id !== action.data.PostId);
+                draft.removePostDone = true;
+                draft.removePostLoading = false;
+                break;
+            case REMOVE_POST_FAILURE:
+                draft.removePostLoading = false;
+                draft.removePostError = action.error;
                 break;
             case ADD_COMMENT_REQUEST:
                 draft.addCommentLoading = true;

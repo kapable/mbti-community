@@ -9,7 +9,9 @@ import {
     FOLLOW_REQUEST ,FOLLOW_SUCCESS ,FOLLOW_FAILURE,
     UNFOLLOW_REQUEST ,UNFOLLOW_SUCCESS ,UNFOLLOW_FAILURE,
     // LOAD_MY_INFO_REQUEST, LOAD_MY_INFO_SUCCESS, LOAD_MY_INFO_FAILURE,
-    LOAD_USER_INFO_REQUEST, LOAD_USER_INFO_SUCCESS, LOAD_USER_INFO_FAILURE
+    LOAD_USER_INFO_REQUEST, LOAD_USER_INFO_SUCCESS, LOAD_USER_INFO_FAILURE,
+    LOAD_FOLLOWER_LIST_REQUEST, LOAD_FOLLOWER_LIST_SUCCESS, LOAD_FOLLOWER_LIST_FAILURE,
+    LOAD_FOLLOWING_LIST_REQUEST, LOAD_FOLLOWING_LIST_SUCCESS, LOAD_FOLLOWING_LIST_FAILURE,
 } from '../reducers/user';
 
 function logInAPI(data) {
@@ -198,6 +200,48 @@ function* unfollow() {
     }
 }
 
+function loadFollowerListAPI(data) {
+    return axios.post(`/user/loadFollowerList`);
+}
+
+function* loadFollowerList(action) {
+    try {
+        // yield call(loadFollowerListAPI);
+        yield delay(1000);
+        yield put({
+            type: LOAD_FOLLOWER_LIST_SUCCESS,
+            data: action.data
+        })
+    } catch (err) {
+        console.log(err);
+        yield put({
+            type: LOAD_FOLLOWER_LIST_FAILURE,
+            error: err.response.data
+        })
+    }
+}
+
+function loadFollowingListAPI(data) {
+    return axios.post(`/user/loadFollowingList`);
+}
+
+function* loadFollowingList(action) {
+    try {
+        // yield call(loadFollowingListAPI);
+        yield delay(1000);
+        yield put({
+            type: LOAD_FOLLOWING_LIST_SUCCESS,
+            data: action.data
+        })
+    } catch (err) {
+        console.log(err);
+        yield put({
+            type: LOAD_FOLLOWING_LIST_FAILURE,
+            error: err.response.data
+        })
+    }
+}
+
 function* watchLogin() {
     yield takeLatest(LOG_IN_REQUEST, logIn)
 }
@@ -234,6 +278,14 @@ function* watchLoadUserInfo() {
     yield takeLatest(LOAD_USER_INFO_REQUEST, loadUserInfo)
 }
 
+function* watchLoadFollowerList() {
+    yield takeLatest(LOAD_FOLLOWER_LIST_REQUEST, loadFollowerList)
+}
+
+function* watchLoadFollowingList() {
+    yield takeLatest(LOAD_FOLLOWING_LIST_REQUEST, loadFollowingList)
+}
+
 export default function* userSaga() {
     yield all([
         fork(watchLogin),
@@ -245,5 +297,7 @@ export default function* userSaga() {
         fork(watchUnfollow),
         fork(watchLoadMyInfo),
         fork(watchLoadUserInfo),
+        fork(watchLoadFollowerList),
+        fork(watchLoadFollowingList),
     ])
 }

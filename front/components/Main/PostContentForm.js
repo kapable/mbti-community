@@ -1,11 +1,15 @@
 import { Col, Row, Image } from 'antd';
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import Router from 'next/router';
 import PropTypes from 'prop-types';
-import { BellFilled, BellOutlined, EditOutlined, LikeOutlined, LikeFilled, CommentOutlined, LinkOutlined, TagOutlined, BookOutlined, BookFilled, DeleteOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
+import { BellFilled, BellOutlined, EditOutlined, LikeOutlined, LikeFilled, CommentOutlined, LinkOutlined, TagOutlined, BookOutlined, BookFilled, DeleteOutlined, LoadingOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { REMOVE_POST_REQUEST } from '../../reducers/post';
 
 const PostContentForm = ({ singlePost }) => {
+    const dispatch = useDispatch();
     const id = useSelector((state) => state.user.myInfo?.id);
+    const { removePostDone, removePostLoading } = useSelector((state) => state.post);
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
     const [alarmed, setAlarmed] = useState(false);
@@ -21,6 +25,22 @@ const PostContentForm = ({ singlePost }) => {
     const onAlarmClick = useCallback(() => {
         setAlarmed(!alarmed);
     }, [alarmed]);
+
+    const onDeletePostClick = useCallback((id) => {
+        if(confirm('정말 이 글을 삭제하시겠습니까? 한번 삭제한 글을 복구할 수 없습니다.')) {
+            dispatch({
+                type: REMOVE_POST_REQUEST,
+                data: { PostId: id }
+            });
+        }
+    }, []);
+
+    useEffect(() => {
+        if(removePostDone) {
+            alert('게시글이 삭제되었습니다!');
+            Router.replace('/');
+        }
+    }, [removePostDone]);
 
     return (
         <Fragment>
@@ -50,8 +70,8 @@ const PostContentForm = ({ singlePost }) => {
                 <Col className='post-content-middle-col' span={6}>
                     {id && singlePost.User.id === id
                     ? (<>
-                            <button className='post-content-edit-button'><EditOutlined />&nbsp;수정하기</button>
-                            <button className='post-content-delete-button'><DeleteOutlined />&nbsp;삭제하기</button>
+                            {/* <button className='post-content-edit-button'><EditOutlined />&nbsp;수정하기</button> */}
+                            <button onClick={() => onDeletePostClick(singlePost.id)} className='post-content-delete-button'>{removePostLoading ? <><LoadingOutlined />&nbsp;삭제하기</> : <><DeleteOutlined />&nbsp;삭제하기</>}</button>
                         </>)
                     : (null)}
                     
@@ -65,7 +85,7 @@ const PostContentForm = ({ singlePost }) => {
             </Row>
             {/* Contents of the post */}
             <div className='post-content-div'>
-                {singlePost.content.map((value) => {
+                {singlePost.Content.map((value) => {
                     if(value.type === "paragraph") {
                         let texts = value.data.text.replace("&nbsp;", "\u00a0")
                         return (<p key={value.id}>{texts}</p>)
