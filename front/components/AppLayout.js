@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Drawer, Layout, Collapse } from 'antd';
-import { BellFilled, BellOutlined, MenuOutlined } from '@ant-design/icons';
+import { BellFilled, BellOutlined, EditOutlined, MenuOutlined } from '@ant-design/icons';
 import { LOG_OUT_REQUEST } from '../reducers/user';
 
 const { Header, Content, Footer } = Layout;
@@ -21,6 +21,7 @@ const AppLayout = ({ children }) => {
     }, [bellClicked]);
 
     const [showDrawer, setShowDrawer] = useState(false);
+
     const onClickHamburger = useCallback(() => {
         setShowDrawer(true);
     }, []);
@@ -40,6 +41,7 @@ const AppLayout = ({ children }) => {
             <Header className='applayout-header'>
             <Link href='/'><a><img className='applayout-header-main-logo' src={'https://d3edqqquyf396f.cloudfront.net/basic/doodling-logo.png'} alt='두들링' /></a></Link>
                 <div className='applayout-header-hamburger' onClick={onClickHamburger}><MenuOutlined /></div>
+                {myInfo ? (<Link href='/upload'><a><div className='applayout-header-write'><EditOutlined /></div></a></Link>) : null}
                 <Drawer
                     className='applayout-drawer'
                     title={account}

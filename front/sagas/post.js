@@ -157,7 +157,7 @@ function* addComment(action) {
         yield delay(1000);
         yield put({
             type: ADD_COMMENT_SUCCESS,
-            data: result.data,
+            data: action.data//result.data,
         })
     } catch (err) {
         console.log(err);

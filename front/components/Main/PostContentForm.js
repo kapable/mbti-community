@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { BellFilled, BellOutlined, EditOutlined, LikeOutlined, LikeFilled, CommentOutlined, LinkOutlined, TagOutlined, BookOutlined, BookFilled, DeleteOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 
-const PostContentForm = ({ singleContent }) => {
+const PostContentForm = ({ singlePost }) => {
     const id = useSelector((state) => state.user.myInfo?.id);
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -27,7 +27,7 @@ const PostContentForm = ({ singleContent }) => {
             {/* Header for the Category */}
             <Row className='post-content-header-row'>
                 <Col className='post-content-header-left-col' span={18}>
-                    <p className='post-content-header-type'>{singleContent.category}</p>
+                    <p className='post-content-header-type'>{singlePost.category}</p>
                 </Col>
                 <Col className='post-content-header-right-col' span={6}>
                     <div onClick={onAlarmClick}>
@@ -40,7 +40,7 @@ const PostContentForm = ({ singleContent }) => {
             {/* Title for the post */}
             <Row className='post-content-title-row'>
                 <Col className='post-content-left-col' span={12}>
-                    <p className='post-content-title'>{singleContent.title}</p>
+                    <p className='post-content-title'>{singlePost.title}</p>
                     <p className='post-content-info'>
                         <span className='post-content-time'>19:25</span>&nbsp;&nbsp;&nbsp;
                         <span className='post-content-views'>조회수 12</span>
@@ -48,7 +48,7 @@ const PostContentForm = ({ singleContent }) => {
                     </p>
                 </Col>
                 <Col className='post-content-middle-col' span={6}>
-                    {id && singleContent.User.id === id
+                    {id && singlePost.User.id === id
                     ? (<>
                             <button className='post-content-edit-button'><EditOutlined />&nbsp;수정하기</button>
                             <button className='post-content-delete-button'><DeleteOutlined />&nbsp;삭제하기</button>
@@ -65,7 +65,7 @@ const PostContentForm = ({ singleContent }) => {
             </Row>
             {/* Contents of the post */}
             <div className='post-content-div'>
-                {singleContent.content.map((value) => {
+                {singlePost.content.map((value) => {
                     if(value.type === "paragraph") {
                         let texts = value.data.text.replace("&nbsp;", "\u00a0")
                         return (<p key={value.id}>{texts}</p>)
@@ -85,7 +85,7 @@ const PostContentForm = ({ singleContent }) => {
 };
 
 PostContentForm.propTypes = {
-    singleContent: PropTypes.shape({
+    singlePost: PropTypes.shape({
         id: PropTypes.number,
         category: PropTypes.string,
         User: PropTypes.object,

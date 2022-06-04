@@ -2,9 +2,11 @@ import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import useInput from '../../hooks/useInput';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_COMMENT_REQUEST } from '../../reducers/post';
 
-const PostCommentForm = ({ singleContent }) => {
+const PostCommentForm = ({ singlePost }) => {
+    const dispatch = useDispatch();
     const [commentText, onChangeCommentText, setCommentText] = useInput('');
     const myId = useSelector((state) => state.user.myInfo?.id);
     const { addCommentDone } = useSelector((state) => state.post);
@@ -21,10 +23,9 @@ const PostCommentForm = ({ singleContent }) => {
         };
         dispatch({
             type: ADD_COMMENT_REQUEST,
-            data: { content: commentText, postId: singleContent.id, userId: myId }
+            data: { content: commentText, postId: singlePost.id, userId: myId }
         });
-        console.log(commentText, singleContent.id);
-    }, [commentText, myId, singleContent]);
+    }, [commentText, myId, singlePost]);
 
     return (
         <div className='post-comment-form-div'>
@@ -52,7 +53,7 @@ const PostCommentForm = ({ singleContent }) => {
 };
 
 PostCommentForm.propTypes = {
-    singleContent: PropTypes.shape({
+    singlePost: PropTypes.shape({
         id: PropTypes.number,
         category: PropTypes.string,
         User: PropTypes.object,

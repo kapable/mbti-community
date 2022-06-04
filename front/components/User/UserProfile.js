@@ -12,9 +12,9 @@ const UserProfile = () => {
     const dispatch = useDispatch();
     const { userInfo, myInfo } = useSelector((state) => state.user);
 
-    const [nickname, setNickname] = useInput(userInfo.nickname);
-    const [description, setDescription] = useInput(userInfo.description);
-    const [myMBTI, setMyMBTI] = useState(userInfo.type);
+    const [nickname, setNickname] = useInput(myInfo.nickname);
+    const [description, setDescription] = useInput(myInfo.description);
+    const [myMBTI, setMyMBTI] = useState(myInfo.type);
 
     const [nicknameEditMode, setNicknameEditMode] = useState(false);
     const [descriptionEditMode, setDescriptionEditMode] = useState(false);
@@ -106,8 +106,8 @@ const UserProfile = () => {
                 </Col>
                 <Col span={8}>
                     <div className='profile-head-right-upper-div'>
-                        <Link href={`/followers/1`}><a><div className='profile-head-follower-div'><span>{userInfo.Followers.length}</span><br />팔로워</div></a></Link>
-                        <Link href={`/followings/1`}><a><div className='profile-head-following-div'><span>{userInfo.Followings.length}</span><br />팔로잉</div></a></Link>
+                        <Link href={`/followers/1`}><a><div className='profile-head-follower-div'><span>{myInfo.Followers.length}</span><br />팔로워</div></a></Link>
+                        <Link href={`/followings/1`}><a><div className='profile-head-following-div'><span>{myInfo.Followings.length}</span><br />팔로잉</div></a></Link>
                     </div>
                     <div className='profile-head-right-below-div'>
                         <Button
@@ -135,7 +135,7 @@ const UserProfile = () => {
                 )
                 : (
                     <Fragment>
-                        <Col className='profile-introduction-text' span={16}>{userInfo.description}</Col>
+                        <Col className='profile-introduction-text' span={16}>{myInfo.description}</Col>
                         <Col className='profile-introduction-edit' span={4}><EditOutlined onClick={onDescriptionEditMode} style={{color: "#b7bed1"}} /></Col>
                     </Fragment>
                 )

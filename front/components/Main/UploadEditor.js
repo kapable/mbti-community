@@ -61,11 +61,11 @@ const UploadEditor = () => {
         formData.append('category', category);
         dispatch({
             type: ADD_POST_REQUEST,
-            data: formData,
+            data: {userId: myInfo.id, title, category, contents},
         });
         alert('정상적으로 글이 게시되었습니다!')
         return Router.push(`/profile/${myInfo.id}`)
-    }, [title, category, contents]);
+    }, [myInfo, title, category, contents]);
 
     useEffect(() => {
         if(addPostDone) {

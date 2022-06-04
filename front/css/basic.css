@@ -18,6 +18,14 @@
 
 /* Drawer */
 
+.applayout-header-write {
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 1.5rem;
+    color: #b7bed1;
+}
+
 .applayout-header-hamburger {
     float: right;
     font-size: 1.5rem;
@@ -144,6 +152,7 @@
     text-align: center;
     font-size: 1rem;
     margin: 1rem auto;
+    
 }
 
 .home-hot-ranking-topten-p {
@@ -163,6 +172,7 @@
 
 .home-hot-ranking-topten-title {
     font-weight: bold;
+    color: black;
 }
 
 .home-hot-ranking-topten-views {

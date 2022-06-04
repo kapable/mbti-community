@@ -1,7 +1,9 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Tabs, Row, Col } from 'antd';
 import CategoryHotPost from './CategoryHotPost';
 import SwipeableViews from 'react-swipeable-views';
+import shortId from 'shortid';
 
 const { TabPane } = Tabs;
 const pointColor = '#375cb7';
@@ -33,26 +35,31 @@ const HotRanking = () => {
 
     const sampleTopten = [
         {
+            id: shortId.generate(),
             type: 'ENFJ',
             title: '엔프제 남친에게 서운할 때',
             views: 34
         },
         {
+            id: shortId.generate(),
             type: 'ENFJ',
             title: '엔프제 남친에게 서운할 때',
             views: 34
         },
         {
+            id: shortId.generate(),
             type: 'ENFJ',
             title: '엔프제 남친에게 서운할 때',
             views: 34
         },
         {
+            id: shortId.generate(),
             type: 'ENFJ',
             title: '엔프제 남친에게 서운할 때',
             views: 34
         },
         {
+            id: shortId.generate(),
             type: 'ENFJ',
             title: '엔프제 남친에게 서운할 때',
             views: 34
@@ -73,11 +80,13 @@ const HotRanking = () => {
                             <Row className='home-hot-ranking-row' justify='center'>
                                 <Col span={20}>
                                     {sampleTopten.map((content, index) => (
-                                        <div key={content.title + index} className='home-hot-ranking-topten-div'>
-                                            <p className='home-hot-ranking-topten-p'>
-                                                <span className='home-hot-ranking-topten-number'>{index+1}</span> <span className='home-hot-ranking-topten-type'>{content.type}</span> <span className='home-hot-ranking-topten-title'>{content.title}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
-                                            </p>
-                                        </div>
+                                        <Link key={`${content.id}`} href={`post/1`}><a>
+                                            <div key={content.title + index} className='home-hot-ranking-topten-div'>
+                                                <p className='home-hot-ranking-topten-p'>
+                                                    <span className='home-hot-ranking-topten-number'>{index+1}</span> <span className='home-hot-ranking-topten-type'>{content.type}</span> <span className='home-hot-ranking-topten-title'>{content.title}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
+                                                </p>
+                                            </div>
+                                        </a></Link>
                                     ))}
                                 </Col>
                             </Row>
@@ -86,11 +95,13 @@ const HotRanking = () => {
                             <Row className='home-hot-ranking-row' justify='center'>
                                 <Col span={20}>
                                     {sampleTopten.map((content, index) => (
-                                        <div key={content.title + index} className='home-hot-ranking-topten-div'>
-                                            <p className='home-hot-ranking-topten-p'>
-                                                <span className='home-hot-ranking-topten-number'>{index+6}</span> <span className='home-hot-ranking-topten-type'>{content.type}</span> <span className='home-hot-ranking-topten-title'>{content.title}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
-                                            </p>
-                                        </div>
+                                        <Link key={`${content.id}`} href={`post/1`}><a>
+                                            <div key={content.title + index} className='home-hot-ranking-topten-div'>
+                                                <p className='home-hot-ranking-topten-p'>
+                                                    <span className='home-hot-ranking-topten-number'>{index+6}</span> <span className='home-hot-ranking-topten-type'>{content.type}</span> <span className='home-hot-ranking-topten-title'>{content.title}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
+                                                </p>
+                                            </div>
+                                        </a></Link>
                                     ))}
                                 </Col>
                             </Row>

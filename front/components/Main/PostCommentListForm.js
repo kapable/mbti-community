@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Comment, List, Pagination } from 'antd';
 
-const PostCommentListForm = ({ singleContent }) => {
+const PostCommentListForm = ({ singlePost }) => {
     return (
         <div className='post-comment-list-form'>
             <List
                 itemLayout="horizontal"
-                dataSource={singleContent.Comments}
-                header={`${singleContent.Comments.length}개의 댓글`}
+                dataSource={singlePost.Comments}
+                header={`${singlePost.Comments.length}개의 댓글`}
                 renderItem={item => (
                     <li>
                         <Comment
@@ -27,7 +27,7 @@ const PostCommentListForm = ({ singleContent }) => {
 };
 
 PostCommentListForm.propTypes = {
-    singleContent: PropTypes.shape({
+    singlePost: PropTypes.shape({
         id: PropTypes.number,
         category: PropTypes.string,
         User: PropTypes.object,

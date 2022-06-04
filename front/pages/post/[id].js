@@ -8,13 +8,13 @@ import { useSelector } from 'react-redux';
 const Post = () => {
     const router = useRouter();
     const { id } = router.query;
-    const singleContent = useSelector((state) => state.post.mainPosts[0]);
+    const { singlePost } = useSelector((state) => state.post);
 
     return (
         <Fragment>
-            <PostContentForm singleContent={singleContent} />
-            <PostCommentForm singleContent={singleContent} />
-            <PostCommentListForm singleContent={singleContent}/>
+            <PostContentForm singlePost={singlePost} />
+            <PostCommentForm singlePost={singlePost} />
+            <PostCommentListForm singlePost={singlePost}/>
         </Fragment>
     );
 };
