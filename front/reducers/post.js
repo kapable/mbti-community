@@ -1,5 +1,8 @@
 import produce from '../util/produce';
 import shortId from 'shortid';
+import faker from '@withshepherd/faker'
+
+faker.locale = "ko";
 
 export const initialState = {
     mainPosts: [{
@@ -192,6 +195,36 @@ export const initialState = {
     addCommentError: false,
 };
 
+initialState.mainPosts = initialState.mainPosts.concat(
+    Array(100).fill().map(() => ({
+        id:shortId.generate(),
+        category: 'ENFJ',
+        User: {
+            id: Math.floor(Math.random() * 100) + 5,
+            nickname: faker.name.findName(),
+        },
+        title: faker.lorem.sentence(),
+        Content: Array(5).fill().map(() => ({
+            id: shortId.generate(),
+            type: "paragraph",
+            data: {
+                text: faker.lorem.sentence()
+            }
+        })),
+        likes: Math.floor(Math.random() * 100) + 5,
+        Comments: Array(10).fill().map(() => ({
+            id:Math.floor(Math.random() * 100) + 5,
+            User: {
+                id:Math.floor(Math.random() * 100) + 5,
+                nickname: faker.name.lastName(),
+                type: 'ENTP',
+            },
+            comment: faker.lorem.sentence(),
+            datetime: faker.date.recent(),
+        }))
+    }))
+);
+
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
@@ -212,7 +245,7 @@ const dummyPost = (data) => ({
         nickname: data.userId,
     },
     title:data.title,
-    content: data.contents,
+    Content: data.contents,
     likes: 0,
     Comments: []
 });

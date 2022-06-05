@@ -117,20 +117,24 @@ const HotRanking = () => {
                 <Row className='home-hot-ranking-row' justify='center'>
                     <Col span={12}>
                         {sampleTopten.map((content, index) => (
-                            <div key={content.title + index} className='home-hot-ranking-topten-div'>
-                                <p className='home-hot-ranking-topten-p'>
-                                    <span className='home-hot-ranking-topten-number'>{index+1}</span> <span className='home-hot-ranking-topten-type'>{content.type}</span> <span className='home-hot-ranking-topten-title'>{content.title}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
-                                </p>
-                            </div>
+                            <Link key={`${content.id}`} href={`post/1`}><a>
+                                <div key={content.title + index} className='home-hot-ranking-topten-div'>
+                                    <p className='home-hot-ranking-topten-p'>
+                                        <span className='home-hot-ranking-topten-number'>{index+1}</span> <span className='home-hot-ranking-topten-type'>{content.type}</span> <span className='home-hot-ranking-topten-title'>{content.title}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
+                                    </p>
+                                </div>
+                            </a></Link>
                         ))}
                     </Col>
                     <Col span={12}>
                         {sampleTopten.map((content, index) => (
-                            <div key={content.title + index} className='home-hot-ranking-topten-div'>
-                                <p className='home-hot-ranking-topten-p'>
-                                    <span className='home-hot-ranking-topten-number'>{index+6}</span> <span className='home-hot-ranking-topten-type'>{content.type}</span> <span className='home-hot-ranking-topten-title'>{content.title}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
-                                </p>
-                            </div>
+                            <Link key={`${content.id}`} href={`post/1`}><a>
+                                <div key={content.title + index} className='home-hot-ranking-topten-div'>
+                                    <p className='home-hot-ranking-topten-p'>
+                                        <span className='home-hot-ranking-topten-number'>{index+6}</span> <span className='home-hot-ranking-topten-type'>{content.type}</span> <span className='home-hot-ranking-topten-title'>{content.title}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
+                                    </p>
+                                </div>
+                            </a></Link>
                         ))}
                     </Col>
                 </Row>
