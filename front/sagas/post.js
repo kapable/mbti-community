@@ -7,7 +7,7 @@ import {
     REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, REMOVE_POST_FAILURE,
     // UPLOAD_IMAGES_SUCCESS, UPLOAD_IMAGES_FAILURE, UPLOAD_IMAGES_REQUEST,
     // UPLOAD_THUMBNAIL_SUCCESS, UPLOAD_THUMBNAIL_FAILURE, UPLOAD_THUMBNAIL_REQUEST,
-    // LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE,
+    LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE,
     // SET_POST_TITLE_REQUEST, SET_POST_TITLE_SUCCESS, SET_POST_TITLE_FAILURE,
     // SET_POST_TEXT_SUCCESS, SET_POST_TEXT_FAILURE, SET_POST_TEXT_REQUEST,
 } from '../reducers/post';
@@ -43,14 +43,14 @@ function* loadPost(action) {
         // const result = yield call(loadPostAPI, action.data);
         yield delay(1000);
         yield put({
-            // type: LOAD_POST_SUCCESS,
-            // data: result.data,
+            type: LOAD_POST_SUCCESS,
+            data: action.data//result.data,
         })
     } catch (err) {
         console.log(err)
         yield put({
-            // type: LOAD_POST_FAILURE,
-            // error: err.response
+            type: LOAD_POST_FAILURE,
+            error: err.response
         })
     };
 };
@@ -217,7 +217,7 @@ function* watchLoadPosts() {
 }
 
 function* watchLoadPost() {
-    // yield takeLatest(LOAD_POST_REQUEST, loadPost);
+    yield takeLatest(LOAD_POST_REQUEST, loadPost);
 }
 
 function* watchAddPost() {

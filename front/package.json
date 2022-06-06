@@ -17,6 +17,7 @@
     "antd": "^4.20.3",
     "axios": "^0.27.2",
     "immer": "^9.0.14",
+    "moment": "^2.29.3",
     "next": "^9.5.5",
     "next-redux-wrapper": "^6.0.2",
     "prop-types": "^15.8.1",

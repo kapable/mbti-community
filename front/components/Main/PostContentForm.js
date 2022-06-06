@@ -63,8 +63,8 @@ const PostContentForm = ({ singlePost }) => {
                     <p className='post-content-title'>{singlePost.title}</p>
                     <p className='post-content-info'>
                         <span className='post-content-time'>19:25</span>&nbsp;&nbsp;&nbsp;
-                        <span className='post-content-views'>조회수 12</span>
-                        <span onClick={onLikeClick} className='post-content-title-like'>&nbsp;&nbsp;{liked ? <LikeFilled /> : <LikeOutlined />}15</span>
+                        <span className='post-content-views'>{`조회수 ${singlePost.views}`}</span>
+                        <span onClick={onLikeClick} className='post-content-title-like'>&nbsp;&nbsp;{liked ? <LikeFilled /> : <LikeOutlined />}{singlePost.likes}</span>
                     </p>
                 </Col>
                 <Col className='post-content-middle-col' span={6}>

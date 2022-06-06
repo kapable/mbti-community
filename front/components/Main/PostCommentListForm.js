@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Comment, List, Pagination } from 'antd';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
+
+moment.locale('ko');
 
 const PostCommentListForm = ({ singlePost }) => {
+
     return (
         <div className='post-comment-list-form'>
             <List
@@ -16,7 +21,7 @@ const PostCommentListForm = ({ singlePost }) => {
                             actions={[<span>댓글달기</span>]}
                             author={[<p key="1-user">{item.User.nickname}<span style={{backgroundColor: "#c86143", color:"white", padding: "0 0.2rem", marginLeft:"0.2rem"}}>{item.User.type}</span></p>]}
                             content={item.comment}
-                            datetime={item.datetime}
+                            datetime={moment(item.datetime).format('YYYY-MM-DD')}
                         />
                     </li>
                 )}
