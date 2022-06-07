@@ -1,8 +1,9 @@
 import { Col, Row } from 'antd';
 import Link from 'next/link';
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_MY_POSTS_REQUEST } from '../../reducers/post';
+import Router from 'next/router';
 
 const MyPosts = ({ userId }) => {
     const dispatch = useDispatch();
@@ -15,18 +16,20 @@ const MyPosts = ({ userId }) => {
 
     const { myPosts } = useSelector((state) => state.post);
 
+    const onPostClick = useCallback((postId) => {
+        Router.push(`/post/${postId}`);
+    }, []);
+
     return (
         <Fragment>
             {myPosts.map((post) => (
-                <Link key={`${post.title}-link`} href={`post/${post.id}`}><a>
-                    <Row key={`${post.id}-Row`} className='my-post-row'>
-                        <Col key={`${post.id}-Col-left`} className='my-post-col-left' span={20}>
-                            <p key={`${post.id}-p1`} className='my-post-col-title'>{post.title}</p>
-                            <p key={`${post.id}-p2`} className='my-post-col-info'>{`조회수 ${post.views} | 추천 ${post.likes} | ${post.User.nickname}`}</p>
-                        </Col>
-                        <Col key={`${post.id}-Col-right`} className='my-post-col-right' span={4}>{post.Comments.length}</Col>
-                    </Row>
-                </a></Link>
+                <Row key={`${post.title}-Row`} className='my-post-row' onClick={() => onPostClick(post.id)}>
+                    <Col key={`${post.title}-Col-left`} className='my-post-col-left' span={20}>
+                        <p key={`${post.title}-p1`} className='my-post-col-title'>{post.title}</p>
+                        <p key={`${post.title}-p2`} className='my-post-col-info'>{`조회수 ${post.views} | 추천 ${post.likes} | ${post.User.nickname}`}</p>
+                    </Col>
+                    <Col key={`${post.title}-Col-right`} className='my-post-col-right' span={4}>{post.Comments.length}</Col>
+                </Row>
             ))}
         </Fragment>
     );
