@@ -53,7 +53,9 @@ const HotRanking = () => {
                     disableDotsControls={true}
                     disableButtonsControls={true}
                     items={topTen.map((post, index) => (
-                        <div className='home-hot-ranking-first-p'>{screenWidth < 600 ? `${index+1} ${post.title.slice(0, 18)}...` : `${index+1} ${post.title}`}</div>
+                        <Link href={`post/${post.id}`}><a>
+                            <div className='home-hot-ranking-first-p'>{screenWidth < 600 ? `${index+1} ${post.title.slice(0, 18)}...` : `${index+1} ${post.title}`}</div>
+                        </a></Link>
                     ))}
                 />
             </Row>

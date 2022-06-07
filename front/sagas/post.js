@@ -10,6 +10,7 @@ import {
     LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE,
     LOAD_HOT_POSTS_REQUEST, LOAD_HOT_POSTS_SUCCESS, LOAD_HOT_POSTS_FAILURE,
     LOAD_CATEGORY_HOT_POSTS_REQUEST, LOAD_CATEGORY_HOT_POSTS_SUCCESS, LOAD_CATEGORY_HOT_POSTS_FAILURE,
+    LOAD_CATEGORY_NEW_POSTS_REQUEST, LOAD_CATEGORY_NEW_POSTS_SUCCESS, LOAD_CATEGORY_NEW_POSTS_FAILURE,
     // SET_POST_TITLE_REQUEST, SET_POST_TITLE_SUCCESS, SET_POST_TITLE_FAILURE,
     // SET_POST_TEXT_SUCCESS, SET_POST_TEXT_FAILURE, SET_POST_TEXT_REQUEST,
 } from '../reducers/post';
@@ -73,6 +74,27 @@ function* loadCategoryHotPosts(action) {
         console.log(err)
         yield put({
             type: LOAD_CATEGORY_HOT_POSTS_FAILURE,
+            error: err.response
+        })
+    };
+};
+
+function loadCategoryNewPostsAPI(data) {
+    return axios.get(`/posts/${data.data}?lastId=${data.lastId || 0}`);
+}
+
+function* loadCategoryNewPosts(action) {
+    try {
+        // const result = yield call(loadCategoryNewPostsAPI, action);
+        yield delay(1000);
+        yield put({
+            type: LOAD_CATEGORY_NEW_POSTS_SUCCESS,
+            data: action.data//result.data,
+        })
+    } catch (err) {
+        console.log(err)
+        yield put({
+            type: LOAD_CATEGORY_NEW_POSTS_FAILURE,
             error: err.response
         })
     };
@@ -268,6 +290,10 @@ function* watchLoadCategoryHotPosts() {
     yield takeLatest(LOAD_CATEGORY_HOT_POSTS_REQUEST, loadCategoryHotPosts);
 }
 
+function* watchLoadCategoryNewPosts() {
+    yield takeLatest(LOAD_CATEGORY_NEW_POSTS_REQUEST, loadCategoryNewPosts);
+}
+
 function* watchLoadPost() {
     yield takeLatest(LOAD_POST_REQUEST, loadPost);
 }
@@ -305,6 +331,7 @@ export default function* postSaga() {
         fork(watchLoadPosts),
         fork(watchLoadHotPosts),
         fork(watchLoadCategoryHotPosts),
+        fork(watchLoadCategoryNewPosts),
         fork(watchLoadPost),
         fork(watchAddPost),
         fork(watchRemovePost),

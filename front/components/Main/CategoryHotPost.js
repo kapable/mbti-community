@@ -27,7 +27,7 @@ const CategoryHotPost = ({ category }) => {
     return (
         <Fragment>
             {categoryHotPosts.slice((currentPage-1)*3, (currentPage-1)*3+3).map((post) => (
-                <Link key={`${post.id}-link`} href={`post/${post.id}`}><a>
+                <Link key={`${post.title}-link`} href={`post/${post.id}`}><a>
                     <Row key={`${post.id}-Row`} className='home-category-hot-post-row'>
                         <Col key={`${post.id}-Col-left`} className='home-category-hot-post-col-left' span={20}>
                             <p key={`${post.id}-p1`} className='home-category-hot-post-col-title'>{post.title}</p>

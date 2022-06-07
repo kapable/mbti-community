@@ -21,6 +21,7 @@ export const initialState = {
     },
     totalHotTen: [],
     categoryHotPosts: [],
+    categoryNewPosts: [],
     imagePaths: [],
     addPostLoading: false,
     addPostDone: false,
@@ -137,6 +138,37 @@ initialState.categoryHotPosts = initialState.categoryHotPosts.concat(
     }))
 );
 
+initialState.categoryNewPosts = initialState.categoryNewPosts.concat(
+    Array(15).fill().map(() => ({
+        id:Math.floor(Math.random() * 100) + 5,
+        category: categories[Math.floor(Math.random() * categories.length) + 1],
+        User: {
+            id: Math.floor(Math.random() * 100) + 5,
+            nickname: faker.name.findName(),
+        },
+        title: faker.lorem.sentence(),
+        Content: Array(5).fill().map(() => ({
+            id: Math.floor(Math.random() * 100) + 5,
+            type: "paragraph",
+            data: {
+                text: faker.lorem.sentence()
+            }
+        })),
+        likes: Math.floor(Math.random() * 100) + 5,
+        views: Math.floor(Math.random() * 100) + 5,
+        Comments: Array(Math.floor(Math.random() * 100) + 5).fill().map(() => ({
+            id:Math.floor(Math.random() * 100) + 5,
+            User: {
+                id:Math.floor(Math.random() * 100) + 5,
+                nickname: faker.name.lastName(),
+                type: 'ENTP',
+            },
+            comment: faker.lorem.sentence(),
+            datetime: faker.date.recent(),
+        }))
+    }))
+);
+
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
@@ -160,6 +192,10 @@ export const LOAD_HOT_POSTS_FAILURE = 'LOAD_HOT_POSTS_FAILURE';
 export const LOAD_CATEGORY_HOT_POSTS_REQUEST = 'LOAD_CATEGORY_HOT_POSTS_REQUEST';
 export const LOAD_CATEGORY_HOT_POSTS_SUCCESS = 'LOAD_CATEGORY_HOT_POSTS_SUCCESS';
 export const LOAD_CATEGORY_HOT_POSTS_FAILURE = 'LOAD_CATEGORY_HOT_POSTS_FAILURE';
+
+export const LOAD_CATEGORY_NEW_POSTS_REQUEST = 'LOAD_CATEGORY_NEW_POSTS_REQUEST';
+export const LOAD_CATEGORY_NEW_POSTS_SUCCESS = 'LOAD_CATEGORY_NEW_POSTS_SUCCESS';
+export const LOAD_CATEGORY_NEW_POSTS_FAILURE = 'LOAD_CATEGORY_NEW_POSTS_FAILURE';
 
 const dummyPost = (data) => ({
     id:shortId.generate(),
@@ -371,6 +407,20 @@ const reducer = (state = initialState, action) => {
             case LOAD_CATEGORY_HOT_POSTS_FAILURE:
                 draft.loadCategoryHotPostsLoading = false;
                 draft.loadCategoryHotPostsError = action.error;
+                break;
+            case LOAD_CATEGORY_NEW_POSTS_REQUEST:
+                draft.loadCategoryNewPostsLoading = true;
+                draft.loadCategoryNewPostsDone = false;
+                draft.loadCategoryNewPostsError = null;
+                break;
+            case LOAD_CATEGORY_NEW_POSTS_SUCCESS:
+                // draft.mainPosts = action.data;
+                draft.loadCategoryNewPostsDone = true;
+                draft.loadCategoryNewPostsLoading = false;
+                break;
+            case LOAD_CATEGORY_NEW_POSTS_FAILURE:
+                draft.loadCategoryNewPostsLoading = false;
+                draft.loadCategoryNewPostsError = action.error;
                 break;
             default:
                 break;

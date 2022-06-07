@@ -1,41 +1,40 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Pagination } from 'antd';
+import { LOAD_CATEGORY_NEW_POSTS_REQUEST } from '../../reducers/post';
+import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
 const CategoryNewPost = ({ category }) => {
+    const dispatch = useDispatch();
+    const [currentPage, setCurrentPage] = useState(1);
+    useEffect(() => {
+        dispatch({
+            type: LOAD_CATEGORY_NEW_POSTS_REQUEST,
+            data: category,
+        })
+    }, []);
+
+    const { categoryNewPosts } = useSelector((state) => state.post);
+
+    const onPageChange = useCallback((page) => {
+        setCurrentPage(page);
+    }, []);
+
     return (
         <Fragment>
-            <Row className='home-category-new-post-row'>
-                <Col className='home-category-new-post-col-left' span={20}>
-                    <p className='home-category-new-post-col-title'>엔프제 남친에게 서운할 때</p>
-                    <p className='home-category-new-post-col-info'>3시간 전 | 조회수 99999</p>
-                </Col>
-                <Col className='home-category-new-post-col-right' span={4}>
-                    완다
-                    <p className='home-category-new-post-col-right-button'>ENTP</p>
-                </Col>
-            </Row>
-            <Row className='home-category-new-post-row'>
-                <Col className='home-category-new-post-col-left' span={20}>
-                    <p className='home-category-new-post-col-title'>엔프제 남친에게 서운할 때</p>
-                    <p className='home-category-new-post-col-info'>3시간 전 | 조회수 99999</p>
-                </Col>
-                <Col className='home-category-new-post-col-right' span={4}>
-                    완다
-                    <p className='home-category-new-post-col-right-button'>ENTP</p>
-                </Col>
-            </Row>
-            <Row className='home-category-new-post-row'>
-                <Col className='home-category-new-post-col-left' span={20}>
-                    <p className='home-category-new-post-col-title'>엔프제 남친에게 서운할 때</p>
-                    <p className='home-category-new-post-col-info'>3시간 전 | 조회수 99999</p>
-                </Col>
-                <Col className='home-category-new-post-col-right' span={4}>
-                    완다
-                    <p className='home-category-new-post-col-right-button'>ENTP</p>
-                </Col>
-            </Row>
-            <Pagination responsive style={{width: "fit-content", margin: "1.5rem auto"}} pageSize={3} total={15} />
+            {categoryNewPosts.slice((currentPage-1)*3, (currentPage-1)*3+3).map((post) => (
+                <Link key={`${post.title}-link`} href={`post/${post.id}`}><a>
+                    <Row key={`${post.id}-Row`} className='home-category-new-post-row'>
+                        <Col key={`${post.id}-Col-left`} className='home-category-new-post-col-left' span={20}>
+                            <p key={`${post.id}-p1`} className='home-category-new-post-col-title'>{post.title}</p>
+                            <p key={`${post.id}-p2`} className='home-category-new-post-col-info'>{`조회수 ${post.views} | 추천 ${post.likes} | ${post.User.nickname}`}</p>
+                        </Col>
+                        <Col key={`${post.id}-Col-right`} className='home-category-new-post-col-right' span={4}>{post.Comments.length}</Col>
+                    </Row>
+                </a></Link>
+            ))}
+            <Pagination responsive style={{width: "fit-content", margin: "1.5rem auto"}} pageSize={3} total={15} onChange={onPageChange} defaultCurrent={1}/>
         </Fragment>
     );
 };
