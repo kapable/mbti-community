@@ -133,10 +133,15 @@
     border: none;
     height: 1.5rem;
     margin: auto 0;
+    position: absolute;
+}
+
+.alice-carousel {
+    padding-top: 0.2rem;
 }
 
 .home-hot-ranking-first-p {
-    margin-left: 2rem;
+    margin-left: 8rem;
     margin-bottom: 0;
     margin-block-start: 0.;
     margin-block-end: 0;

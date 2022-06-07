@@ -4,6 +4,8 @@ import { Tabs, Row, Col, Carousel } from 'antd';
 import CategoryHotPost from './CategoryHotPost';
 import SwipeableViews from 'react-swipeable-views';
 import { useDispatch, useSelector } from 'react-redux';
+import AliceCarousel from 'react-alice-carousel';
+import 'react-alice-carousel/lib/alice-carousel.css';
 
 const { TabPane } = Tabs;
 const pointColor = '#375cb7';
@@ -34,14 +36,26 @@ const HotRanking = () => {
     const onChangeCategory = useCallback((category) => {
         setSelectedCategory(category);
     }, []);
-
     return (
         <Fragment>
             <Row className='home-hot-ranking-title-div'>
                 <button className='home-hot-ranking-title-btn'>Hot 게시글</button>
-                    {/* {topTen.map((post, index) => (
-                        <div className='home-hot-ranking-first-p'>{screenWidth < 600 ? `${index+1} ${post.title.slice(0, 15)}...` : `${index+1} ${post.title}`}</div>
-                    ))} */}
+                <AliceCarousel
+                    autoPlay
+                    autoPlayControls={false}
+                    autoPlayStrategy="none"
+                    autoPlayInterval={4000}
+                    animationDuration={500}
+                    animationType="fadeout"
+                    infinite
+                    innerWidth={8}
+                    touchTracking={false}
+                    disableDotsControls={true}
+                    disableButtonsControls={true}
+                    items={topTen.map((post, index) => (
+                        <div className='home-hot-ranking-first-p'>{screenWidth < 600 ? `${index+1} ${post.title.slice(0, 18)}...` : `${index+1} ${post.title}`}</div>
+                    ))}
+                />
             </Row>
             {screenWidth < 600
             ? (
@@ -54,7 +68,7 @@ const HotRanking = () => {
                                         <Link key={`${content.id}-${content.title}`} href={`post/${content.id}`}><a>
                                             <div key={content.title + index} className='home-hot-ranking-topten-div'>
                                                 <p className='home-hot-ranking-topten-p'>
-                                                    <span className='home-hot-ranking-topten-number'>{index+1}</span> <span className='home-hot-ranking-topten-type'>{content.category}</span> <span className='home-hot-ranking-topten-title'>{content.title.slice(0, 18) + "..."}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
+                                                    <span className='home-hot-ranking-topten-number'>{index+1}</span> <span className='home-hot-ranking-topten-type'>{content.category}</span> <span className='home-hot-ranking-topten-title'>{content.title.slice(0, 16) + "..."}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
                                                 </p>
                                             </div>
                                         </a></Link>
