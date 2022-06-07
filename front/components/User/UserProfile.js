@@ -12,8 +12,8 @@ const UserProfile = () => {
     const dispatch = useDispatch();
     const { myInfo } = useSelector((state) => state.user);
 
-    const [nickname, setNickname] = useInput(myInfo.nickname);
-    const [description, setDescription] = useInput(myInfo.description);
+    const [nickname, onChangeNickname, setNickname] = useInput(myInfo.nickname);
+    const [description, onChangeDescription, setDescription] = useInput(myInfo.description);
     const [myMBTI, setMyMBTI] = useState(myInfo.type);
 
     const [nicknameEditMode, setNicknameEditMode] = useState(false);
@@ -51,6 +51,7 @@ const UserProfile = () => {
                 type: CHANGE_NICKNAME_REQUEST,
                 data: nickname,
             });
+            setNickname(nickname);
             setNicknameEditMode(false);
         };
     }, [nickname]);
@@ -65,6 +66,7 @@ const UserProfile = () => {
                 type: CHANGE_DESCRIPTION_REQUEST,
                 data: description,
             });
+            setDescription(description);
             setDescriptionEditMode(false);
         };
         
@@ -83,7 +85,7 @@ const UserProfile = () => {
                     ? (<Input.Search 
                         className='user-nickname-edit-input'
                         value={nickname}
-                        onChange={setNickname}
+                        onChange={onChangeNickname}
                         addonBefore="닉네임"
                         enterButton="수정"
                         onSearch={onNicknameSubmit}
@@ -127,7 +129,7 @@ const UserProfile = () => {
                     <Input.Search
                         className='user-description-edit-input'
                         value={description}
-                        onChange={setDescription}
+                        onChange={onChangeDescription}
                         addonBefore="소개"
                         enterButton="수정"
                         onSearch={onDescriptionSubmit}
@@ -135,7 +137,7 @@ const UserProfile = () => {
                 )
                 : (
                     <Fragment>
-                        <Col className='profile-introduction-text' span={16}>{myInfo.description}</Col>
+                        <Col className='profile-introduction-text' span={16}>{description}</Col>
                         <Col className='profile-introduction-edit' span={4}><EditOutlined onClick={onDescriptionEditMode} style={{color: "#b7bed1"}} /></Col>
                     </Fragment>
                 )

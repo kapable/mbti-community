@@ -58,7 +58,7 @@ const AppLayout = ({ children }) => {
                         ))}
                     </div>
                     <Collapse ghost accordion defaultActiveKey={['1']}>
-                        <Panel key="1" header="즐겨찾는 게시판">
+                        <Panel key="1" header="즐겨보는 게시판">
                             {Object.keys(bellClicked).map((key) => {
                                 if(bellClicked[key] === true) {
                                     return<p key={key}>{key}<span onClick={onBellClick(key)} className='applayout-drawer-bell-icon'>{bellClicked[key] ? <BellFilled /> : <BellOutlined />}</span></p>
