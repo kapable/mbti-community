@@ -11,6 +11,9 @@ import {
     LOAD_HOT_POSTS_REQUEST, LOAD_HOT_POSTS_SUCCESS, LOAD_HOT_POSTS_FAILURE,
     LOAD_CATEGORY_HOT_POSTS_REQUEST, LOAD_CATEGORY_HOT_POSTS_SUCCESS, LOAD_CATEGORY_HOT_POSTS_FAILURE,
     LOAD_CATEGORY_NEW_POSTS_REQUEST, LOAD_CATEGORY_NEW_POSTS_SUCCESS, LOAD_CATEGORY_NEW_POSTS_FAILURE,
+    LOAD_MY_POSTS_REQUEST, LOAD_MY_POSTS_SUCCESS, LOAD_MY_POSTS_FAILURE,
+    LOAD_MY_LIKE_POSTS_REQUEST, LOAD_MY_LIKE_POSTS_SUCCESS, LOAD_MY_LIKE_POSTS_FAILURE,
+    LOAD_MY_COMMENTS_REQUEST, LOAD_MY_COMMENTS_SUCCESS, LOAD_MY_COMMENTS_FAILURE,
     // SET_POST_TITLE_REQUEST, SET_POST_TITLE_SUCCESS, SET_POST_TITLE_FAILURE,
     // SET_POST_TEXT_SUCCESS, SET_POST_TEXT_FAILURE, SET_POST_TEXT_REQUEST,
 } from '../reducers/post';
@@ -95,6 +98,69 @@ function* loadCategoryNewPosts(action) {
         console.log(err)
         yield put({
             type: LOAD_CATEGORY_NEW_POSTS_FAILURE,
+            error: err.response
+        })
+    };
+};
+
+function loadMyPostsAPI(data) {
+    return axios.get(`/posts/${data.data}?lastId=${data.lastId || 0}`);
+}
+
+function* loadMyPosts(action) {
+    try {
+        // const result = yield call(loadMyPostsAPI, action);
+        yield delay(1000);
+        yield put({
+            type: LOAD_MY_POSTS_SUCCESS,
+            data: action.data//result.data,
+        })
+    } catch (err) {
+        console.log(err)
+        yield put({
+            type: LOAD_MY_POSTS_FAILURE,
+            error: err.response
+        })
+    };
+};
+
+function loadMyLikePostsAPI(data) {
+    return axios.get(`/posts/${data.data}?lastId=${data.lastId || 0}`);
+}
+
+function* loadMyLikePosts(action) {
+    try {
+        // const result = yield call(loadMyLikePostsAPI, action);
+        yield delay(1000);
+        yield put({
+            type: LOAD_MY_LIKE_POSTS_SUCCESS,
+            data: action.data//result.data,
+        })
+    } catch (err) {
+        console.log(err)
+        yield put({
+            type: LOAD_MY_LIKE_POSTS_FAILURE,
+            error: err.response
+        })
+    };
+};
+
+function loadMyCommentsAPI(data) {
+    return axios.get(`/posts/${data.data}?lastId=${data.lastId || 0}`);
+}
+
+function* loadMyComments(action) {
+    try {
+        // const result = yield call(loadMyCommentsAPI, action);
+        yield delay(1000);
+        yield put({
+            type: LOAD_MY_COMMENTS_SUCCESS,
+            data: action.data//result.data,
+        })
+    } catch (err) {
+        console.log(err)
+        yield put({
+            type: LOAD_MY_COMMENTS_FAILURE,
             error: err.response
         })
     };
@@ -294,6 +360,18 @@ function* watchLoadCategoryNewPosts() {
     yield takeLatest(LOAD_CATEGORY_NEW_POSTS_REQUEST, loadCategoryNewPosts);
 }
 
+function* watchLoadMyPosts() {
+    yield takeLatest(LOAD_MY_POSTS_REQUEST, loadMyPosts);
+}
+
+function* watchLoadMyLikePosts() {
+    yield takeLatest(LOAD_MY_LIKE_POSTS_REQUEST, loadMyLikePosts);
+}
+
+function* watchLoadMyComments() {
+    yield takeLatest(LOAD_MY_COMMENTS_REQUEST, loadMyComments);
+}
+
 function* watchLoadPost() {
     yield takeLatest(LOAD_POST_REQUEST, loadPost);
 }
@@ -332,6 +410,9 @@ export default function* postSaga() {
         fork(watchLoadHotPosts),
         fork(watchLoadCategoryHotPosts),
         fork(watchLoadCategoryNewPosts),
+        fork(watchLoadMyPosts),
+        fork(watchLoadMyLikePosts),
+        fork(watchLoadMyComments),
         fork(watchLoadPost),
         fork(watchAddPost),
         fork(watchRemovePost),

@@ -5,6 +5,9 @@ import useInput from '../../hooks/useInput';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { CHANGE_DESCRIPTION_REQUEST, CHANGE_NICKNAME_REQUEST } from '../../reducers/user';
+import MyPosts from '../../components/User/MyPosts';
+import MyComments from '../../components/User/MyComments';
+import MyLikePosts from '../../components/User/MyLikePosts';
 
 const { TabPane } = Tabs;
 
@@ -93,7 +96,7 @@ const UserProfile = () => {
                     : (<div className='profile-head-name'>{nickname} <EditOutlined onClick={onNicknameEditMode} className="profile-head-name-edit-button" /></div>)
                     }
                     
-                    <div className='profile-head-email'>ellen0@gmail.com</div>
+                    <div className='profile-head-email'>{myInfo.email}</div>
                     {typeEditMode
                     ? (<Dropdown overlay={menu} trigger={['click']}>
                             <Button style={{ width: '6rem' }}>
@@ -145,13 +148,13 @@ const UserProfile = () => {
             </Row>
             <Tabs className='profile-menu-tab' tabBarStyle={{margin:"0 auto", width:"fit-content"}} tabPosition='top' size='default' type='line'>
                 <TabPane style={{padding: "16px"}} tab="작성글" key="1">
-                    작성글
+                    <MyPosts userId={myInfo.id}/>
                 </TabPane>
                 <TabPane style={{padding: "16px"}} tab="작성댓글" key="2">
-                    작성댓글
+                    <MyComments userId={myInfo.id}/>
                 </TabPane>
                 <TabPane style={{padding: "16px"}} tab="좋아요한 글" key="4">
-                    좋아요한 글
+                    <MyLikePosts userId={myInfo.id}/>
                 </TabPane>
             </Tabs>
         </div>

@@ -149,6 +149,34 @@
     margin: 16px 16px;
 }
 
+/* Profile > MyPost series */
+.my-post-row {
+    background-color: white;
+    padding: 0 20px;
+    border-bottom: solid 0.01rem #b7bed1;
+}
+
+.my-post-col-title {
+    font-size: 0.8rem;
+    margin-block-start: 0.8rem;
+    margin-block-end: 0.4rem;
+    color: black;
+}
+
+.my-post-col-info {
+    color: #bfbfbf;
+    font-size: 0.5rem;
+    margin-block-start: 0.4rem;
+    margin-block-end: 0.8rem;
+}
+
+.my-post-col-right {
+    color: var(--point-color);
+    font-size: 1.1rem;
+    line-height: 4rem;
+    text-align: right;
+}
+
 /* Follow Form */
 .follow-list-form {
     padding: 0 16px;

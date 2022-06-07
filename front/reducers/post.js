@@ -22,6 +22,9 @@ export const initialState = {
     totalHotTen: [],
     categoryHotPosts: [],
     categoryNewPosts: [],
+    myPosts:[],
+    myLikePosts:[],
+    myComments:[],
     imagePaths: [],
     addPostLoading: false,
     addPostDone: false,
@@ -41,6 +44,15 @@ export const initialState = {
     loadCategoryHotPostsLoading: false,
     loadCategoryHotPostsDone: false,
     loadCategoryHotPostsError: false,
+    loadMyPostsLoading: false,
+    loadMyPostsDone: false,
+    loadMyPostsError: false,
+    loadMyLikePostsLoading: false,
+    loadMyLikePostsDone: false,
+    loadMyLikePostsError: false,
+    loadMyCommentsLoading: false,
+    loadMyCommentsDone: false,
+    loadMyCommentsError: false,
 };
 
 const categories = ['ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
@@ -138,7 +150,69 @@ initialState.categoryHotPosts = initialState.categoryHotPosts.concat(
     }))
 );
 
-initialState.categoryNewPosts = initialState.categoryNewPosts.concat(
+initialState.myPosts = initialState.myPosts.concat(
+    Array(15).fill().map(() => ({
+        id:Math.floor(Math.random() * 100) + 5,
+        category: categories[Math.floor(Math.random() * categories.length) + 1],
+        User: {
+            id: Math.floor(Math.random() * 100) + 5,
+            nickname: faker.name.findName(),
+        },
+        title: faker.lorem.sentence(),
+        Content: Array(5).fill().map(() => ({
+            id: Math.floor(Math.random() * 100) + 5,
+            type: "paragraph",
+            data: {
+                text: faker.lorem.sentence()
+            }
+        })),
+        likes: Math.floor(Math.random() * 100) + 5,
+        views: Math.floor(Math.random() * 100) + 5,
+        Comments: Array(Math.floor(Math.random() * 100) + 5).fill().map(() => ({
+            id:Math.floor(Math.random() * 100) + 5,
+            User: {
+                id:Math.floor(Math.random() * 100) + 5,
+                nickname: faker.name.lastName(),
+                type: 'ENTP',
+            },
+            comment: faker.lorem.sentence(),
+            datetime: faker.date.recent(),
+        }))
+    }))
+);
+
+initialState.myLikePosts = initialState.myLikePosts.concat(
+    Array(15).fill().map(() => ({
+        id:Math.floor(Math.random() * 100) + 5,
+        category: categories[Math.floor(Math.random() * categories.length) + 1],
+        User: {
+            id: Math.floor(Math.random() * 100) + 5,
+            nickname: faker.name.findName(),
+        },
+        title: faker.lorem.sentence(),
+        Content: Array(5).fill().map(() => ({
+            id: Math.floor(Math.random() * 100) + 5,
+            type: "paragraph",
+            data: {
+                text: faker.lorem.sentence()
+            }
+        })),
+        likes: Math.floor(Math.random() * 100) + 5,
+        views: Math.floor(Math.random() * 100) + 5,
+        Comments: Array(Math.floor(Math.random() * 100) + 5).fill().map(() => ({
+            id:Math.floor(Math.random() * 100) + 5,
+            User: {
+                id:Math.floor(Math.random() * 100) + 5,
+                nickname: faker.name.lastName(),
+                type: 'ENTP',
+            },
+            comment: faker.lorem.sentence(),
+            datetime: faker.date.recent(),
+        }))
+    }))
+);
+
+initialState.myComments = initialState.myComments.concat(
     Array(15).fill().map(() => ({
         id:Math.floor(Math.random() * 100) + 5,
         category: categories[Math.floor(Math.random() * categories.length) + 1],
@@ -196,6 +270,18 @@ export const LOAD_CATEGORY_HOT_POSTS_FAILURE = 'LOAD_CATEGORY_HOT_POSTS_FAILURE'
 export const LOAD_CATEGORY_NEW_POSTS_REQUEST = 'LOAD_CATEGORY_NEW_POSTS_REQUEST';
 export const LOAD_CATEGORY_NEW_POSTS_SUCCESS = 'LOAD_CATEGORY_NEW_POSTS_SUCCESS';
 export const LOAD_CATEGORY_NEW_POSTS_FAILURE = 'LOAD_CATEGORY_NEW_POSTS_FAILURE';
+
+export const LOAD_MY_POSTS_REQUEST = 'LOAD_MY_POSTS_REQUEST';
+export const LOAD_MY_POSTS_SUCCESS = 'LOAD_MY_POSTS_SUCCESS';
+export const LOAD_MY_POSTS_FAILURE = 'LOAD_MY_POSTS_FAILURE';
+
+export const LOAD_MY_LIKE_POSTS_REQUEST = 'LOAD_MY_LIKE_POSTS_REQUEST';
+export const LOAD_MY_LIKE_POSTS_SUCCESS = 'LOAD_MY_LIKE_POSTS_SUCCESS';
+export const LOAD_MY_LIKE_POSTS_FAILURE = 'LOAD_MY_LIKE_POSTS_FAILURE';
+
+export const LOAD_MY_COMMENTS_REQUEST = 'LOAD_MY_COMMENTS_REQUEST';
+export const LOAD_MY_COMMENTS_SUCCESS = 'LOAD_MY_COMMENTS_SUCCESS';
+export const LOAD_MY_COMMENTS_FAILURE = 'LOAD_MY_COMMENTS_FAILURE';
 
 const dummyPost = (data) => ({
     id:shortId.generate(),
@@ -421,6 +507,48 @@ const reducer = (state = initialState, action) => {
             case LOAD_CATEGORY_NEW_POSTS_FAILURE:
                 draft.loadCategoryNewPostsLoading = false;
                 draft.loadCategoryNewPostsError = action.error;
+                break;
+            case LOAD_MY_POSTS_REQUEST:
+                draft.loadMyPostsLoading = true;
+                draft.loadMyPostsDone = false;
+                draft.loadMyPostsError = null;
+                break;
+            case LOAD_MY_POSTS_SUCCESS:
+                // draft.mainPosts = action.data;
+                draft.loadMyPostsDone = true;
+                draft.loadMyPostsLoading = false;
+                break;
+            case LOAD_MY_POSTS_FAILURE:
+                draft.loadMyPostsLoading = false;
+                draft.loadMyPostsError = action.error;
+                break;
+            case LOAD_MY_LIKE_POSTS_REQUEST:
+                draft.loadMyLikePostsLoading = true;
+                draft.loadMyLikePostsDone = false;
+                draft.loadMyLikePostsError = null;
+                break;
+            case LOAD_MY_LIKE_POSTS_SUCCESS:
+                // draft.mainPosts = action.data;
+                draft.loadMyLikePostsDone = true;
+                draft.loadMyLikePostsLoading = false;
+                break;
+            case LOAD_MY_LIKE_POSTS_FAILURE:
+                draft.loadMyLikePostsLoading = false;
+                draft.loadMyLikePostsError = action.error;
+                break;
+            case LOAD_MY_COMMENTS_REQUEST:
+                draft.loadMyCommentsLoading = true;
+                draft.loadMyCommentsDone = false;
+                draft.loadMyCommentsError = null;
+                break;
+            case LOAD_MY_COMMENTS_SUCCESS:
+                // draft.mainPosts = action.data;
+                draft.loadMyCommentsDone = true;
+                draft.loadMyCommentsLoading = false;
+                break;
+            case LOAD_MY_COMMENTS_FAILURE:
+                draft.loadMyCommentsLoading = false;
+                draft.loadMyCommentsError = action.error;
                 break;
             default:
                 break;
