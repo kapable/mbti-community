@@ -1,17 +1,17 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Tabs, Row, Col } from 'antd';
+import { Tabs, Row, Col, Carousel } from 'antd';
 import CategoryHotPost from './CategoryHotPost';
 import SwipeableViews from 'react-swipeable-views';
-import shortId from 'shortid';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const { TabPane } = Tabs;
 const pointColor = '#375cb7';
 const greyColor = '#f3f3f3';
 
 const HotRanking = () => {
-    const topTen = useSelector((state) => state.post.mainPosts.slice(1, 11));
+    // const topTen = useSelector((state) => state.post.mainPosts.slice(1, 11));
+    const topTen = useSelector((state) => state.post.totalHotTen);
     const [screenWidth, setScreenWidth] = useState();
     useEffect(() => {
         setScreenWidth(window.screen.width)
@@ -39,7 +39,9 @@ const HotRanking = () => {
         <Fragment>
             <Row className='home-hot-ranking-title-div'>
                 <button className='home-hot-ranking-title-btn'>Hot 게시글</button>
-                <p className='home-hot-ranking-first-p'>{screenWidth < 600 ? `1 ${topTen[0].title.slice(0, 15)}...` : `1 ${topTen[0].title}`}</p>
+                    {/* {topTen.map((post, index) => (
+                        <div className='home-hot-ranking-first-p'>{screenWidth < 600 ? `${index+1} ${post.title.slice(0, 15)}...` : `${index+1} ${post.title}`}</div>
+                    ))} */}
             </Row>
             {screenWidth < 600
             ? (
@@ -49,7 +51,7 @@ const HotRanking = () => {
                             <Row className='home-hot-ranking-row' justify='center'>
                                 <Col span={20}>
                                     {topTen.slice(0, 5).map((content, index) => (
-                                        <Link key={`${content.id}`} href={`post/${content.id}`}><a>
+                                        <Link key={`${content.id}-${content.title}`} href={`post/${content.id}`}><a>
                                             <div key={content.title + index} className='home-hot-ranking-topten-div'>
                                                 <p className='home-hot-ranking-topten-p'>
                                                     <span className='home-hot-ranking-topten-number'>{index+1}</span> <span className='home-hot-ranking-topten-type'>{content.category}</span> <span className='home-hot-ranking-topten-title'>{content.title.slice(0, 18) + "..."}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
@@ -64,7 +66,7 @@ const HotRanking = () => {
                             <Row className='home-hot-ranking-row' justify='center'>
                                 <Col span={20}>
                                     {topTen.slice(5).map((content, index) => (
-                                        <Link key={`${content.id}`} href={`post/${content.id}`}><a>
+                                        <Link key={`${content.id}-${content.title}`} href={`post/${content.id}`}><a>
                                             <div key={content.title + index} className='home-hot-ranking-topten-div'>
                                                 <p className='home-hot-ranking-topten-p'>
                                                     <span className='home-hot-ranking-topten-number'>{index+6}</span> <span className='home-hot-ranking-topten-type'>{content.category}</span> <span className='home-hot-ranking-topten-title'>{content.title.slice(0, 18) + "..."}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
@@ -86,7 +88,7 @@ const HotRanking = () => {
                 <Row className='home-hot-ranking-row' justify='center'>
                     <Col span={12}>
                         {topTen.slice(0, 5).map((content, index) => (
-                            <Link key={`${content.id}`} href={`post/${content.id}`}><a>
+                            <Link key={`${content.id}-${content.title}`} href={`post/${content.id}`}><a>
                                 <div key={content.title + index} className='home-hot-ranking-topten-div'>
                                     <p className='home-hot-ranking-topten-p'>
                                         <span className='home-hot-ranking-topten-number'>{index+1}</span> <span className='home-hot-ranking-topten-type'>{content.category}</span> <span className='home-hot-ranking-topten-title'>{content.title.slice(0, 18) + "..."}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>
@@ -97,7 +99,7 @@ const HotRanking = () => {
                     </Col>
                     <Col span={12}>
                         {topTen.slice(5).map((content, index) => (
-                            <Link key={`${content.id}`} href={`post/${content.id}`}><a>
+                            <Link key={`${content.id}-${content.title}`} href={`post/${content.id}`}><a>
                                 <div key={content.title + index} className='home-hot-ranking-topten-div'>
                                     <p className='home-hot-ranking-topten-p'>
                                         <span className='home-hot-ranking-topten-number'>{index+6}</span> <span className='home-hot-ranking-topten-type'>{content.category}</span> <span className='home-hot-ranking-topten-title'>{content.title.slice(0, 18) + "..."}</span> <span className='home-hot-ranking-topten-views'>{content.views}</span>

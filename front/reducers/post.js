@@ -5,19 +5,7 @@ import faker from '@withshepherd/faker'
 faker.locale = "ko";
 
 export const initialState = {
-    mainPosts: [{
-        id:null,
-        category: '',
-        User: {
-            id:null,
-            nickname: '',
-        },
-        title:'',
-        Content: [],
-        likes: null,
-        views: null,
-        Comments: []
-    }],
+    mainPosts: [],
     singlePost: {
         id:null,
         category: '',
@@ -31,6 +19,8 @@ export const initialState = {
         views: null,
         Comments: []
     },
+    totalHotTen: [],
+    categoryHotPosts: [],
     imagePaths: [],
     addPostLoading: false,
     addPostDone: false,
@@ -44,12 +34,20 @@ export const initialState = {
     loadPostLoading: false,
     loadPostDone: false,
     loadPostError: false,
+    loadHotPostsLoading: false,
+    loadHotPostsDone: false,
+    loadHotPostsError: false,
+    loadCategoryHotPostsLoading: false,
+    loadCategoryHotPostsDone: false,
+    loadCategoryHotPostsError: false,
 };
+
+const categories = ['ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
 
 initialState.mainPosts = initialState.mainPosts.concat(
     Array(100).fill().map(() => ({
         id:Math.floor(Math.random() * 100) + 5,
-        category: 'ENFJ',
+        category: categories[Math.floor(Math.random() * categories.length) + 1],
         User: {
             id: Math.floor(Math.random() * 100) + 5,
             nickname: faker.name.findName(),
@@ -77,6 +75,68 @@ initialState.mainPosts = initialState.mainPosts.concat(
     }))
 );
 
+initialState.totalHotTen = initialState.totalHotTen.concat(
+    Array(10).fill().map(() => ({
+        id:Math.floor(Math.random() * 100) + 5,
+        category: categories[Math.floor(Math.random() * categories.length) + 1],
+        User: {
+            id: Math.floor(Math.random() * 100) + 5,
+            nickname: faker.name.findName(),
+        },
+        title: faker.lorem.sentence(),
+        Content: Array(5).fill().map(() => ({
+            id: Math.floor(Math.random() * 100) + 5,
+            type: "paragraph",
+            data: {
+                text: faker.lorem.sentence()
+            }
+        })),
+        likes: Math.floor(Math.random() * 100) + 5,
+        views: Math.floor(Math.random() * 100) + 5,
+        Comments: Array(10).fill().map(() => ({
+            id:Math.floor(Math.random() * 100) + 5,
+            User: {
+                id:Math.floor(Math.random() * 100) + 5,
+                nickname: faker.name.lastName(),
+                type: 'ENTP',
+            },
+            comment: faker.lorem.sentence(),
+            datetime: faker.date.recent(),
+        }))
+    }))
+);
+
+initialState.categoryHotPosts = initialState.categoryHotPosts.concat(
+    Array(15).fill().map(() => ({
+        id:Math.floor(Math.random() * 100) + 5,
+        category: categories[Math.floor(Math.random() * categories.length) + 1],
+        User: {
+            id: Math.floor(Math.random() * 100) + 5,
+            nickname: faker.name.findName(),
+        },
+        title: faker.lorem.sentence(),
+        Content: Array(5).fill().map(() => ({
+            id: Math.floor(Math.random() * 100) + 5,
+            type: "paragraph",
+            data: {
+                text: faker.lorem.sentence()
+            }
+        })),
+        likes: Math.floor(Math.random() * 100) + 5,
+        views: Math.floor(Math.random() * 100) + 5,
+        Comments: Array(Math.floor(Math.random() * 100) + 5).fill().map(() => ({
+            id:Math.floor(Math.random() * 100) + 5,
+            User: {
+                id:Math.floor(Math.random() * 100) + 5,
+                nickname: faker.name.lastName(),
+                type: 'ENTP',
+            },
+            comment: faker.lorem.sentence(),
+            datetime: faker.date.recent(),
+        }))
+    }))
+);
+
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
@@ -92,6 +152,14 @@ export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
 export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
 export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
+
+export const LOAD_HOT_POSTS_REQUEST = 'LOAD_HOT_POSTS_REQUEST';
+export const LOAD_HOT_POSTS_SUCCESS = 'LOAD_HOT_POSTS_SUCCESS';
+export const LOAD_HOT_POSTS_FAILURE = 'LOAD_HOT_POSTS_FAILURE';
+
+export const LOAD_CATEGORY_HOT_POSTS_REQUEST = 'LOAD_CATEGORY_HOT_POSTS_REQUEST';
+export const LOAD_CATEGORY_HOT_POSTS_SUCCESS = 'LOAD_CATEGORY_HOT_POSTS_SUCCESS';
+export const LOAD_CATEGORY_HOT_POSTS_FAILURE = 'LOAD_CATEGORY_HOT_POSTS_FAILURE';
 
 const dummyPost = (data) => ({
     id:shortId.generate(),
@@ -273,6 +341,36 @@ const reducer = (state = initialState, action) => {
             case LOAD_POST_FAILURE:
                 draft.loadPostLoading = false;
                 draft.loadPostError = action.error;
+                break;
+            case LOAD_HOT_POSTS_REQUEST:
+                draft.loadHotPostsLoading = true;
+                draft.loadHotPostsDone = false;
+                draft.loadHotPostsError = null;
+                break;
+            case LOAD_HOT_POSTS_SUCCESS:
+                // draft.mainPosts = action.data;
+                draft.totalHotTen = draft.totalHotTen.slice(0).sort((a, b) => (b.views - a.views));
+                draft.loadHotPostsDone = true;
+                draft.loadHotPostsLoading = false;
+                break;
+            case LOAD_HOT_POSTS_FAILURE:
+                draft.loadHotPostsLoading = false;
+                draft.loadHotPostsError = action.error;
+                break;
+            case LOAD_CATEGORY_HOT_POSTS_REQUEST:
+                draft.loadCategoryHotPostsLoading = true;
+                draft.loadCategoryHotPostsDone = false;
+                draft.loadCategoryHotPostsError = null;
+                break;
+            case LOAD_CATEGORY_HOT_POSTS_SUCCESS:
+                // draft.mainPosts = action.data;
+                draft.categoryHotPosts = draft.categoryHotPosts.slice(0).sort((a, b) => (b.views - a.views));
+                draft.loadCategoryHotPostsDone = true;
+                draft.loadCategoryHotPostsLoading = false;
+                break;
+            case LOAD_CATEGORY_HOT_POSTS_FAILURE:
+                draft.loadCategoryHotPostsLoading = false;
+                draft.loadCategoryHotPostsError = action.error;
                 break;
             default:
                 break;

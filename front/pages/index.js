@@ -1,12 +1,21 @@
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { Tabs } from 'antd';
 import Head from 'next/head';
 import HotRanking from '../components/Main/HotRanking';
 import TypeForum from '../components/Main/TypeForum';
+import { useDispatch } from 'react-redux';
+import { LOAD_HOT_POSTS_REQUEST } from '../reducers/post';
 
 const { TabPane } = Tabs;
 
 const Home = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({
+            type: LOAD_HOT_POSTS_REQUEST,
+
+        })
+    }, []);
     const categories = ["Hot 게시글", "고민상담소", 'ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
     const [selectedCategory, setSelectedCategory] = useState(categories[0]);
     const onChangeCategory = useCallback((category) => {
