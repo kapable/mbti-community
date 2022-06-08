@@ -11,9 +11,9 @@ const CategoryNewPost = ({ category }) => {
     useEffect(() => {
         dispatch({
             type: LOAD_CATEGORY_NEW_POSTS_REQUEST,
-            data: category,
+            category,
         })
-    }, []);
+    }, [category]);
 
     const { categoryNewPosts } = useSelector((state) => state.post);
 

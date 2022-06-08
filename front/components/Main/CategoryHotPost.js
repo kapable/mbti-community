@@ -14,9 +14,9 @@ const CategoryHotPost = ({ category }) => {
     useEffect(() => {
         dispatch({
             type: LOAD_CATEGORY_HOT_POSTS_REQUEST,
-            data: category,
+            category,
         })
-    }, []);
+    }, [category]);
 
 
     const onPageChange = useCallback((page) => {

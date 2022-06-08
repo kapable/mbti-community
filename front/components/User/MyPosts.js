@@ -14,7 +14,26 @@ const MyPosts = ({ userId }) => {
         })
     }, [userId]);
 
-    const { myPosts } = useSelector((state) => state.post);
+    const { myPosts, myHasMorePosts, loadMyPostsLoading } = useSelector((state) => state.post);
+
+    useEffect(() => {
+        function onScroll() {
+            if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 500) {
+                if(myHasMorePosts && !loadMyPostsLoading) {
+                    const lastId = myPosts[myPosts.length - 1]?.id;
+                    dispatch({
+                        type: LOAD_MY_POSTS_REQUEST,
+                        data: userId,
+                        lastId
+                    });
+                };
+            };
+        };
+        window.addEventListener('scroll', onScroll);
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+        };
+    }, [myHasMorePosts, loadMyPostsLoading, myPosts]);
 
     const onPostClick = useCallback((postId) => {
         Router.push(`/post/${postId}`);

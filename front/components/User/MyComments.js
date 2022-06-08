@@ -14,7 +14,26 @@ const MyComments = ({ userId }) => {
         })
     }, [userId]);
 
-    const { myComments } = useSelector((state) => state.post);
+    const { myComments, myCommentsHasMorePosts, loadMyCommentsLoading } = useSelector((state) => state.post);
+
+    useEffect(() => {
+        function onScroll() {
+            if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 500) {
+                if(myCommentsHasMorePosts && !loadMyCommentsLoading) {
+                    const lastId = myComments[myComments.length - 1]?.id;
+                    dispatch({
+                        type: LOAD_MY_COMMENTS_REQUEST,
+                        data: userId,
+                        lastId
+                    });
+                };
+            };
+        };
+        window.addEventListener('scroll', onScroll);
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+        };
+    }, [myCommentsHasMorePosts, loadMyCommentsLoading, myComments]);
 
     const onPostClick = useCallback((postId) => {
         Router.push(`/post/${postId}`);

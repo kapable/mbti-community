@@ -18,7 +18,7 @@ import {
     // SET_POST_TEXT_SUCCESS, SET_POST_TEXT_FAILURE, SET_POST_TEXT_REQUEST,
 } from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
-import { generateDummyPost } from '../reducers/post';
+import { generateDummyPost, dummySinglePost } from '../reducers/post';
 
 function loadPostsAPI(data) {
     return axios.get(`/posts/${data.data}?lastId=${data.lastId || 0}`);
@@ -69,10 +69,11 @@ function loadCategoryHotPostsAPI(data) {
 function* loadCategoryHotPosts(action) {
     try {
         // const result = yield call(loadCategoryHotPostsAPI, action);
+        console.log('HOT POSTS', action.category);
         yield delay(1000);
         yield put({
             type: LOAD_CATEGORY_HOT_POSTS_SUCCESS,
-            data: action.data//result.data,
+            data: generateDummyPost(15)//result.data,
         })
     } catch (err) {
         console.log(err)
@@ -90,10 +91,11 @@ function loadCategoryNewPostsAPI(data) {
 function* loadCategoryNewPosts(action) {
     try {
         // const result = yield call(loadCategoryNewPostsAPI, action);
+        console.log('NEW POSTS', action.category);
         yield delay(1000);
         yield put({
             type: LOAD_CATEGORY_NEW_POSTS_SUCCESS,
-            data: action.data//result.data,
+            data: generateDummyPost(15)//result.data,
         })
     } catch (err) {
         console.log(err)
@@ -114,7 +116,7 @@ function* loadMyPosts(action) {
         yield delay(1000);
         yield put({
             type: LOAD_MY_POSTS_SUCCESS,
-            data: action.data//result.data,
+            data: generateDummyPost(15)//result.data,
         })
     } catch (err) {
         console.log(err)
@@ -156,7 +158,7 @@ function* loadMyComments(action) {
         yield delay(1000);
         yield put({
             type: LOAD_MY_COMMENTS_SUCCESS,
-            data: action.data//result.data,
+            data: generateDummyPost(15)//result.data,
         })
     } catch (err) {
         console.log(err)
@@ -177,7 +179,7 @@ function* loadPost(action) {
         yield delay(1000);
         yield put({
             type: LOAD_POST_SUCCESS,
-            data: action.data//result.data,
+            data: dummySinglePost(action.id)//result.data,
         })
     } catch (err) {
         console.log(err)

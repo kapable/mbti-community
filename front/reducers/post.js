@@ -96,13 +96,13 @@ initialState.mainPosts = initialState.mainPosts.concat(generateDummyPost(100));
 
 // initialState.totalHotTen = initialState.totalHotTen.concat(generateDummyPost(10));
 
-initialState.categoryHotPosts = initialState.categoryHotPosts.concat(generateDummyPost(15));
+// initialState.categoryHotPosts = initialState.categoryHotPosts.concat(generateDummyPost(15));
 
-initialState.myPosts = initialState.myPosts.concat(generateDummyPost(15));
+// initialState.myPosts = initialState.myPosts.concat(generateDummyPost(15));
 
 // initialState.myLikePosts = initialState.myLikePosts.concat(generateDummyPost(15));
 
-initialState.myComments = initialState.myComments.concat(generateDummyPost(15));
+// initialState.myComments = initialState.myComments.concat(generateDummyPost(15));
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -157,95 +157,33 @@ const dummyPost = (data) => ({
     Comments: []
 });
 
-const dummySinglePost = (id) => ({
+export const dummySinglePost = (id) => ({
     id: parseInt(id),
     category: 'ENFJ',
     User: {
-        id:10,
-        nickname: 'be_seeyong',
+        id:Math.floor(Math.random() * 100) + 5,
+        nickname: faker.name.findName(),
     },
-    title:'엔프제 남친에게 서운할 때 어떻게 해야 하나요 ㅠㅠ',
-    Content: [
-        {
-            id: "5jvmbJbK4Q",
-            type: "paragraph",
-            data: {
-                text: "엔프제 남친에게 서운할 때 마리야"
-            }
-        },
-        {
-            id: "_NVkfm0kkf",
-            type: "paragraph",
-            data: {
-                text: "가나다라마바사아자아자 화이팅!&nbsp;"
-            }
-        },
-        {
-            id: "FF1iyF3VwasdfN",
-            type: "image",
-            data: {
-                file: {
-                    url: "https://codex.so/public/app/img/external/codex2x.png"
-                },
-                caption: "",
-                withBorder: false,
-                stretched: false,
-                withBackground: false
-            }
-        },
-        {
-            id: "SkQzn3tbvZ",
-            type: "paragraph",
-            data: {
-                text: "is good!"
-            }
-        },
-        {
-            id: "FF1iyF3VwN",
-            type: "image",
-            data: {
-                file: {
-                    url: "https://codex.so/public/app/img/external/codex2x.png"
-                },
-                caption: "",
-                withBorder: false,
-                stretched: false,
-                withBackground: false
-            }
-        },
-    ],
+    title:faker.lorem.sentence(),
+    Content: Array(5).fill().map(() => ({
+        id: Math.floor(Math.random() * 100) + 5,
+        type: "paragraph",
+        data: {
+            text: faker.lorem.sentence()
+        }
+    })),
     likes: Math.floor(Math.random() * 100) + 5,
     views: Math.floor(Math.random() * 100) + 5,
-    Comments: [{
-        id:45,
+    Comments: Array(10).fill().map(() => ({
+        id:Math.floor(Math.random() * 100) + 5,
         User: {
-            id:90,
-            nickname: 'Donkey',
+            id:Math.floor(Math.random() * 100) + 5,
+            nickname: faker.name.lastName(),
             type: 'ENTP',
         },
-        comment: '그건 말이 안돼요!',
-        datetime: 3,
-    },
-    {
-        id:46,
-        User: {
-            id:98,
-            nickname: '딜로미',
-            type: 'ESTP',
-        },
-        comment: '그건 말이 되죠!',
-        datetime: 2,
-    },
-    {
-        id:47,
-        User: {
-            id:92,
-            nickname: '정구리',
-            type: 'INFP',
-        },
-        comment: '그건 말이 될까요?!!',
-        datetime: 1,
-    },]
+        comment: faker.lorem.sentence(),
+        datetime: faker.date.recent(),
+    }))
 });
 
 const dummyComment = (data) => ({
@@ -315,8 +253,7 @@ const reducer = (state = initialState, action) => {
                 draft.loadPostError = null;
                 break;
             case LOAD_POST_SUCCESS:
-                // draft.singlePost = action.data;
-                draft.singlePost = dummySinglePost(action.data);
+                draft.singlePost = action.data;
                 draft.loadPostDone = true;
                 draft.loadPostLoading = false;
                 // draft.hasMorePosts = action.data.length === 10;
@@ -331,8 +268,7 @@ const reducer = (state = initialState, action) => {
                 draft.loadHotPostsError = null;
                 break;
             case LOAD_HOT_POSTS_SUCCESS:
-                // draft.mainPosts = action.data;
-                draft.totalHotTen = draft.totalHotTen.concat(action.data).slice(0).sort((a, b) => (b.views - a.views));
+                draft.totalHotTen = action.data.slice(0).sort((a, b) => (b.views - a.views));
                 draft.loadHotPostsDone = true;
                 draft.loadHotPostsLoading = false;
                 break;
@@ -346,9 +282,8 @@ const reducer = (state = initialState, action) => {
                 draft.loadCategoryHotPostsError = null;
                 break;
             case LOAD_CATEGORY_HOT_POSTS_SUCCESS:
-                // draft.mainPosts = action.data;
-                draft.categoryHotPosts = draft.categoryHotPosts.slice(0).sort((a, b) => (b.views - a.views));
-                draft.loadCategoryHotPostsDone = true;
+                draft.categoryHotPosts = action.data.slice(0).sort((a, b) => (b.views - a.views));
+                draft.loadCategoryHotPostsDoneG = true;
                 draft.loadCategoryHotPostsLoading = false;
                 break;
             case LOAD_CATEGORY_HOT_POSTS_FAILURE:
@@ -361,7 +296,7 @@ const reducer = (state = initialState, action) => {
                 draft.loadCategoryNewPostsError = null;
                 break;
             case LOAD_CATEGORY_NEW_POSTS_SUCCESS:
-                // draft.mainPosts = action.data;
+                draft.categoryNewPosts = action.data.slice(0).sort((a, b) => (b.views - a.views));
                 draft.loadCategoryNewPostsDone = true;
                 draft.loadCategoryNewPostsLoading = false;
                 break;
@@ -375,7 +310,8 @@ const reducer = (state = initialState, action) => {
                 draft.loadMyPostsError = null;
                 break;
             case LOAD_MY_POSTS_SUCCESS:
-                // draft.mainPosts = action.data;
+                draft.myPosts = draft.myPosts.concat(action.data);
+                draft.myHasMorePosts = draft.myPosts.length < 50;
                 draft.loadMyPostsDone = true;
                 draft.loadMyPostsLoading = false;
                 break;
@@ -404,7 +340,8 @@ const reducer = (state = initialState, action) => {
                 draft.loadMyCommentsError = null;
                 break;
             case LOAD_MY_COMMENTS_SUCCESS:
-                // draft.mainPosts = action.data;
+                draft.myComments = draft.myComments.concat(action.data);
+                draft.myCommentsHasMorePosts = draft.myComments.length < 50;
                 draft.loadMyCommentsDone = true;
                 draft.loadMyCommentsLoading = false;
                 break;
