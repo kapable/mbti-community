@@ -94,16 +94,6 @@ export const generateDummyPost = (number) => Array(number).fill().map(() => ({
 
 initialState.mainPosts = initialState.mainPosts.concat(generateDummyPost(100));
 
-// initialState.totalHotTen = initialState.totalHotTen.concat(generateDummyPost(10));
-
-// initialState.categoryHotPosts = initialState.categoryHotPosts.concat(generateDummyPost(15));
-
-// initialState.myPosts = initialState.myPosts.concat(generateDummyPost(15));
-
-// initialState.myLikePosts = initialState.myLikePosts.concat(generateDummyPost(15));
-
-// initialState.myComments = initialState.myComments.concat(generateDummyPost(15));
-
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
@@ -206,8 +196,7 @@ const reducer = (state = initialState, action) => {
                 draft.addPostError = null;
                 break;
             case ADD_POST_SUCCESS:
-                draft.mainPosts.unshift(dummyPost(action.data));
-                // draft.mainPosts.unshift(action.data);
+                draft.myPosts.unshift(dummyPost(action.data));
                 draft.addPostDone = true;
                 draft.addPostLoading = false;
                 draft.imagePaths = [];
@@ -222,7 +211,7 @@ const reducer = (state = initialState, action) => {
                 draft.removePostError = null;
                 break;
             case REMOVE_POST_SUCCESS:
-                draft.mainPosts = draft.mainPosts.filter((v) => v.id !== action.data.PostId);
+                draft.myPosts = draft.myPosts.filter((v) => v.id !== action.data.PostId);
                 draft.removePostDone = true;
                 draft.removePostLoading = false;
                 break;
@@ -238,7 +227,7 @@ const reducer = (state = initialState, action) => {
             case ADD_COMMENT_SUCCESS:
                 draft.singlePost.Comments.unshift(dummyComment(action.data));
                 // draft.singlePost.Comments.unshift(action.data);
-                // const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+                // const post = draft.myPosts.find((v) => v.id === action.data.PostId);
                 // post.Comments.unshift(action.data);
                 draft.addCommentDone = true;
                 draft.addCommentLoading = false;

@@ -69,7 +69,6 @@ function loadCategoryHotPostsAPI(data) {
 function* loadCategoryHotPosts(action) {
     try {
         // const result = yield call(loadCategoryHotPostsAPI, action);
-        console.log('HOT POSTS', action.category);
         yield delay(1000);
         yield put({
             type: LOAD_CATEGORY_HOT_POSTS_SUCCESS,
@@ -91,7 +90,6 @@ function loadCategoryNewPostsAPI(data) {
 function* loadCategoryNewPosts(action) {
     try {
         // const result = yield call(loadCategoryNewPostsAPI, action);
-        console.log('NEW POSTS', action.category);
         yield delay(1000);
         yield put({
             type: LOAD_CATEGORY_NEW_POSTS_SUCCESS,

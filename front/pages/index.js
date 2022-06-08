@@ -5,6 +5,7 @@ import HotRanking from '../components/Main/HotRanking';
 import TypeForum from '../components/Main/TypeForum';
 import { useDispatch } from 'react-redux';
 import { LOAD_HOT_POSTS_REQUEST } from '../reducers/post';
+import { EllipsisOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 
@@ -33,7 +34,7 @@ const Home = () => {
                 <meta name="description" content="MBTI 커뮤니티" />
                 <meta name="keywords" content="MBTI, 커뮤니티" />
             </Head>
-            <Tabs className='home-category-tab' onChange={onChangeCategory} tabPosition='top' size='default' type='line' tabBarGutter={20} tabBarStyle={{backgroundColor: '#f3f3f3', height:'1.7rem'}} moreIcon={false}> 
+            <Tabs className='home-category-tab' onChange={onChangeCategory} tabPosition='top' size='default' type='line' tabBarGutter={20} tabBarStyle={{backgroundColor: '#f3f3f3', height:'1.7rem'}} moreIcon={<EllipsisOutlined />}> 
                 {categories.map((category) => (
                     <TabPane key={category} tab={category}>
                         {selectedCategory === "Hot 게시글" ? <HotRanking /> : <TypeForum category={selectedCategory} />}

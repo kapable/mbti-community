@@ -14,7 +14,7 @@ const AppLayout = ({ children }) => {
     const { myInfo } = useSelector((state) => state.user);
 
     const categoriesObj = {"Hot 게시글":false, "고민상담소":false, 'ENFJ':false, 'ENFP':false, 'ENTJ':false, 'ENTP':false, 'ESFJ':false, 'ESFP':false, 'ESTJ':false, 'ESTP':false, 'INFJ':false, 'INFP':false, 'INTJ':false, 'INTP':false, 'ISFJ':false, 'ISFP':false, 'ISTJ':false, 'ISTP':false}
-    const account = <div><div className='applayout-drawer-account-name-div'>My Name</div><div className='applayout-drawer-account-type-div'>ENTP</div></div>
+    const account = <div><div className='applayout-drawer-account-name-div'>{myInfo ? myInfo.nickname : '두들링 | MBTI 커뮤니티'}</div><div className='applayout-drawer-account-type-div'>{myInfo ? myInfo.type : null}</div></div>
     const [bellClicked, setBellClicked] = useState(categoriesObj);
     const onBellClick = useCallback((type) => () => {
         setBellClicked((bellClicked) => ({...bellClicked, [type]: !bellClicked[type]}));
@@ -51,36 +51,44 @@ const AppLayout = ({ children }) => {
                     visible={showDrawer}
                     key="applayout-drawer"
                     width={270}
-                >
-                    <div className='applayout-drawer-fixed-menu-div'>
-                        {Object.keys(bellClicked).slice(0, 2).map(menu => (
-                            <p key={menu}>{menu}<span onClick={onBellClick(menu)} className='applayout-drawer-bell-icon'>{bellClicked[menu] ? <BellFilled /> : <BellOutlined />}</span></p>
-                        ))}
-                    </div>
-                    <Collapse ghost accordion defaultActiveKey={['1']}>
-                        <Panel key="1" header="즐겨보는 게시판">
-                            {Object.keys(bellClicked).map((key) => {
-                                if(bellClicked[key] === true) {
-                                    return<p key={key}>{key}<span onClick={onBellClick(key)} className='applayout-drawer-bell-icon'>{bellClicked[key] ? <BellFilled /> : <BellOutlined />}</span></p>
-                                }
-                            })}
-                        </Panel>
-                        <Panel key="2" header="E형">
-                            {Object.keys(bellClicked).map(type => {
-                                if(type.startsWith('E')) {
-                                    return <p key={type}>{type}<span onClick={onBellClick(type)} className='applayout-drawer-bell-icon'>{bellClicked[type] ? <BellFilled /> : <BellOutlined />}</span></p>
-                                }
-                            })}
-                        </Panel>
-                        <Panel key="3" header="I형">
-                        {Object.keys(bellClicked).map(type => {
-                                if(type.startsWith('I')) {
-                                    return <p key={type}>{type}<span onClick={onBellClick(type)} className='applayout-drawer-bell-icon'>{bellClicked[type] ? <BellFilled /> : <BellOutlined />}</span></p>
-                                }
-                            })}
-                        </Panel>
-                        
-                    </Collapse>
+                >   
+                    {myInfo
+                    ? (
+                        <>
+                            <div className='applayout-drawer-fixed-menu-div'>
+                                {Object.keys(bellClicked).slice(0, 2).map(menu => (
+                                    <p key={menu}>{menu}<span onClick={onBellClick(menu)} className='applayout-drawer-bell-icon'>{bellClicked[menu] ? <BellFilled /> : <BellOutlined />}</span></p>
+                                ))}
+                            </div>
+                            <Collapse ghost accordion defaultActiveKey={['1']}>
+                                <Panel key="1" header="즐겨보는 게시판">
+                                    {Object.keys(bellClicked).map((key) => {
+                                        if(bellClicked[key] === true) {
+                                            return<p key={key}>{key}<span onClick={onBellClick(key)} className='applayout-drawer-bell-icon'>{bellClicked[key] ? <BellFilled /> : <BellOutlined />}</span></p>
+                                        }
+                                    })}
+                                </Panel>
+                                <Panel key="2" header="E형">
+                                    {Object.keys(bellClicked).map(type => {
+                                        if(type.startsWith('E')) {
+                                            return <p key={type}>{type}<span onClick={onBellClick(type)} className='applayout-drawer-bell-icon'>{bellClicked[type] ? <BellFilled /> : <BellOutlined />}</span></p>
+                                        }
+                                    })}
+                                </Panel>
+                                <Panel key="3" header="I형">
+                                {Object.keys(bellClicked).map(type => {
+                                        if(type.startsWith('I')) {
+                                            return <p key={type}>{type}<span onClick={onBellClick(type)} className='applayout-drawer-bell-icon'>{bellClicked[type] ? <BellFilled /> : <BellOutlined />}</span></p>
+                                        }
+                                    })}
+                                </Panel>
+                                
+                            </Collapse>
+                        </>
+                    )
+                    : (
+                        <div className='applayout-drawer-fixed-menu-logout-div'>로그인 해주세요!</div>
+                    )}
                 </Drawer>
             </Header>
             <div className='applayout-nav'>

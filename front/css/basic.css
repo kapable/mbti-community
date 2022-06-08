@@ -58,6 +58,11 @@
     border-bottom: solid 0.05rem #b7bed1;
 }
 
+.applayout-drawer-fixed-menu-logout-div {
+    padding-left: 16px;
+    font-size: 1rem;
+}
+
 .ant-collapse-header, .ant-collapse-content-box {
     border-bottom: solid 0.05rem #b7bed1;
 }
