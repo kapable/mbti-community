@@ -96,11 +96,11 @@ export const categoriesColorObj = {'ENFJ':'#52ceb0', 'ENFP':'#ffa348', 'ENTJ':'#
 const categoriesArr = Object.keys(categoriesColorObj);
 export const dummyUser = (data) => ({
     ...data,
-    nickname: 'BESEEYONG',
+    nickname: faker.name.findName(),
     id: Math.floor(Math.random() * 100) + 5,
     type: categoriesArr[Math.floor(Math.random() * categoriesArr.length)],
-    description: '안녕하세요! 인간 엔팁 웡아잉입니다! 고민 해결 해드릴게요! 팔로우 부탁드립니다!',
-    Posts: [{ id: 1 }],
+    description: faker.lorem.sentence(),
+    Posts: [{ id: Math.floor(Math.random() * 100) + 5 }],
     Followings: [{ nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }],
     Followers: [{ nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }],
 });

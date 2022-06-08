@@ -13,16 +13,27 @@ const { TabPane } = Tabs;
 
 const UserProfile = ({ userInfo }) => {
     const dispatch = useDispatch();
+    
+    const { myInfo } = useSelector((state) => state.user);
+    const [isMyProfile, setIsMyProfile] = useState();
 
     const [nickname, onChangeNickname, setNickname] = useInput('');
     const [description, onChangeDescription, setDescription] = useInput('');
     const [myMBTI, setMyMBTI] = useState('');
+    const [myColor, setMyColor] = useState('');
 
     useEffect(() => {
+        setIsMyProfile(userInfo.id === myInfo?.id);
         setNickname(userInfo.nickname);
         setDescription(userInfo.description);
+        setMyColor(categoriesColorObj[userInfo.type])
         setMyMBTI(userInfo.type);
-    }, [userInfo]);
+    }, [userInfo, myInfo, categoriesColorObj]);
+    
+    useEffect(() => {
+        setMyColor(categoriesColorObj[myMBTI]);
+    }, [myMBTI, categoriesColorObj]);
+
 
     const [nicknameEditMode, setNicknameEditMode] = useState(false);
     const [descriptionEditMode, setDescriptionEditMode] = useState(false);
@@ -88,7 +99,7 @@ const UserProfile = ({ userInfo }) => {
         <div>
             <Row className='profile-head-div'>
                 <Col span={16}>
-                    {nicknameEditMode
+                    {nicknameEditMode && isMyProfile
                     ? (<Input.Search 
                         className='user-nickname-edit-input'
                         value={nickname}
@@ -97,11 +108,11 @@ const UserProfile = ({ userInfo }) => {
                         enterButton="수정"
                         onSearch={onNicknameSubmit}
                     />)
-                    : (<div className='profile-head-name'>{nickname} <EditOutlined onClick={onNicknameEditMode} className="profile-head-name-edit-button" /></div>)
+                    : (<div className='profile-head-name'>{nickname} {isMyProfile ? <EditOutlined onClick={onNicknameEditMode} className="profile-head-name-edit-button" /> : null}</div>)
                     }
                     
                     <div className='profile-head-email'>{userInfo.email}</div>
-                    {typeEditMode
+                    {typeEditMode && isMyProfile
                     ? (<Dropdown overlay={menu} trigger={['click']}>
                             <Button style={{ width: '6rem' }}>
                                 <Space>
@@ -110,7 +121,7 @@ const UserProfile = ({ userInfo }) => {
                                 </Space>
                             </Button>
                         </Dropdown>)
-                    : (<div onClick={() => (setTypeEditMode(true))} className='profile-head-type' style={userInfo ? { backgroundColor: categoriesColorObj[userInfo.type]} : null}>{myMBTI}</div>)
+                    : (<div onClick={isMyProfile ? () => (setTypeEditMode(true)) : null} className='profile-head-type' style={userInfo ? { backgroundColor: myColor } : null}>{myMBTI}</div>)
                     }
                 </Col>
                 <Col span={8}>
@@ -119,19 +130,24 @@ const UserProfile = ({ userInfo }) => {
                         <Link href={`/followings/1`}><a><div className='profile-head-following-div'><span>{userInfo.Followings.length}</span><br />팔로잉</div></a></Link>
                     </div>
                     <div className='profile-head-right-below-div'>
-                        <Button
-                            style={{ border: 'none', backgroundColor: isFollow ? '#b7bed1' : "#375cb7", color: 'white' }}
-                            onClick={onFollowButtonClick}
-                            shape='round'
-                            className='profile-head-follow-button'>
-                                {isFollow ? <span><CheckOutlined /> 팔로잉</span> : <span><PlusOutlined /> 팔로우</span>}
-                        </Button>
+                        {isMyProfile
+                        ? null
+                        : (
+                            <Button
+                                style={{ border: 'none', backgroundColor: isFollow ? '#b7bed1' : "#375cb7", color: 'white' }}
+                                onClick={onFollowButtonClick}
+                                shape='round'
+                                className='profile-head-follow-button'>
+                                    {isFollow ? <span><CheckOutlined /> 팔로잉</span> : <span><PlusOutlined /> 팔로우</span>}
+                            </Button>
+                        )
+                        }
                     </div>
                 </Col>
             </Row>
             <Row className='profile-introduction-row'>
                 <Col className='profile-introduction-icon' span={4}><WechatOutlined style={{color: "#375cb7"}} /></Col>
-                {descriptionEditMode
+                {descriptionEditMode && isMyProfile
                 ? (
                     <Input.Search
                         className='user-description-edit-input'
@@ -145,7 +161,7 @@ const UserProfile = ({ userInfo }) => {
                 : (
                     <Fragment>
                         <Col className='profile-introduction-text' span={16}>{description}</Col>
-                        <Col className='profile-introduction-edit' span={4}><EditOutlined onClick={onDescriptionEditMode} style={{color: "#b7bed1"}} /></Col>
+                        <Col className='profile-introduction-edit' span={4}>{isMyProfile? <EditOutlined onClick={onDescriptionEditMode} style={{color: "#b7bed1"}} /> : null}</Col>
                     </Fragment>
                 )
                 }
