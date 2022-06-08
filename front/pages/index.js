@@ -26,6 +26,7 @@ const Home = () => {
         <Fragment>
             <Head>
                 <title>MBTI 커뮤니티</title>
+                <link rel='shortcut icon' href='/doodling-favicon.png'/>
                 <meta charSet='utf-8'/>
                 <meta name="language" content="Korean" />
                 <meta name="author" content="쿠키로켓" />

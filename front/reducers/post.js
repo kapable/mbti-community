@@ -94,7 +94,7 @@ export const generateDummyPost = (number) => Array(number).fill().map(() => ({
 
 initialState.mainPosts = initialState.mainPosts.concat(generateDummyPost(100));
 
-initialState.totalHotTen = initialState.totalHotTen.concat(generateDummyPost(10));
+// initialState.totalHotTen = initialState.totalHotTen.concat(generateDummyPost(10));
 
 initialState.categoryHotPosts = initialState.categoryHotPosts.concat(generateDummyPost(15));
 
@@ -332,7 +332,7 @@ const reducer = (state = initialState, action) => {
                 break;
             case LOAD_HOT_POSTS_SUCCESS:
                 // draft.mainPosts = action.data;
-                draft.totalHotTen = draft.totalHotTen.slice(0).sort((a, b) => (b.views - a.views));
+                draft.totalHotTen = draft.totalHotTen.concat(action.data).slice(0).sort((a, b) => (b.views - a.views));
                 draft.loadHotPostsDone = true;
                 draft.loadHotPostsLoading = false;
                 break;

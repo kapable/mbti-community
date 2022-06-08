@@ -51,7 +51,7 @@ function* loadHotPosts(action) {
         yield delay(1000);
         yield put({
             type: LOAD_HOT_POSTS_SUCCESS,
-            // data: result.data,
+            data: generateDummyPost(10)//result.data,
         })
     } catch (err) {
         console.log(err)
