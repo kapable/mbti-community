@@ -85,12 +85,41 @@ export const generateDummyPost = (number) => Array(number).fill().map(() => ({
         User: {
             id:Math.floor(Math.random() * 100) + 5,
             nickname: faker.name.lastName(),
-            type: 'ENTP',
+            type: categories[Math.floor(Math.random() * categories.length) + 1],
         },
         comment: faker.lorem.sentence(),
         datetime: faker.date.recent(),
     }))
 }));
+
+export const dummySinglePost = (id) => ({
+    id: parseInt(id),
+    category: 'ENFJ',
+    User: {
+        id:Math.floor(Math.random() * 100) + 5,
+        nickname: faker.name.findName(),
+    },
+    title:faker.lorem.sentence(),
+    Content: Array(5).fill().map(() => ({
+        id: Math.floor(Math.random() * 100) + 5,
+        type: "paragraph",
+        data: {
+            text: faker.lorem.sentence()
+        }
+    })),
+    likes: Math.floor(Math.random() * 100) + 5,
+    views: Math.floor(Math.random() * 100) + 5,
+    Comments: Array(10).fill().map(() => ({
+        id:Math.floor(Math.random() * 100) + 5,
+        User: {
+            id:Math.floor(Math.random() * 100) + 5,
+            nickname: faker.name.lastName(),
+            type: categories[Math.floor(Math.random() * categories.length) + 1],
+        },
+        comment: faker.lorem.sentence(),
+        datetime: faker.date.recent(),
+    }))
+});
 
 initialState.mainPosts = initialState.mainPosts.concat(generateDummyPost(100));
 
@@ -145,35 +174,6 @@ const dummyPost = (data) => ({
     Content: data.contents,
     likes: 0,
     Comments: []
-});
-
-export const dummySinglePost = (id) => ({
-    id: parseInt(id),
-    category: 'ENFJ',
-    User: {
-        id:Math.floor(Math.random() * 100) + 5,
-        nickname: faker.name.findName(),
-    },
-    title:faker.lorem.sentence(),
-    Content: Array(5).fill().map(() => ({
-        id: Math.floor(Math.random() * 100) + 5,
-        type: "paragraph",
-        data: {
-            text: faker.lorem.sentence()
-        }
-    })),
-    likes: Math.floor(Math.random() * 100) + 5,
-    views: Math.floor(Math.random() * 100) + 5,
-    Comments: Array(10).fill().map(() => ({
-        id:Math.floor(Math.random() * 100) + 5,
-        User: {
-            id:Math.floor(Math.random() * 100) + 5,
-            nickname: faker.name.lastName(),
-            type: 'ENTP',
-        },
-        comment: faker.lorem.sentence(),
-        datetime: faker.date.recent(),
-    }))
 });
 
 const dummyComment = (data) => ({

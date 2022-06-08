@@ -14,7 +14,6 @@ const Home = () => {
     useEffect(() => {
         dispatch({
             type: LOAD_HOT_POSTS_REQUEST,
-
         })
     }, []);
     const categories = ["Hot 게시글", "고민상담소", 'ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];

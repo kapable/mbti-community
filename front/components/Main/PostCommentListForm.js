@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Comment, List, Pagination } from 'antd';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import { categoriesColorObj } from '../../reducers/user';
 
 moment.locale('ko');
 
@@ -19,7 +20,7 @@ const PostCommentListForm = ({ singlePost }) => {
                         <Comment
                             key={`${item.datetime}-comment`}
                             actions={[<span>댓글달기</span>]}
-                            author={[<p key="1-user">{item.User.nickname}<span style={{backgroundColor: "#c86143", color:"white", padding: "0 0.2rem", marginLeft:"0.2rem"}}>{item.User.type}</span></p>]}
+                            author={[<p key="1-user">{item.User.nickname}<span style={{backgroundColor: categoriesColorObj[item.User.type], color:"white", padding: "0 0.2rem", marginLeft:"0.2rem"}}>{item.User.type}</span></p>]}
                             content={item.comment}
                             datetime={moment(item.datetime).format('YYYY-MM-DD')}
                         />
