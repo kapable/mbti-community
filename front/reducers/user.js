@@ -35,7 +35,16 @@ export const initialState = {
     loadFollowingListDone:false,
     loadFollowingListError:false,
     myInfo: null,
-    userInfo: null,
+    userInfo: {
+        email:'',
+        nickname: '',
+        id: null,
+        type: '',
+        description: '',
+        Posts: [{}],
+        Followings: [{}],
+        Followers: [{}],
+    },
     signUpData: {},
     loginData: {},
 };
@@ -83,12 +92,13 @@ export const LOAD_FOLLOWING_LIST_FAILURE = 'LOAD_FOLLOWING_LIST_FAILURE';
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
 export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
-
-const dummyUser = (data) => ({
+export const categoriesColorObj = {'ENFJ':'#52ceb0', 'ENFP':'#ffa348', 'ENTJ':'#3462a3', 'ENTP':'#dd5843', 'ESFJ':'#ffcfcf', 'ESFP':'#e0707e', 'ESTJ':'#587a4b', 'ESTP':'#ff977b', 'INFJ':'#c2dbff', 'INFP':'#277a64', 'INTJ':'#b9b0ff', 'INTP':'#7fc2f4', 'ISFJ':'#ffcf73', 'ISFP':'#a6be6f', 'ISTJ':' #a6be6f', 'ISTP':'#4690b4'};
+const categoriesArr = Object.keys(categoriesColorObj);
+export const dummyUser = (data) => ({
     ...data,
     nickname: 'BESEEYONG',
-    id: 10,
-    type: 'ISTJ',
+    id: Math.floor(Math.random() * 100) + 5,
+    type: categoriesArr[Math.floor(Math.random() * categoriesArr.length)],
     description: '안녕하세요! 인간 엔팁 웡아잉입니다! 고민 해결 해드릴게요! 팔로우 부탁드립니다!',
     Posts: [{ id: 1 }],
     Followings: [{ nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }],
@@ -107,7 +117,7 @@ const reducer = (state = initialState, action) => {
             case LOG_IN_SUCCESS:
                 draft.logInLoading = false;
                 draft.logInDone = true;
-                draft.myInfo = dummyUser(action.data)//action.data;
+                draft.myInfo = action.data;
                 break;
             case LOG_IN_FAILURE:
                 draft.logInLoading = false;
@@ -207,7 +217,7 @@ const reducer = (state = initialState, action) => {
             case LOAD_USER_INFO_SUCCESS:
                 draft.loadUserInfoLoading = false;
                 draft.loadUserInfoDone = true;
-                draft.userInfo = dummyUser()//action?.data || null;
+                draft.userInfo = action?.data || null;
                 break;
             case LOAD_USER_INFO_FAILURE:
                 draft.loadUserInfoLoading = false;

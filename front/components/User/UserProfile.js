@@ -1,23 +1,28 @@
 import { CheckOutlined, DownOutlined, EditOutlined, PlusOutlined, WechatOutlined } from '@ant-design/icons';
 import { Button, Col, Dropdown, Form, Input, Menu, Row, Space, Tabs } from 'antd';
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import useInput from '../../hooks/useInput';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { CHANGE_DESCRIPTION_REQUEST, CHANGE_NICKNAME_REQUEST } from '../../reducers/user';
+import { CHANGE_DESCRIPTION_REQUEST, CHANGE_NICKNAME_REQUEST, categoriesColorObj } from '../../reducers/user';
 import MyPosts from '../../components/User/MyPosts';
 import MyComments from '../../components/User/MyComments';
 import MyLikePosts from '../../components/User/MyLikePosts';
 
 const { TabPane } = Tabs;
 
-const UserProfile = () => {
+const UserProfile = ({ userInfo }) => {
     const dispatch = useDispatch();
-    const { myInfo } = useSelector((state) => state.user);
 
-    const [nickname, onChangeNickname, setNickname] = useInput(myInfo.nickname);
-    const [description, onChangeDescription, setDescription] = useInput(myInfo.description);
-    const [myMBTI, setMyMBTI] = useState(myInfo.type);
+    const [nickname, onChangeNickname, setNickname] = useInput('');
+    const [description, onChangeDescription, setDescription] = useInput('');
+    const [myMBTI, setMyMBTI] = useState('');
+
+    useEffect(() => {
+        setNickname(userInfo.nickname);
+        setDescription(userInfo.description);
+        setMyMBTI(userInfo.type);
+    }, [userInfo]);
 
     const [nicknameEditMode, setNicknameEditMode] = useState(false);
     const [descriptionEditMode, setDescriptionEditMode] = useState(false);
@@ -36,11 +41,10 @@ const UserProfile = () => {
         setTypeEditMode(false);
     }, [myMBTI]);
 
-    const categories = ['ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
     const menu = (
         <Menu
             onClick={onMBTIClick}
-            items={categories.map((type, _) => ({ label: type, key: type }))}
+            items={Object.keys(categoriesColorObj).map((type, _) => ({ label: type, key: type }))}
         />
     );
 
@@ -96,7 +100,7 @@ const UserProfile = () => {
                     : (<div className='profile-head-name'>{nickname} <EditOutlined onClick={onNicknameEditMode} className="profile-head-name-edit-button" /></div>)
                     }
                     
-                    <div className='profile-head-email'>{myInfo.email}</div>
+                    <div className='profile-head-email'>{userInfo.email}</div>
                     {typeEditMode
                     ? (<Dropdown overlay={menu} trigger={['click']}>
                             <Button style={{ width: '6rem' }}>
@@ -106,13 +110,13 @@ const UserProfile = () => {
                                 </Space>
                             </Button>
                         </Dropdown>)
-                    : (<div onClick={() => (setTypeEditMode(true))} className='profile-head-type'>{myMBTI}</div>)
+                    : (<div onClick={() => (setTypeEditMode(true))} className='profile-head-type' style={userInfo ? { backgroundColor: categoriesColorObj[userInfo.type]} : null}>{myMBTI}</div>)
                     }
                 </Col>
                 <Col span={8}>
                     <div className='profile-head-right-upper-div'>
-                        <Link href={`/followers/1`}><a><div className='profile-head-follower-div'><span>{myInfo.Followers.length}</span><br />팔로워</div></a></Link>
-                        <Link href={`/followings/1`}><a><div className='profile-head-following-div'><span>{myInfo.Followings.length}</span><br />팔로잉</div></a></Link>
+                        <Link href={`/followers/1`}><a><div className='profile-head-follower-div'><span>{userInfo.Followers.length}</span><br />팔로워</div></a></Link>
+                        <Link href={`/followings/1`}><a><div className='profile-head-following-div'><span>{userInfo.Followings.length}</span><br />팔로잉</div></a></Link>
                     </div>
                     <div className='profile-head-right-below-div'>
                         <Button
@@ -148,13 +152,13 @@ const UserProfile = () => {
             </Row>
             <Tabs className='profile-menu-tab' tabBarStyle={{margin:"0 auto", width:"fit-content"}} tabPosition='top' size='default' type='line'>
                 <TabPane style={{padding: "16px"}} tab="작성글" key="1">
-                    <MyPosts userId={myInfo.id}/>
+                    <MyPosts userId={userInfo.id}/>
                 </TabPane>
                 <TabPane style={{padding: "16px"}} tab="작성댓글" key="2">
-                    <MyComments userId={myInfo.id}/>
+                    <MyComments userId={userInfo.id}/>
                 </TabPane>
                 <TabPane style={{padding: "16px"}} tab="좋아요한 글" key="4">
-                    <MyLikePosts userId={myInfo.id}/>
+                    <MyLikePosts userId={userInfo.id}/>
                 </TabPane>
             </Tabs>
         </div>

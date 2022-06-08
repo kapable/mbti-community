@@ -17,6 +17,8 @@ const Profile = () => {
         })
     }, [userId]);
 
+    const { userInfo } = useSelector((state) => state.user);
+
     return (
         <Fragment>
             <Head>
@@ -27,7 +29,7 @@ const Profile = () => {
                 <meta name="description" content="MBTI 커뮤니티" />
                 <meta name="keywords" content="MBTI, 커뮤니티" />
             </Head>
-            <UserProfile />
+            <UserProfile userInfo={userInfo}/>
         </Fragment>
     );
 };

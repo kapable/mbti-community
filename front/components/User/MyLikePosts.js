@@ -1,6 +1,5 @@
 import { LikeFilled } from '@ant-design/icons';
 import { Col, Row } from 'antd';
-import Link from 'next/link';
 import React, { Fragment, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_MY_LIKE_POSTS_REQUEST } from '../../reducers/post';

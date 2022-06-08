@@ -1,7 +1,6 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import Head from 'next/head';
-import { Button, Checkbox, Form, Input, Dropdown, Row, Col, Space, Menu } from 'antd';
-import { DownOutlined, LoadingOutlined } from '@ant-design/icons';
+import React, { useCallback } from 'react';
+import { Button, Form, Input } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOG_IN_REQUEST } from '../../reducers/user';

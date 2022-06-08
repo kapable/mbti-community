@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Drawer, Layout, Collapse } from 'antd';
 import { BellFilled, BellOutlined, EditOutlined, MenuOutlined } from '@ant-design/icons';
-import { LOG_OUT_REQUEST } from '../reducers/user';
+import { categoriesColorObj, LOG_OUT_REQUEST } from '../reducers/user';
 
 const { Header, Content, Footer } = Layout;
 const { Panel } = Collapse;
@@ -12,9 +12,9 @@ const { Panel } = Collapse;
 const AppLayout = ({ children }) => {
     const dispatch = useDispatch();
     const { myInfo } = useSelector((state) => state.user);
-
-    const categoriesObj = {"Hot 게시글":false, "고민상담소":false, 'ENFJ':false, 'ENFP':false, 'ENTJ':false, 'ENTP':false, 'ESFJ':false, 'ESFP':false, 'ESTJ':false, 'ESTP':false, 'INFJ':false, 'INFP':false, 'INTJ':false, 'INTP':false, 'ISFJ':false, 'ISFP':false, 'ISTJ':false, 'ISTP':false}
-    const account = <div><div className='applayout-drawer-account-name-div'>{myInfo ? myInfo.nickname : '두들링 | MBTI 커뮤니티'}</div><div className='applayout-drawer-account-type-div'>{myInfo ? myInfo.type : null}</div></div>
+    
+    const categoriesObj = {"Hot 게시글":false, "고민상담소":false, 'ENFJ':false, 'ENFP':false, 'ENTJ':false, 'ENTP':false, 'ESFJ':false, 'ESFP':false, 'ESTJ':false, 'ESTP':false, 'INFJ':false, 'INFP':false, 'INTJ':false, 'INTP':false, 'ISFJ':false, 'ISFP':false, 'ISTJ':false, 'ISTP':false};
+    const account = <div><div className='applayout-drawer-account-name-div'>{myInfo ? myInfo.nickname : '두들링 | MBTI 커뮤니티'}</div><div className='applayout-drawer-account-type-div' style={myInfo ? { backgroundColor: categoriesColorObj[myInfo.type]} : null}>{myInfo ? myInfo.type : null}</div></div>
     const [bellClicked, setBellClicked] = useState(categoriesObj);
     const onBellClick = useCallback((type) => () => {
         setBellClicked((bellClicked) => ({...bellClicked, [type]: !bellClicked[type]}));

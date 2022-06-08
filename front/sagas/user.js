@@ -13,6 +13,10 @@ import {
     LOAD_FOLLOWER_LIST_REQUEST, LOAD_FOLLOWER_LIST_SUCCESS, LOAD_FOLLOWER_LIST_FAILURE,
     LOAD_FOLLOWING_LIST_REQUEST, LOAD_FOLLOWING_LIST_SUCCESS, LOAD_FOLLOWING_LIST_FAILURE,
 } from '../reducers/user';
+import { dummyUser } from '../reducers/user';
+import faker from '@withshepherd/faker'
+
+faker.locale = "ko";
 
 function logInAPI(data) {
     return axios.post(`/user/login`, data);
@@ -24,7 +28,7 @@ function* logIn(action) {
         yield delay(1000);
         yield put({
             type: LOG_IN_SUCCESS,
-            data: action.data// result.data
+            data: dummyUser(action.data)// result.data
         })
     } catch (err) {
         console.log(err);
@@ -106,7 +110,7 @@ function* loadUserInfo(action) {
         yield delay(1000);
         yield put({
             type: LOAD_USER_INFO_SUCCESS,
-            data: action.data//result?.data || null
+            data: dummyUser({ email: faker.internet.email(), password: faker.internet.password() })//result?.data || null
         })
     } catch (err) {
         console.log(err);
