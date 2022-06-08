@@ -7,15 +7,35 @@ import { LOAD_MY_LIKE_POSTS_REQUEST } from '../../reducers/post';
 import Router from 'next/router';
 
 const MyLikePosts = ({ userId }) => {
+    
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({
             type: LOAD_MY_LIKE_POSTS_REQUEST,
             data: userId,
         })
-    }, [userId]);
+    }, []);
 
-    const { myLikePosts } = useSelector((state) => state.post);
+    const { myLikePosts, myLikeHasMorePosts, loadMyLikePostsLoading } = useSelector((state) => state.post);
+
+    useEffect(() => {
+        function onScroll() {
+            if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 500) {
+                if(myLikeHasMorePosts && !loadMyLikePostsLoading) {
+                    const lastId = myLikePosts[myLikePosts.length - 1]?.id;
+                    dispatch({
+                        type: LOAD_MY_LIKE_POSTS_REQUEST,
+                        data: userId,
+                        lastId
+                    });
+                };
+            };
+        };
+        window.addEventListener('scroll', onScroll);
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+        };
+    }, [myLikeHasMorePosts, loadMyLikePostsLoading, myLikePosts]);
 
     const onPostClick = useCallback((postId) => {
         Router.push(`/post/${postId}`);

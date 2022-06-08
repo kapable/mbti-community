@@ -18,6 +18,7 @@ import {
     // SET_POST_TEXT_SUCCESS, SET_POST_TEXT_FAILURE, SET_POST_TEXT_REQUEST,
 } from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
+import { generateDummyPost } from '../reducers/post';
 
 function loadPostsAPI(data) {
     return axios.get(`/posts/${data.data}?lastId=${data.lastId || 0}`);
@@ -134,7 +135,7 @@ function* loadMyLikePosts(action) {
         yield delay(1000);
         yield put({
             type: LOAD_MY_LIKE_POSTS_SUCCESS,
-            data: action.data//result.data,
+            data: generateDummyPost(10)//result.data,
         })
     } catch (err) {
         console.log(err)

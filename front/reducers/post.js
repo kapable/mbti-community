@@ -20,11 +20,17 @@ export const initialState = {
         Comments: []
     },
     totalHotTen: [],
+    totalHotTenHasMorePosts: true,
     categoryHotPosts: [],
+    categoryHotHasMorePosts: true,
     categoryNewPosts: [],
+    categoryNewHasMorePosts: true,
     myPosts:[],
+    myHasMorePosts: true,
     myLikePosts:[],
+    myLikeHasMorePosts: true,
     myComments:[],
+    myCommentsHasMorePosts: true,
     imagePaths: [],
     addPostLoading: false,
     addPostDone: false,
@@ -57,191 +63,46 @@ export const initialState = {
 
 const categories = ['ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
 
-initialState.mainPosts = initialState.mainPosts.concat(
-    Array(100).fill().map(() => ({
+export const generateDummyPost = (number) => Array(number).fill().map(() => ({
+    id:Math.floor(Math.random() * 100) + 5,
+    category: categories[Math.floor(Math.random() * categories.length) + 1],
+    User: {
+        id: Math.floor(Math.random() * 100) + 5,
+        nickname: faker.name.findName(),
+    },
+    title: faker.lorem.sentence(),
+    Content: Array(5).fill().map(() => ({
+        id: Math.floor(Math.random() * 100) + 5,
+        type: "paragraph",
+        data: {
+            text: faker.lorem.sentence()
+        }
+    })),
+    likes: Math.floor(Math.random() * 100) + 5,
+    views: Math.floor(Math.random() * 100) + 5,
+    Comments: Array(10).fill().map(() => ({
         id:Math.floor(Math.random() * 100) + 5,
-        category: categories[Math.floor(Math.random() * categories.length) + 1],
         User: {
-            id: Math.floor(Math.random() * 100) + 5,
-            nickname: faker.name.findName(),
-        },
-        title: faker.lorem.sentence(),
-        Content: Array(5).fill().map(() => ({
-            id: Math.floor(Math.random() * 100) + 5,
-            type: "paragraph",
-            data: {
-                text: faker.lorem.sentence()
-            }
-        })),
-        likes: Math.floor(Math.random() * 100) + 5,
-        views: Math.floor(Math.random() * 100) + 5,
-        Comments: Array(10).fill().map(() => ({
             id:Math.floor(Math.random() * 100) + 5,
-            User: {
-                id:Math.floor(Math.random() * 100) + 5,
-                nickname: faker.name.lastName(),
-                type: 'ENTP',
-            },
-            comment: faker.lorem.sentence(),
-            datetime: faker.date.recent(),
-        }))
+            nickname: faker.name.lastName(),
+            type: 'ENTP',
+        },
+        comment: faker.lorem.sentence(),
+        datetime: faker.date.recent(),
     }))
-);
+}));
 
-initialState.totalHotTen = initialState.totalHotTen.concat(
-    Array(10).fill().map(() => ({
-        id:Math.floor(Math.random() * 100) + 5,
-        category: categories[Math.floor(Math.random() * categories.length) + 1],
-        User: {
-            id: Math.floor(Math.random() * 100) + 5,
-            nickname: faker.name.findName(),
-        },
-        title: faker.lorem.sentence(),
-        Content: Array(5).fill().map(() => ({
-            id: Math.floor(Math.random() * 100) + 5,
-            type: "paragraph",
-            data: {
-                text: faker.lorem.sentence()
-            }
-        })),
-        likes: Math.floor(Math.random() * 100) + 5,
-        views: Math.floor(Math.random() * 100) + 5,
-        Comments: Array(10).fill().map(() => ({
-            id:Math.floor(Math.random() * 100) + 5,
-            User: {
-                id:Math.floor(Math.random() * 100) + 5,
-                nickname: faker.name.lastName(),
-                type: 'ENTP',
-            },
-            comment: faker.lorem.sentence(),
-            datetime: faker.date.recent(),
-        }))
-    }))
-);
+initialState.mainPosts = initialState.mainPosts.concat(generateDummyPost(100));
 
-initialState.categoryHotPosts = initialState.categoryHotPosts.concat(
-    Array(15).fill().map(() => ({
-        id:Math.floor(Math.random() * 100) + 5,
-        category: categories[Math.floor(Math.random() * categories.length) + 1],
-        User: {
-            id: Math.floor(Math.random() * 100) + 5,
-            nickname: faker.name.findName(),
-        },
-        title: faker.lorem.sentence(),
-        Content: Array(5).fill().map(() => ({
-            id: Math.floor(Math.random() * 100) + 5,
-            type: "paragraph",
-            data: {
-                text: faker.lorem.sentence()
-            }
-        })),
-        likes: Math.floor(Math.random() * 100) + 5,
-        views: Math.floor(Math.random() * 100) + 5,
-        Comments: Array(Math.floor(Math.random() * 100) + 5).fill().map(() => ({
-            id:Math.floor(Math.random() * 100) + 5,
-            User: {
-                id:Math.floor(Math.random() * 100) + 5,
-                nickname: faker.name.lastName(),
-                type: 'ENTP',
-            },
-            comment: faker.lorem.sentence(),
-            datetime: faker.date.recent(),
-        }))
-    }))
-);
+initialState.totalHotTen = initialState.totalHotTen.concat(generateDummyPost(10));
 
-initialState.myPosts = initialState.myPosts.concat(
-    Array(15).fill().map(() => ({
-        id:Math.floor(Math.random() * 100) + 5,
-        category: categories[Math.floor(Math.random() * categories.length) + 1],
-        User: {
-            id: Math.floor(Math.random() * 100) + 5,
-            nickname: faker.name.findName(),
-        },
-        title: faker.lorem.sentence(),
-        Content: Array(5).fill().map(() => ({
-            id: Math.floor(Math.random() * 100) + 5,
-            type: "paragraph",
-            data: {
-                text: faker.lorem.sentence()
-            }
-        })),
-        likes: Math.floor(Math.random() * 100) + 5,
-        views: Math.floor(Math.random() * 100) + 5,
-        Comments: Array(Math.floor(Math.random() * 100) + 5).fill().map(() => ({
-            id:Math.floor(Math.random() * 100) + 5,
-            User: {
-                id:Math.floor(Math.random() * 100) + 5,
-                nickname: faker.name.lastName(),
-                type: 'ENTP',
-            },
-            comment: faker.lorem.sentence(),
-            datetime: faker.date.recent(),
-        }))
-    }))
-);
+initialState.categoryHotPosts = initialState.categoryHotPosts.concat(generateDummyPost(15));
 
-initialState.myLikePosts = initialState.myLikePosts.concat(
-    Array(15).fill().map(() => ({
-        id:Math.floor(Math.random() * 100) + 5,
-        category: categories[Math.floor(Math.random() * categories.length) + 1],
-        User: {
-            id: Math.floor(Math.random() * 100) + 5,
-            nickname: faker.name.findName(),
-        },
-        title: faker.lorem.sentence(),
-        Content: Array(5).fill().map(() => ({
-            id: Math.floor(Math.random() * 100) + 5,
-            type: "paragraph",
-            data: {
-                text: faker.lorem.sentence()
-            }
-        })),
-        likes: Math.floor(Math.random() * 100) + 5,
-        views: Math.floor(Math.random() * 100) + 5,
-        Comments: Array(Math.floor(Math.random() * 100) + 5).fill().map(() => ({
-            id:Math.floor(Math.random() * 100) + 5,
-            User: {
-                id:Math.floor(Math.random() * 100) + 5,
-                nickname: faker.name.lastName(),
-                type: 'ENTP',
-            },
-            comment: faker.lorem.sentence(),
-            datetime: faker.date.recent(),
-        }))
-    }))
-);
+initialState.myPosts = initialState.myPosts.concat(generateDummyPost(15));
 
-initialState.myComments = initialState.myComments.concat(
-    Array(15).fill().map(() => ({
-        id:Math.floor(Math.random() * 100) + 5,
-        category: categories[Math.floor(Math.random() * categories.length) + 1],
-        User: {
-            id: Math.floor(Math.random() * 100) + 5,
-            nickname: faker.name.findName(),
-        },
-        title: faker.lorem.sentence(),
-        Content: Array(5).fill().map(() => ({
-            id: Math.floor(Math.random() * 100) + 5,
-            type: "paragraph",
-            data: {
-                text: faker.lorem.sentence()
-            }
-        })),
-        likes: Math.floor(Math.random() * 100) + 5,
-        views: Math.floor(Math.random() * 100) + 5,
-        Comments: Array(Math.floor(Math.random() * 100) + 5).fill().map(() => ({
-            id:Math.floor(Math.random() * 100) + 5,
-            User: {
-                id:Math.floor(Math.random() * 100) + 5,
-                nickname: faker.name.lastName(),
-                type: 'ENTP',
-            },
-            comment: faker.lorem.sentence(),
-            datetime: faker.date.recent(),
-        }))
-    }))
-);
+// initialState.myLikePosts = initialState.myLikePosts.concat(generateDummyPost(15));
+
+initialState.myComments = initialState.myComments.concat(generateDummyPost(15));
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -528,7 +389,8 @@ const reducer = (state = initialState, action) => {
                 draft.loadMyLikePostsError = null;
                 break;
             case LOAD_MY_LIKE_POSTS_SUCCESS:
-                // draft.mainPosts = action.data;
+                draft.myLikePosts = draft.myLikePosts.concat(action.data);
+                draft.myLikeHasMorePosts = draft.myLikePosts.length < 50;
                 draft.loadMyLikePostsDone = true;
                 draft.loadMyLikePostsLoading = false;
                 break;
