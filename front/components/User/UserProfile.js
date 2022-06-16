@@ -4,7 +4,7 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import useInput from '../../hooks/useInput';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { CHANGE_DESCRIPTION_REQUEST, CHANGE_NICKNAME_REQUEST, categoriesColorObj } from '../../reducers/user';
+import { CHANGE_DESCRIPTION_REQUEST, CHANGE_NICKNAME_REQUEST, categoriesColorObj, UNFOLLOW_REQUEST, FOLLOW_REQUEST } from '../../reducers/user';
 import MyPosts from '../../components/User/MyPosts';
 import MyComments from '../../components/User/MyComments';
 import MyLikePosts from '../../components/User/MyLikePosts';
@@ -14,7 +14,7 @@ const { TabPane } = Tabs;
 const UserProfile = ({ userInfo }) => {
     const dispatch = useDispatch();
     
-    const { myInfo } = useSelector((state) => state.user);
+    const { myInfo, followLoading, unfollowLoading } = useSelector((state) => state.user);
     const [isMyProfile, setIsMyProfile] = useState();
 
     const [nickname, onChangeNickname, setNickname] = useInput('');
@@ -91,9 +91,27 @@ const UserProfile = ({ userInfo }) => {
     }, [description]);
 
     const [isFollow, setIsFollow] = useState(false);
+    const isFollowingUser = myInfo?.Followings.find((v) => v.id === userInfo.id);
     const onFollowButtonClick = useCallback(() => {
-        setIsFollow(!isFollow);
-    }, [isFollow]);
+        // setIsFollow(!isFollow);
+        if(isFollowingUser) {
+            dispatch({
+                type: UNFOLLOW_REQUEST,
+                data: {
+                    fromInfo: { id:myInfo.id },
+                    toInfo: { id:userInfo.id }
+                },
+            });
+        } else {
+            dispatch({
+                type: FOLLOW_REQUEST,
+                data: {
+                        fromInfo: { id:myInfo.id, nickname:myInfo.nickname, type:myInfo.type },
+                        toInfo: { id:userInfo.id, nickname:userInfo.nickname, type:userInfo.type }
+                    },
+            });
+        }
+    }, [isFollowingUser, userInfo, myInfo]);
 
     return (
         <div>
@@ -130,15 +148,16 @@ const UserProfile = ({ userInfo }) => {
                         <Link href={`/followings/1`}><a><div className='profile-head-following-div'><span>{userInfo.Followings.length}</span><br />팔로잉</div></a></Link>
                     </div>
                     <div className='profile-head-right-below-div'>
-                        {isMyProfile
+                        {isMyProfile || !myInfo // 내 프로필 or 로그인을 하지 않았다면 -> 팔로우 버튼 안보이기
                         ? null
                         : (
                             <Button
-                                style={{ border: 'none', backgroundColor: isFollow ? '#b7bed1' : "#375cb7", color: 'white' }}
+                                style={{ border: 'none', backgroundColor: isFollowingUser ? '#b7bed1' : "#375cb7", color: 'white' }}
                                 onClick={onFollowButtonClick}
+                                loading={followLoading || unfollowLoading}
                                 shape='round'
                                 className='profile-head-follow-button'>
-                                    {isFollow ? <span><CheckOutlined /> 팔로잉</span> : <span><PlusOutlined /> 팔로우</span>}
+                                    {isFollowingUser ? <span><CheckOutlined /> 팔로잉</span> : <span><PlusOutlined /> 팔로우</span>}
                             </Button>
                         )
                         }

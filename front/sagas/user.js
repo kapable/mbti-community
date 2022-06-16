@@ -110,7 +110,7 @@ function* loadUserInfo(action) {
         yield delay(1000);
         yield put({
             type: LOAD_USER_INFO_SUCCESS,
-            data: dummyUser({ email: faker.internet.email(), password: faker.internet.password() })//result?.data || null
+            data: dummyUser({ id:parseInt(action.data), email: faker.internet.email(), password: faker.internet.password() })//result?.data || null
         })
     } catch (err) {
         console.log(err);
@@ -184,16 +184,17 @@ function* follow(action) {
     }
 }
 
-function unfollowAPI() {
+function unfollowAPI(data) {
     return axios.post(`/user/Unfollow`);
 }
 
-function* unfollow() {
+function* unfollow(action) {
     try {
         // yield call(unfollowAPI);
         yield delay(1000);
         yield put({
             type: UNFOLLOW_SUCCESS,
+            data: action.data// result.data
         })
     } catch (err) {
         console.log(err);

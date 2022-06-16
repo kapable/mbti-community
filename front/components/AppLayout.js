@@ -95,7 +95,7 @@ const AppLayout = ({ children }) => {
                 {myInfo
                 ? (
                     <>
-                        <div className='applayout-nav-signup-div'><Link href={`/profile/${myInfo.id}`}><a className='applayout-nav-signup-div-a'>내 정보</a></Link></div>
+                        <div className='applayout-nav-signup-div'><Link href={`/profile/${50}`}><a className='applayout-nav-signup-div-a'>내 정보</a></Link></div> {/* myInfo.id */}
                         <div onClick={onLogOut} className='applayout-nav-login-div'><a className='applayout-nav-login-div-a'>로그아웃</a></div>
                     </>
                 )

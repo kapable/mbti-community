@@ -95,7 +95,6 @@ export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 export const categoriesColorObj = {'ENFJ':'#52ceb0', 'ENFP':'#ffa348', 'ENTJ':'#3462a3', 'ENTP':'#dd5843', 'ESFJ':'#ffcfcf', 'ESFP':'#e0707e', 'ESTJ':'#587a4b', 'ESTP':'#ff977b', 'INFJ':'#c2dbff', 'INFP':'#277a64', 'INTJ':'#b9b0ff', 'INTP':'#7fc2f4', 'ISFJ':'#ffcf73', 'ISFP':'#a6be6f', 'ISTJ':' #a6be6f', 'ISTP':'#4690b4'};
 const categoriesArr = Object.keys(categoriesColorObj);
 export const dummyUser = (data) => ({
-    ...data,
     nickname: faker.name.findName(),
     id: Math.floor(Math.random() * 100) + 5,
     type: categoriesArr[Math.floor(Math.random() * categoriesArr.length)],
@@ -103,6 +102,7 @@ export const dummyUser = (data) => ({
     Posts: [{ id: Math.floor(Math.random() * 100) + 5 }],
     Followings: [{ nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }],
     Followers: [{ nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }],
+    ...data,
 });
 
 
@@ -189,7 +189,8 @@ const reducer = (state = initialState, action) => {
             case FOLLOW_SUCCESS:
                 draft.followLoading = false;
                 draft.followDone = true;
-                draft.myInfo = dummyUser(action.data)//action.data;
+                draft.myInfo.Followings.push(action.data.toInfo);
+                draft.userInfo.Followers.push(action.data.fromInfo);
                 break;
             case FOLLOW_FAILURE:
                 draft.followLoading = false;
@@ -204,7 +205,8 @@ const reducer = (state = initialState, action) => {
                 draft.unfollowLoading = false;
                 draft.unfollowDone = true;
                 draft.followDone = false;
-                draft.myInfo = null;
+                draft.myInfo.Followings = draft.myInfo.Followings.filter((v) => v.id !== action.data.toInfo.id);
+                draft.userInfo.Followers = draft.userInfo.Followers.filter((v) => v.id !== action.data.fromInfo.id);
                 break;
             case UNFOLLOW_FAILURE:
                 draft.unfollowLoading = false;

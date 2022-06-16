@@ -22,12 +22,13 @@ const Profile = () => {
     return (
         <Fragment>
             <Head>
-                {/* <title>{`${userInfo.nickname} 프로필 | 두들링`}</title> */}
+                <title>{`${userInfo.nickname} 프로필 | 두들링`}</title>
                 <meta charSet='utf-8'/>
                 <meta name="language" content="Korean" />
                 <meta name="author" content="쿠키로켓" />
                 <meta name="description" content="MBTI 커뮤니티" />
                 <meta name="keywords" content="MBTI, 커뮤니티" />
+                <link rel='shortcut icon' href='/doodling-favicon.png'/>
             </Head>
             <UserProfile userInfo={userInfo}/>
         </Fragment>
