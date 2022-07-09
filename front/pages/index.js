@@ -17,9 +17,27 @@ const Home = () => {
         })
     }, []);
     const categories = ["Hot 게시글", "고민상담소", 'ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
+    const Categories = {
+        "Hot 게시글" : [],
+        "MBTI" : ['ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'],
+        "이슈두들링" : ['이슈', 'A'],
+        "뒷담두들링" : ['뒷담', 'A'],
+        "연애두들링" : ["연애", 'A'],
+        "정보두들링" : ["정보", 'A'],
+        "19두들링" : ["19", 'A'],
+    };
+    
+    
+    ["Hot 게시글", "고민상담소", ];
     const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+    const [selectedSubCategory, setSelectedSubCategory] = useState('');
     const onChangeCategory = useCallback((category) => {
         setSelectedCategory(category);
+        // setSelectedSubCategory(Categories[category[0]]);
+    }, []);
+
+    const onChangeSubCategory = useCallback((category) => {
+        setSelectedSubCategory(category);
     }, []);
 
     return (
@@ -33,10 +51,28 @@ const Home = () => {
                 <meta name="description" content="MBTI 커뮤니티" />
                 <meta name="keywords" content="MBTI, 커뮤니티" />
             </Head>
-            <Tabs className='home-category-tab' onChange={onChangeCategory} tabPosition='top' size='default' type='line' tabBarGutter={20} tabBarStyle={{backgroundColor: '#f3f3f3', height:'1.7rem'}} moreIcon={<EllipsisOutlined />}> 
+            {/* <Tabs className='home-category-tab' onChange={onChangeCategory} tabPosition='top' size='default' type='line' tabBarGutter={20} tabBarStyle={{backgroundColor: '#f3f3f3', height:'1.7rem'}} moreIcon={<EllipsisOutlined />}> 
                 {categories.map((category) => (
                     <TabPane key={category} tab={category}>
                         {selectedCategory === "Hot 게시글" ? <HotRanking /> : <TypeForum category={selectedCategory} />}
+                    </TabPane>
+                ))}
+            </Tabs> */}
+            <Tabs className='home-category-tab' onChange={onChangeCategory} tabPosition='top' size='default' type='line' tabBarGutter={20} tabBarStyle={{backgroundColor: '#f3f3f3', height:'1.7rem'}} moreIcon={<EllipsisOutlined />}>
+                {Object.entries(Categories).map((pair) => (
+                    <TabPane key={pair[0]} tab={pair[0]}>
+                        {selectedCategory === "Hot 게시글"
+                        ? <HotRanking />
+                        :
+                        // Sub NavBar in case of ordinary Menu
+                        <Tabs onChange={onChangeSubCategory} defaultActiveKey={pair[1][0]} tabPosition='top' size='default' type='line' tabBarGutter={20} tabBarStyle={{backgroundColor: '#f3f3f3', height:'1.7rem'}} moreIcon={<EllipsisOutlined />}>
+                            {pair[1].map((subCategory) => (
+                                <TabPane key={subCategory} tab={subCategory}>
+                                    {/* {selectedCategory + subCategory} */}
+                                    <TypeForum category={selectedCategory} subCategory={subCategory} />
+                                </TabPane>
+                            ))}
+                        </Tabs>}
                     </TabPane>
                 ))}
             </Tabs>

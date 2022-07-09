@@ -11,12 +11,12 @@ import Link from 'next/link';
 const pointColor = '#375cb7';
 const greyColor = '#f3f3f3';
 
-const TypeForum = ({ category }) => {
+const TypeForum = ({ category, subCategory }) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({
             type: LOAD_CATEGORY_HOT_POSTS_REQUEST,
-            data: category,
+            data: subCategory,
         })
     }, []);
 
