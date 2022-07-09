@@ -18,7 +18,7 @@ const TypeForum = ({ category, subCategory }) => {
             type: LOAD_CATEGORY_HOT_POSTS_REQUEST,
             data: subCategory,
         })
-    }, []);
+    }, [subCategory]);
 
     const { categoryHotPosts } = useSelector((state) => state.post);
     const [swipeIndex, setSwipeIndex] = useState(0);
