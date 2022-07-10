@@ -16,9 +16,9 @@ const TypeForum = ({ category, subCategory }) => {
     useEffect(() => {
         dispatch({
             type: LOAD_CATEGORY_HOT_POSTS_REQUEST,
-            data: subCategory,
+            data: {category, subCategory},
         })
-    }, [subCategory]);
+    }, [category, subCategory]);
 
     const { categoryHotPosts } = useSelector((state) => state.post);
     const [swipeIndex, setSwipeIndex] = useState(0);
@@ -39,7 +39,7 @@ const TypeForum = ({ category, subCategory }) => {
         <Fragment>
             <Row>
                 <Col className='type-forum-title-left-col' span={18}>
-                    <p className='type-forum-title-left-col-title'>{category}</p>
+                    <p className='type-forum-title-left-col-title'>{category + "-" + subCategory}</p>
                     <div className='type-forum-title-left-col-hot'>HOT</div>
                 </Col>
                 <Col className='type-forum-title-right-col' span={6}>
@@ -79,7 +79,7 @@ const TypeForum = ({ category, subCategory }) => {
                 <button onClick={onFirstSwipeBtnClick} style={swipeIndex ? {backgroundColor:greyColor}:{backgroundColor:pointColor}} className='type-forum-swipe-first-button'></button>
                 <button onClick={onSecondSwipeBtnClick} style={swipeIndex ? {backgroundColor:pointColor}:{backgroundColor:greyColor}} className='type-forum-swipe-second-button'></button>
             </div>
-            <CategoryNewPost category={category} />
+            <CategoryNewPost category={category} subCategory={subCategory} />
         </Fragment>
     );
 };

@@ -5,15 +5,15 @@ import { LOAD_CATEGORY_NEW_POSTS_REQUEST } from '../../reducers/post';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 
-const CategoryNewPost = ({ category }) => {
+const CategoryNewPost = ({ category, subCategory }) => {
     const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(1);
     useEffect(() => {
         dispatch({
             type: LOAD_CATEGORY_NEW_POSTS_REQUEST,
-            category,
+            data: {category, subCategory},
         })
-    }, [category]);
+    }, [category, subCategory]);
 
     const { categoryNewPosts } = useSelector((state) => state.post);
 

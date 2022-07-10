@@ -6,13 +6,13 @@ import SwipeableViews from 'react-swipeable-views';
 import { useDispatch, useSelector } from 'react-redux';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
+import { EllipsisOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 const pointColor = '#375cb7';
 const greyColor = '#f3f3f3';
 
 const HotRanking = () => {
-    // const topTen = useSelector((state) => state.post.mainPosts.slice(1, 11));
     const topTen = useSelector((state) => state.post.totalHotTen);
     const [screenWidth, setScreenWidth] = useState();
     useEffect(() => {
@@ -30,11 +30,24 @@ const HotRanking = () => {
     const onSecondSwipeBtnClick = useCallback(() => {
         setSwipeIndex(1);
     }, []);
-
-    const categories = ['ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
-    const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+    const Categories = {
+        "Hot 게시글" : [],
+        "MBTI" : ['MBTI', 'ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'],
+        "이슈두들링" : ['이슈', 'A'],
+        "뒷담두들링" : ['뒷담', 'A'],
+        "연애두들링" : ["연애", 'A'],
+        "정보두들링" : ["정보", 'A'],
+        "19두들링" : ["19", 'A'],
+    };
+    const [selectedCategory, setSelectedCategory] = useState("MBTI");
+    const [selectedSubCategory, setSelectedSubCategory] = useState(Categories['MBTI'][0]);
     const onChangeCategory = useCallback((category) => {
         setSelectedCategory(category);
+        setSelectedSubCategory(Categories[category][0]);
+    }, []);
+
+    const onChangeSubCategory = useCallback((subCategory) => {
+        setSelectedSubCategory(subCategory);
     }, []);
     return (
         <Fragment>
@@ -127,11 +140,23 @@ const HotRanking = () => {
                 </Row>
             )}
             <Tabs className='home-category-under-tab' onChange={onChangeCategory} tabPosition='top' size='default' type='line' tabBarGutter={20} tabBarStyle={{height:'1.7rem'}} moreIcon={false}> 
-                {categories.map((category) => (
-                    <TabPane key={category} tab={category}>
-                        <CategoryHotPost category={selectedCategory} />
-                    </TabPane>
-                ))}
+            {Object.entries(Categories).map((pair) => {
+                {if(pair[0] !== 'Hot 게시글') {
+                    return (
+                        <TabPane key={pair[0]} tab={pair[0]}>
+                            {/* // Sub NavBar in case of ordinary Menu */}
+                            <Tabs onChange={onChangeSubCategory} activeKey={selectedSubCategory} tabPosition='top' size='default' type='line' tabBarGutter={20} tabBarStyle={{height:'1.7rem'}} moreIcon={<EllipsisOutlined />}>
+                                {pair[1].map((subCategory) => (
+                                    <TabPane key={subCategory} tab={subCategory}>
+                                        <CategoryHotPost category={selectedCategory} subCategory={selectedSubCategory} />
+                                    </TabPane>
+                                ))}
+                            </Tabs>
+                        </TabPane>
+                    )
+                    
+                }}
+            })}
             </Tabs>
         </Fragment>
     );

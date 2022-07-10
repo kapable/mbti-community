@@ -8,15 +8,15 @@ import Link from 'next/link';
 
 moment.locale('ko');
 
-const CategoryHotPost = ({ category }) => {
+const CategoryHotPost = ({ category, subCategory }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({
             type: LOAD_CATEGORY_HOT_POSTS_REQUEST,
-            category,
+            data: {category, subCategory},
         })
-    }, [category]);
+    }, [category, subCategory]);
 
 
     const onPageChange = useCallback((page) => {
