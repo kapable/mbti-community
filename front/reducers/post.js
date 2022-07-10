@@ -62,10 +62,20 @@ export const initialState = {
 };
 
 const categories = ['ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
+const Categories = {
+    "Hot 게시글" : [],
+    "MBTI" : ['MBTI', 'ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'],
+    "이슈두들링" : ['이슈', 'A'],
+    "뒷담두들링" : ['뒷담', 'A'],
+    "연애두들링" : ["연애", 'A'],
+    "정보두들링" : ["정보", 'A'],
+    "19두들링" : ["19", 'A'],
+};
 
 export const generateDummyPost = (number) => Array(number).fill().map(() => ({
     id:Math.floor(Math.random() * 100) + 5,
-    category: categories[Math.floor(Math.random() * categories.length) + 1],
+    category: Object.keys(Categories)[Math.floor(Math.random() * Object.keys(Categories).length) + 1],
+    subCategory: '이슈',
     User: {
         id: Math.floor(Math.random() * 100) + 5,
         nickname: faker.name.findName(),
@@ -95,6 +105,7 @@ export const generateDummyPost = (number) => Array(number).fill().map(() => ({
 export const dummySinglePost = (id) => ({
     id: parseInt(id),
     category: 'ENFJ',
+    subCategory: '이슈',
     User: {
         id:Math.floor(Math.random() * 100) + 5,
         nickname: faker.name.findName(),
@@ -164,15 +175,17 @@ export const LOAD_MY_COMMENTS_SUCCESS = 'LOAD_MY_COMMENTS_SUCCESS';
 export const LOAD_MY_COMMENTS_FAILURE = 'LOAD_MY_COMMENTS_FAILURE';
 
 const dummyPost = (data) => ({
-    id:shortId.generate(),
+    id: Math.floor(Math.random() * 100) + 5,
     category: data.category,
+    subCategory: data.subCategory,
     User: {
-        id:5,
-        nickname: data.userId,
+        id: parseInt(data.userId),
+        nickname: faker.name.findName(),
     },
     title:data.title,
     Content: data.contents,
     likes: 0,
+    views: 0,
     Comments: []
 });
 

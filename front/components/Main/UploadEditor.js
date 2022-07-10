@@ -28,17 +28,31 @@ const { Option } = Select;
 
 const UploadEditor = () => {
     const dispatch = useDispatch();
-    const { imagePaths, addPostDone } = useSelector((state) => state.post);
+    const { imagePaths, addPostDone, myPosts } = useSelector((state) => state.post);
     const { myInfo } = useSelector((state) => state.user);
 
-    const categories = ['고민상담소','ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'];
+    const Categories = {
+        "Hot 게시글" : [],
+        "MBTI" : ['MBTI', 'ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'],
+        "이슈두들링" : ['이슈', 'A'],
+        "뒷담두들링" : ['뒷담', 'A'],
+        "연애두들링" : ["연애", 'A'],
+        "정보두들링" : ["정보", 'A'],
+        "19두들링" : ["19", 'A'],
+    };
     const [title, onChangeTitle, setTitle] = useInput('');
     const [category, setCategory] = useState('');
+    const [subCategory, setSubCategory] = useState('');
     const [contents, setContents] = useState(``);
     const imageInput = useRef(null);
     const onClickImageUpload = useCallback(() => {
         imageInput.current.click();
         }, [imageInput.current]);
+
+    const onCategoryChange = useCallback((cat) => {
+        setCategory(cat);
+        setSubCategory(Categories[cat][0]);
+    }, [Categories]);
 
     const handleOnChange = useCallback(async (e) => {
         const value = await e.saver.save();
@@ -61,19 +75,20 @@ const UploadEditor = () => {
         formData.append('category', category);
         dispatch({
             type: ADD_POST_REQUEST,
-            data: {userId: myInfo.id, title, category, contents},
+            data: {userId: myInfo.id, title, category, subCategory, contents},
         });
         alert('정상적으로 글이 게시되었습니다!')
-        return Router.push(`/profile/${myInfo.id}`)
-    }, [myInfo, title, category, contents]);
+        
+    }, [myInfo, title, category, subCategory, contents]);
 
     useEffect(() => {
         if(addPostDone) {
             setTitle('');
             setContents('');
             setCategory('');
+            Router.push(`/post/${myPosts[0].id}`)
         };
-    }, [addPostDone]);
+    }, [addPostDone, myPosts]);
 
     const EDITOR_JS_TOOLS = {
         // embed: Embed,
@@ -109,12 +124,34 @@ const UploadEditor = () => {
                     className='upload-category-select'
                     placeholder="게시판을 선택해주세요."
                     optionLabelProp='type'
-                    onChange={setCategory}>
-                        {categories.map((type => (
-                            <Option value={type} label={type} key={`${type}_category`}>
-                                {type}
-                            </Option>
-                        )))}
+                    onChange={onCategoryChange}>
+                        {Object.entries(Categories).map((pair) => {
+                            if(pair[0] !== 'Hot 게시글') {
+                                return (
+                                    <Option value={pair[0]} label={pair[0]} key={`${pair[0]}_category`}>
+                                        {pair[0]}
+                                    </Option>
+                                )
+                            }
+                        })}
+                </Select>
+                <Select
+                    className='upload-category-select'
+                    disabled={category ? false : true}
+                    placeholder="하위 게시판을 선택해주세요."
+                    optionLabelProp='type'
+                    value={subCategory ? subCategory : null}
+                    onChange={setSubCategory}>
+                        {category
+                        ? (
+                            Categories[category].map((item) => (
+                                <Option value={item} label={item} key={`${item}_subcategory`}>
+                                    {item}
+                                </Option>
+                            ))
+                        )
+                        : null}
+                        
                 </Select>
             </div>
             {/* <h1 className='admin-upload-title-preview'>{title}</h1> */}
