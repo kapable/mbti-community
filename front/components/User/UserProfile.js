@@ -90,10 +90,8 @@ const UserProfile = ({ userInfo }) => {
         
     }, [description]);
 
-    const [isFollow, setIsFollow] = useState(false);
     const isFollowingUser = myInfo?.Followings.find((v) => v.id === userInfo.id);
     const onFollowButtonClick = useCallback(() => {
-        // setIsFollow(!isFollow);
         if(isFollowingUser) {
             dispatch({
                 type: UNFOLLOW_REQUEST,

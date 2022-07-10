@@ -96,12 +96,12 @@ export const categoriesColorObj = {'ENFJ':'#52ceb0', 'ENFP':'#ffa348', 'ENTJ':'#
 const categoriesArr = Object.keys(categoriesColorObj);
 export const dummyUser = (data) => ({
     nickname: faker.name.findName(),
-    id: Math.floor(Math.random() * 100) + 5,
+    id: 7,
     type: categoriesArr[Math.floor(Math.random() * categoriesArr.length)],
     description: faker.lorem.sentence(),
     Posts: [{ id: Math.floor(Math.random() * 100) + 5 }],
-    Followings: [{ nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }],
-    Followers: [{ nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }, { nickname: faker.name.findName(), type: 'ESTP' }],
+    Followings: [{ id: 50, nickname: faker.name.findName(), type: 'ESTP' }, { id: Math.floor(Math.random() * 100) + 15, nickname: faker.name.findName(), type: 'ESTP' }, { id: Math.floor(Math.random() * 100) + 15, nickname: faker.name.findName(), type: 'ESTP' }],
+    Followers: [{ id:7, nickname: faker.name.findName(), type: 'ESTP' }, { id: Math.floor(Math.random() * 100) + 15, nickname: faker.name.findName(), type: 'ESTP' }, { id: Math.floor(Math.random() * 100) + 15, nickname: faker.name.findName(), type: 'ESTP' }],
     ...data,
 });
 

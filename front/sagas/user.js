@@ -185,7 +185,7 @@ function* follow(action) {
 }
 
 function unfollowAPI(data) {
-    return axios.post(`/user/Unfollow`);
+    return axios.post(`/user/unfollow`);
 }
 
 function* unfollow(action) {
