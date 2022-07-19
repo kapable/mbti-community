@@ -1,8 +1,14 @@
-const http = require('http');
-const server = http.createServer((req, res) => {
-    console.log(req.url, req.method);
-    res.end('Hello DOODLE back!');
+const express = require('express');
+const postRouter = require('./routes/post');
+
+const app = express();
+
+app.use('/post', postRouter);
+
+app.get('/', (req, res) => {
+    res.send('Welcome to Doodling API!');
 });
-server.listen(3065, () => {
+
+app.listen(3065, () => {
     console.log('Server running..');
 });
