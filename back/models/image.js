@@ -9,6 +9,10 @@ module.exports = class Image extends Model {
                 type: DataTypes.STRING(200),
                 allowNull: false,
             },
+            order:  {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            }
         }, {
             modelName: 'Image',
             tableName: 'images',

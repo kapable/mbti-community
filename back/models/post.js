@@ -12,10 +12,6 @@ module.exports = class Post extends Model {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            content: {
-                type: DataTypes.TEXT,
-                allowNull: true,
-            },
         }, {
             modelName: 'Post',
             tableName: 'posts',
@@ -26,12 +22,13 @@ module.exports = class Post extends Model {
     };
     static associate(db) {
         db.Post.belongsTo(db.User);
+        db.Post.belongsTo(db.Category);
+        db.Post.belongsTo(db.Subcategory);
         db.Post.hasMany(db.Comment);
         db.Post.hasMany(db.Text);
         db.Post.hasMany(db.Image);
         db.Post.belongsToMany(db.User, { through: 'Like', as: 'Likers' });
         db.Post.belongsToMany(db.User, { through: 'View', as: 'Viewers' });
         // db.Post.hasMany(db.Thumbnail);
-        // db.Post.belongsToMany(db.Category, { through: 'PostCategory' });
     };
 };

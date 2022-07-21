@@ -6,9 +6,13 @@ module.exports = class Text extends Model {
         return super.init({ 
             // id가 기본적으로 자동 삽입
             content: {
-                type: DataTypes.JSON,
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
+            order:  {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            }
         }, {
             modelName: 'Text',
             tableName: 'texts',
