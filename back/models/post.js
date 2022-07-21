@@ -8,10 +8,14 @@ module.exports = class Post extends Model {
                 type: DataTypes.STRING(70),
                 allowNull: false,
             },
+            views: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
             content: {
                 type: DataTypes.TEXT,
                 allowNull: true,
-            }
+            },
         }, {
             modelName: 'Post',
             tableName: 'posts',
@@ -20,11 +24,14 @@ module.exports = class Post extends Model {
             sequelize
         })
     };
-    // static associate(db) {
-    //     db.Post.belongsTo(db.User);
-    //     db.Post.hasMany(db.Comment);
-    //     db.Post.hasMany(db.Image);
-    //     db.Post.hasMany(db.Thumbnail);
-    //     db.Post.belongsToMany(db.Category, { through: 'PostCategory' });
-    // };
+    static associate(db) {
+        db.Post.belongsTo(db.User);
+        db.Post.hasMany(db.Comment);
+        db.Post.hasMany(db.Text);
+        db.Post.hasMany(db.Image);
+        db.Post.belongsToMany(db.User, { through: 'Like', as: 'Likers' });
+        db.Post.belongsToMany(db.User, { through: 'View', as: 'Viewers' });
+        // db.Post.hasMany(db.Thumbnail);
+        // db.Post.belongsToMany(db.Category, { through: 'PostCategory' });
+    };
 };

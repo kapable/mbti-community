@@ -49,8 +49,12 @@ module.exports = class User extends Model {
             sequelize
         })
     };
-    // static associate(db) {
-    //     db.User.hasMany(db.Post); // user.addPosts
-    //     db.User.hasMany(db.Comment); // user.addComments
-    // };
+    static associate(db) {
+        db.User.hasMany(db.Post); // user.addPosts
+        db.User.hasMany(db.Comment); // user.addComments
+        db.User.belongsToMany(db.User, { through: 'Follow', as: 'Followers', foreignKey: 'FollowingId' });
+        db.User.belongsToMany(db.User, { through: 'Follow', as: 'Followings', foreignKey: 'FollowerId' });
+        db.User.belongsToMany(db.Post, { through: 'Like', as: 'Liked' });
+        db.User.belongsToMany(db.Post, { through: 'View', as: 'Viewed' });
+    };
 };
