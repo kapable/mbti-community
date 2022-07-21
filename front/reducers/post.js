@@ -50,6 +50,9 @@ export const initialState = {
     loadCategoryHotPostsLoading: false,
     loadCategoryHotPostsDone: false,
     loadCategoryHotPostsError: false,
+    loadCategoryNewPostsLoading: false,
+    loadCategoryNewPostsDone: false,
+    loadCategoryNewPostsError: false,
     loadMyPostsLoading: false,
     loadMyPostsDone: false,
     loadMyPostsError: false,
@@ -161,6 +164,8 @@ export const LOAD_CATEGORY_HOT_POSTS_FAILURE = 'LOAD_CATEGORY_HOT_POSTS_FAILURE'
 export const LOAD_CATEGORY_NEW_POSTS_REQUEST = 'LOAD_CATEGORY_NEW_POSTS_REQUEST';
 export const LOAD_CATEGORY_NEW_POSTS_SUCCESS = 'LOAD_CATEGORY_NEW_POSTS_SUCCESS';
 export const LOAD_CATEGORY_NEW_POSTS_FAILURE = 'LOAD_CATEGORY_NEW_POSTS_FAILURE';
+
+export const RESET_CATEGORY_NEW_POSTS = 'RESET_CATEGORY_NEW_POSTS';
 
 export const LOAD_MY_POSTS_REQUEST = 'LOAD_MY_POSTS_REQUEST';
 export const LOAD_MY_POSTS_SUCCESS = 'LOAD_MY_POSTS_SUCCESS';
@@ -298,7 +303,8 @@ const reducer = (state = initialState, action) => {
                 draft.loadCategoryNewPostsError = null;
                 break;
             case LOAD_CATEGORY_NEW_POSTS_SUCCESS:
-                draft.categoryNewPosts = action.data.slice(0).sort((a, b) => (b.views - a.views));
+                draft.categoryNewPosts = draft.categoryNewPosts.concat(action.data); //action.data.slice(0).sort((a, b) => (b.views - a.views)); 
+                draft.categoryNewHasMorePosts = draft.categoryNewPosts.length < 50;
                 draft.loadCategoryNewPostsDone = true;
                 draft.loadCategoryNewPostsLoading = false;
                 break;
@@ -306,6 +312,9 @@ const reducer = (state = initialState, action) => {
                 draft.loadCategoryNewPostsLoading = false;
                 draft.loadCategoryNewPostsError = action.error;
                 break;
+            case RESET_CATEGORY_NEW_POSTS:
+                draft.loadCategoryNewPostsLoading = false;
+                draft.categoryNewPosts = [];
             case LOAD_MY_POSTS_REQUEST:
                 draft.loadMyPostsLoading = true;
                 draft.loadMyPostsDone = false;

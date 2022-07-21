@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import Router from 'next/router';
 import { Drawer, Layout, Collapse } from 'antd';
 import { BellFilled, BellOutlined, EditOutlined, MenuOutlined } from '@ant-design/icons';
 import { categoriesColorObj, LOG_OUT_REQUEST } from '../reducers/user';
@@ -36,12 +37,21 @@ const AppLayout = ({ children }) => {
         alert('로그아웃 되었습니다!');
     }, []);
 
+    const onEditButtonClick = useCallback(() => {
+        if(myInfo) {
+            Router.push(`/upload`);
+        } else {
+            alert('로그인이 필요합니다!');
+            Router.push(`/login`);
+        };
+    }, [myInfo]);
+
     return (
         <Layout className='applayout'>
             <Header className='applayout-header'>
             <Link href='/'><a><img className='applayout-header-main-logo' src={'https://d3edqqquyf396f.cloudfront.net/basic/doodling-logo.png'} alt='두들링' /></a></Link>
                 <div className='applayout-header-hamburger' onClick={onClickHamburger}><MenuOutlined /></div>
-                {myInfo ? (<Link href='/upload'><a><div className='applayout-header-write'><EditOutlined /></div></a></Link>) : null}
+                <div className='applayout-header-write' onClick={onEditButtonClick}><EditOutlined /></div>
                 <Drawer
                     className='applayout-drawer'
                     title={account}
