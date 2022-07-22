@@ -14,7 +14,7 @@ export const initialState = {
             nickname: '',
         },
         title:'',
-        Content: [],
+        Content: ``,
         likes: null,
         views: null,
         Comments: []
@@ -114,13 +114,14 @@ export const dummySinglePost = (id) => ({
         nickname: faker.name.findName(),
     },
     title:faker.lorem.sentence(),
-    Content: Array(5).fill().map(() => ({
-        id: Math.floor(Math.random() * 100) + 5,
-        type: "paragraph",
-        data: {
-            text: faker.lorem.sentence()
-        }
-    })),
+    // Content: Array(5).fill().map(() => ({
+    //     id: Math.floor(Math.random() * 100) + 5,
+    //     type: "paragraph",
+    //     data: {
+    //         text: faker.lorem.sentence()
+    //     }
+    // })),
+    Content: `<p key=0 >1dsff</p><p key=1 >2asdfasf</p><img key=2 className='post-content-image' src="https://i.ytimg.com/vi/cOCvghiHvFo/maxresdefault.jpg" alt="random" /><p key=3 >3sfdgasdfgasf</p>`,
     likes: Math.floor(Math.random() * 100) + 5,
     views: Math.floor(Math.random() * 100) + 5,
     Comments: Array(10).fill().map(() => ({

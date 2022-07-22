@@ -43,7 +43,8 @@ const UploadEditor = () => {
     const [title, onChangeTitle, setTitle] = useInput('');
     const [category, setCategory] = useState('');
     const [subCategory, setSubCategory] = useState('');
-    const [contents, setContents] = useState(``);
+    const [contents, setContents] = useState();
+    const [resultContents, setResultContents] = useState(``);
     const imageInput = useRef(null);
     const onClickImageUpload = useCallback(() => {
         imageInput.current.click();
@@ -59,7 +60,24 @@ const UploadEditor = () => {
         setContents(value.blocks);
     }, []);
 
+    // {contents ? contents.map((value, index) => {
+    //     if(value.type == 'paragraph') {
+    //         return (
+    //             <p key={index}>{value.data.text}</p>
+    //         )
+    //     }
+    // }) : null}
+
     const onSubmit = useCallback(() => {
+        let combinedContents = ``
+        contents.map((value, index) => {
+            if(value.type === 'paragraph') {
+                combinedContents = combinedContents + `<p key=${index} >${value.data.text.replace("&nbsp;", "\u00a0")}</p>`
+            } else if(value.type === 'image') {
+                combinedContents = combinedContents + `<img key=${index} className='post-content-image' src=${value.data.file.url} alt=${index} />`
+            }
+        });
+        setResultContents(combinedContents)
         if(!title || !title.trim()) {
             return alert('제목을 입력하세요!');
         };
@@ -71,14 +89,13 @@ const UploadEditor = () => {
         }
         const formData = new FormData();
         formData.append('title', title);
-        formData.append('content', contents);
+        formData.append('content', combinedContents);
         formData.append('category', category);
         dispatch({
             type: ADD_POST_REQUEST,
-            data: {userId: myInfo.id, title, category, subCategory, contents},
+            data: {userId: myInfo.id, title, category, subCategory, combinedContents},
         });
         alert('정상적으로 글이 게시되었습니다!')
-        
     }, [myInfo, title, category, subCategory, contents]);
 
     useEffect(() => {
@@ -164,6 +181,7 @@ const UploadEditor = () => {
             <div style={{textAlign: "center"}}>
                 <Button onClick={onSubmit} icon={<UploadOutlined />} className='upload-submit-button'>&nbsp;글 업로드</Button>
             </div>
+            {resultContents}
         </div>
     );
 };

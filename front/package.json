@@ -16,6 +16,7 @@
     "@withshepherd/faker": "^5.5.5",
     "antd": "^4.20.3",
     "axios": "^0.27.2",
+    "html-react-parser": "^3.0.1",
     "immer": "^9.0.14",
     "moment": "^2.29.3",
     "next": "^9.5.5",

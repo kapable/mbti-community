@@ -12,6 +12,10 @@ module.exports = class Post extends Model {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
+            likes: {
+                type: DataTypes.INTEGER,
+                allowNull: false
+            }
         }, {
             modelName: 'Post',
             tableName: 'posts',

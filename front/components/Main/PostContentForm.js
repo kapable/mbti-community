@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { BellFilled, BellOutlined, EditOutlined, LikeOutlined, LikeFilled, CommentOutlined, LinkOutlined, TagOutlined, BookOutlined, BookFilled, DeleteOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { REMOVE_POST_REQUEST } from '../../reducers/post';
+import parse from 'html-react-parser';
 
 const PostContentForm = ({ singlePost }) => {
     const dispatch = useDispatch();
@@ -85,14 +86,17 @@ const PostContentForm = ({ singlePost }) => {
             </Row>
             {/* Contents of the post */}
             <div className='post-content-div'>
-                {singlePost.Content.map((value) => {
+                {/* {singlePost.Content.map((value) => {
                     if(value.type === "paragraph") {
                         let texts = value.data.text.replace("&nbsp;", "\u00a0")
                         return (<p key={value.id}>{texts}</p>)
                     } else if(value.type === 'image') {
                         return <Image key={value.id} className='post-content-image' src={value.data.file.url} alt={"이미지 불러오는 중.."} />
                     }
-                })}
+                })} */}
+                {singlePost.Content ? singlePost.Content.match(/<p ([^\<]*?) >([^\<]*?)<\/p>|<img ([^\<]*?) \/>/g).map(v => (
+                    parse(v)
+                )) : null}
             </div>
             {/* Bottom action buttons */}
             <Row className='post-content-bottom-actions-row'>
@@ -110,8 +114,9 @@ PostContentForm.propTypes = {
         category: PropTypes.string,
         User: PropTypes.object,
         title: PropTypes.string,
-        content: PropTypes.arrayOf(PropTypes.object),
+        Content: PropTypes.string,
         likes: PropTypes.number,
+        views: PropTypes.number,
         Comments: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
 };
