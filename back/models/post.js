@@ -8,6 +8,10 @@ module.exports = class Post extends Model {
                 type: DataTypes.STRING(70),
                 allowNull: false,
             },
+            content: {
+                type: DataTypes.TEXT,
+                allowNull: false,
+            },
             views: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -29,7 +33,6 @@ module.exports = class Post extends Model {
         db.Post.belongsTo(db.Category);
         db.Post.belongsTo(db.Subcategory);
         db.Post.hasMany(db.Comment);
-        db.Post.hasMany(db.Text);
         db.Post.hasMany(db.Image);
         db.Post.belongsToMany(db.User, { through: 'Like', as: 'Likers' });
         db.Post.belongsToMany(db.User, { through: 'View', as: 'Viewers' });

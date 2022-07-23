@@ -94,7 +94,7 @@ const PostContentForm = ({ singlePost }) => {
                         return <Image key={value.id} className='post-content-image' src={value.data.file.url} alt={"이미지 불러오는 중.."} />
                     }
                 })} */}
-                {singlePost.Content ? singlePost.Content.match(/<p ([^\<]*?) >([^\<]*?)<\/p>|<img ([^\<]*?) \/>/g).map(v => (
+                {singlePost.content ? singlePost.content.match(/<p ([^\<]*?) >([^\<]*?)<\/p>|<img ([^\<]*?) \/>/g).map(v => (
                     parse(v)
                 )) : null}
             </div>
