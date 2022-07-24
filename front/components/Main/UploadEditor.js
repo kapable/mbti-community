@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Router from 'next/router';
 import { createReactEditorJS } from "react-editor-js";
 const ReactEditorJS = createReactEditorJS();
-
+import Paragraph from '@editorjs/paragraph'
 // import Embed from "@editorjs/embed";
 // import Table from "@editorjs/table";
 // import List from "@editorjs/list";
@@ -108,6 +108,7 @@ const UploadEditor = () => {
     }, [addPostDone, myPosts]);
 
     const EDITOR_JS_TOOLS = {
+        paragraph: Paragraph,
         // embed: Embed,
         // table: Table,
         // marker: Marker,
