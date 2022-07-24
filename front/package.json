@@ -4,8 +4,9 @@
   "description": "MBTI Community Front-end",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
-    "build": "next build"
+    "dev": "next -p 3060",
+    "build": "cross-env NODE_ENV=production next build",
+    "start": "cross-env NODE_ENV=production next start -p 3060"
   },
   "author": "Seeyong",
   "license": "ISC",
@@ -16,11 +17,13 @@
     "@withshepherd/faker": "^5.5.5",
     "antd": "^4.20.3",
     "axios": "^0.27.2",
+    "cross-env": "^7.0.3",
     "html-react-parser": "^3.0.1",
     "immer": "^9.0.14",
     "moment": "^2.29.3",
     "next": "^9.5.5",
     "next-redux-wrapper": "^6.0.2",
+    "pm2": "^5.2.0",
     "prop-types": "^15.8.1",
     "react": "^16.14.0",
     "react-alice-carousel": "^2.6.1",
