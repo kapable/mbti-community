@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Router from 'next/router';
-import { createReactEditorJS } from "react-editor-js";
-const ReactEditorJS = createReactEditorJS();
-import Paragraph from '@editorjs/paragraph'
+// import { createReactEditorJS } from "react-editor-js";
+// const ReactEditorJS = createReactEditorJS();
+// import Paragraph from '@editorjs/paragraph'
 // import Embed from "@editorjs/embed";
 // import Table from "@editorjs/table";
 // import List from "@editorjs/list";
 // import Warning from "@editorjs/warning";
 // import Code from "@editorjs/code";
 // import LinkTool from "@editorjs/link";
-import Image from "@editorjs/image";
+// import Image from "@editorjs/image";
 import { Button, Divider, Input, Select } from 'antd';
 import useInput from '../../hooks/useInput';
 import { UploadOutlined } from '@ant-design/icons';
@@ -176,7 +176,7 @@ const UploadEditor = () => {
             <Divider dashed />
             {/* EDITOR */}
             {/* <input type="file" name='image' accept="image/*" multiple hidden ref={imageInput} /> */}
-            <ReactEditorJS tools={EDITOR_JS_TOOLS} onChange={handleOnChange} />
+            {/* <ReactEditorJS tools={EDITOR_JS_TOOLS} onChange={handleOnChange} /> */}
             <Divider dashed />
             {/* UPLOAD BUTTON */}
             <div style={{textAlign: "center"}}>
