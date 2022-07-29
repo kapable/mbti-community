@@ -18,12 +18,9 @@ const Home = () => {
     }, []);
     const Categories = {
         "Hot 게시글" : [],
-        "MBTI" : ['MBTI', 'ENFJ', 'ENFP', 'ENTJ', 'ENTP', 'ESFJ', 'ESFP', 'ESTJ', 'ESTP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ISFJ', 'ISFP', 'ISTJ', 'ISTP'],
-        "이슈두들링" : ['이슈', 'A'],
-        "뒷담두들링" : ['뒷담', 'A'],
-        "연애두들링" : ["연애", 'A'],
-        "정보두들링" : ["정보", 'A'],
-        "19두들링" : ["19", 'A'],
+        "MBTI" : ['전체', '연애&썸', '끄적끄적'],
+        "이슈두들링" : ['전체'],
+        "공지" : ['전체', '필독사항', '이벤트']
     };
     const [selectedCategory, setSelectedCategory] = useState("Hot 게시글");
     const [selectedSubCategory, setSelectedSubCategory] = useState('');

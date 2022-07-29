@@ -1,9 +1,25 @@
+const user = require('./user');
+const post = require('./post');
+const comment = require('./comment');
+const image = require('./image');
+const subcategory = require('./subcategory');
+const category = require('./category');
+const url = require('./url');
+
 const Sequelize = require('sequelize');
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config.js')[env];
 const db = {};
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
+
+db.User = user;
+db.Post = post;
+db.Comment = comment;
+db.Image = image;
+db.Subcategory = subcategory;
+db.Category = category;
+db.Url = url;
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
